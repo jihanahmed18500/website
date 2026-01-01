@@ -13,169 +13,207 @@
             --text-dim: #6b7280;
             --accent: #2563eb;
             --border: #f3f4f6;
+            --card-hover: #f9fafb;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 100px; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 120px; }
 
-        /* Navigation - Floating Dock style from your image */
+        /* Navigation - Minimal Floating Dock */
         .dock-container {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px);
-            padding: 10px 25px; border-radius: 999px; border: 1px solid #e5e7eb;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); z-index: 1000;
-            display: flex; gap: 20px;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+            padding: 12px 28px; border-radius: 999px; border: 1px solid #e5e7eb;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06); z-index: 1000;
+            display: flex; gap: 24px;
         }
         .dock-container a { 
-            text-decoration: none; color: var(--text-dim); font-size: 0.9rem; font-weight: 600; transition: 0.2s;
+            text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; transition: 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .dock-container a:hover { color: var(--text-main); }
+        .dock-container a:hover { color: var(--accent); }
 
-        /* Main Content Wrapper */
         .container { max-width: 800px; margin: 0 auto; padding: 80px 24px; }
 
-        /* Hero Header */
-        header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px; padding-top: 40px; }
-        .hero-text h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
-        .hero-text p { font-size: 1.25rem; color: var(--text-dim); font-weight: 500; }
+        /* Hero */
+        header { margin-bottom: 80px; padding-top: 40px; }
+        .hero-text h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 16px; }
+        .hero-text p { font-size: 1.25rem; color: var(--text-dim); font-weight: 500; max-width: 600px; }
 
-        /* Sections */
-        section { margin-bottom: 56px; }
-        h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.5px; }
-        h3 { font-size: 1rem; font-weight: 700; color: var(--text-main); }
+        section { margin-bottom: 72px; }
+        h2 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
 
-        /* Text Blocks */
-        .about-p { color: var(--text-dim); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem; }
+        /* Work & Leadership Entries */
+        .entry { margin-bottom: 40px; transition: 0.3s; }
+        .entry-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+        .entry-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); }
+        .entry-subtitle { font-size: 0.95rem; font-weight: 600; color: var(--accent); margin-bottom: 12px; display: block; }
+        .entry-date { color: #9ca3af; font-size: 0.85rem; font-weight: 500; white-space: nowrap; margin-left: 20px; }
+        .entry-details { list-style: none; }
+        .entry-details li { color: var(--text-dim); font-size: 1rem; margin-bottom: 8px; padding-left: 1.2rem; position: relative; }
+        .entry-details li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
 
-        /* Entry Item (Work/Leadership) */
-        .entry { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-        .entry-content { flex: 1; }
-        .entry-title { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 2px; }
-        .entry-subtitle { color: var(--text-dim); font-size: 0.9rem; font-weight: 500; }
-        .entry-date { color: #9ca3af; font-size: 0.85rem; font-weight: 500; text-align: right; min-width: 150px; }
-        .entry-details { margin-top: 10px; padding-left: 18px; }
-        .entry-details li { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 6px; list-style-type: circle; }
+        /* Leadership Cards */
+        .leadership-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
 
-        /* Tags/Skills Grid */
-        .tag-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag { background: #111827; color: white; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+        /* Featured Project Box */
+        .highlight-box { 
+            background: #f9fafb; border: 1px solid var(--border); border-radius: 20px; padding: 32px; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .highlight-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
 
-        /* Mental Health Project Highlight */
-        .project-highlight { background: #f9fafb; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 24px; }
-        .stat-accent { color: var(--accent); font-weight: 800; }
+        /* Connect Section */
+        .connect-card {
+            background: #111827; color: white; border-radius: 24px; padding: 48px; text-align: center;
+            margin-top: 100px; position: relative; overflow: hidden;
+        }
+        .connect-card h2 { color: white; border: none; font-size: 2rem; margin-bottom: 8px; }
+        .connect-card p { color: #9ca3af; margin-bottom: 32px; font-weight: 500; }
+        .social-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .social-btn {
+            background: rgba(255,255,255,0.05); color: white; text-decoration: none;
+            padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
+        }
+        .social-btn:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
 
         @media (max-width: 640px) {
-            header { flex-direction: column-reverse; text-align: left; align-items: flex-start; }
-            .hero-text h1 { font-size: 2.5rem; }
-            .entry { flex-direction: column; }
-            .entry-date { text-align: left; margin-top: 4px; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .entry-header { flex-direction: column; }
+            .entry-date { margin-left: 0; margin-top: 4px; }
+            .connect-card { padding: 32px 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="dock-container">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
+        <a href="#about">Bio</a>
+        <a href="#work">Experience</a>
         <a href="#leadership">Leadership</a>
-        <a href="#projects">Project</a>
-        <a href="mailto:jihanahmed1850@gmail.com">Contact</a>
+        <a href="#contact">Connect</a>
     </div>
 
     <div class="container">
-        <header>
+        <header id="about">
             <div class="hero-text">
-                <h1>Hi, I'm Jihan</h1>
-                <p>Advocate. President. Community Leader.</p>
+                <h1>Jihan Ahmed</h1>
+                <p>Advocating for student mental health, equity, and civic empowerment across Toronto.</p>
             </div>
         </header>
-
-        <section id="about">
-            <h2>About</h2>
-            <p class="about-p">
-                I am a dedicated community advocate and student leader focused on mental health awareness, equity, and civic engagement. My work bridges the gap between students and municipal leadership, driving tangible systemic improvements for youth across Toronto.
-            </p>
-        </section>
 
         <section id="work">
             <h2>Work Experience</h2>
             
             <div class="entry">
-                <div class="entry-content">
+                <div class="entry-header">
                     <div class="entry-title">City of Toronto, Parks & Recreation</div>
-                    <div class="entry-subtitle">Facility - In Charge</div>
-                    <ul class="entry-details">
-                        <li>Supervised facility closing shifts for 5-15 staff members[cite: 8].</li>
-                        <li>Coordinated delivery of 5+ recreational programs weekly for over 100 participants[cite: 7].</li>
-                        <li>Managed operations including incident reporting, logistics, and compliance with health and safety standards[cite: 9].</li>
-                    </ul>
+                    <div class="entry-date">Sept 2023 — Present</div>
                 </div>
-                <div class="entry-date">Sept 2023 — Present</div>
+                <span class="entry-subtitle">Facility - In Charge</span>
+                <ul class="entry-details">
+                    <li>Supervises on-site operations and facility closing shifts, overseeing 5-15 staff members.</li>
+                    <li>Ensures 100% compliance with Ontario Health and Safety Act and City policies across multi-use facilities.</li>
+                    <li>Assists in delivering 5+ recreational programs weekly, supporting 100+ community participants.</li>
+                </ul>
             </div>
 
             <div class="entry">
-                <div class="entry-content">
+                <div class="entry-header">
                     <div class="entry-title">Doly Begum, MPP Office</div>
-                    <div class="entry-subtitle">Pollcat / Outreach Assistant</div>
-                    <ul class="entry-details">
-                        <li>Assisted in organizing community events and outreach programs[cite: 21].</li>
-                        <li>Engaged with residents door-to-door to collect data on local issues[cite: 26].</li>
-                        <li>Supported administrative tasks and strategy sessions with the MPP team[cite: 23, 25].</li>
-                    </ul>
+                    <div class="entry-date">July 2022 — July 2024</div>
                 </div>
-                <div class="entry-date">July 2022 — July 2024</div>
+                <span class="entry-subtitle">Pollcat / Community Outreach</span>
+                <ul class="entry-details">
+                    <li>Engaged directly with residents through door-to-door data collection and legislative awareness campaigns.</li>
+                    <li>Organized community events and provided administrative support to the MPP's strategy sessions.</li>
+                    <li>Managed constituent correspondence and prepared materials for local legislative initiatives.</li>
+                </ul>
             </div>
         </section>
 
         <section id="leadership">
             <h2>Presidencies & Roles</h2>
             
-            <div class="tag-grid">
-                <div class="tag">Mayor’s Youth Council President & Founder</div>
-                <div class="tag">Equity Council President</div>
-                <div class="tag">Model UN President</div>
-                <div class="tag">MSA President (2024)</div>
-                <div class="tag">TDSB Mental Health Ambassador</div>
-            </div>
-
-            <div style="margin-top: 24px;">
+            <div class="leadership-grid">
                 <div class="entry">
-                    <div class="entry-content">
-                        <div class="entry-title">Equity Council</div>
-                        <p class="about-p" style="margin-bottom: 0; font-size: 0.95rem;">Led the largest club at Satec, raising over $3,000 for community causes[cite: 33].</p>
-                    </div>
-                </div>
-                <div class="entry">
-                    <div class="entry-content">
+                    <div class="entry-header">
                         <div class="entry-title">Model United Nations</div>
-                        <p class="about-p" style="margin-bottom: 0; font-size: 0.95rem;">Won multiple awards across the TDSB and hosted conferences for 150+ competitors[cite: 33].</p>
+                        <div class="entry-date">President</div>
                     </div>
+                    <ul class="entry-details">
+                        <li>Won multiple awards across the TDSB for diplomatic excellence.</li>
+                        <li>Lead organizer for conferences hosting 150+ regional competitors.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <div class="entry-title">Equity Council</div>
+                        <div class="entry-date">President</div>
+                    </div>
+                    <ul class="entry-details">
+                        <li>Directed the largest student club at Satec, overseeing diverse advocacy teams.</li>
+                        <li>Raised and donated over $3,000 for equity-based community initiatives.</li>
+                        <li>Increased organization's digital reach and engagement by 120%.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <div class="entry-title">Mayor’s Youth Council</div>
+                        <div class="entry-date">Founder & President</div>
+                    </div>
+                    <ul class="entry-details">
+                        <li>Established the council to bridge the gap between municipal government and youth perspectives.</li>
+                        <li>Conceptualized long-term strategies for youth engagement in Toronto's local policy.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <div class="entry-title">Muslim Student Association (MSA)</div>
+                        <div class="entry-date">President (2024)</div>
+                    </div>
+                    <ul class="entry-details">
+                        <li>Hosted annual Iftar Nights with 200+ attendees, including high-profile guest speakers.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <section id="projects">
             <h2>Featured Impact</h2>
-            <div class="project-highlight">
-                <h3>Mental Health Day Event</h3>
-                <p class="about-p" style="margin: 10px 0;">
-                    Conceptualized and executed a school-wide initiative impacting over <span class="stat-accent">1,200 students</span>[cite: 13].
+            <div class="highlight-box">
+                <div class="highlight-title">Mental Health Day Event</div>
+                <span class="entry-subtitle" style="color: var(--text-main); opacity: 0.7;">TDSB Mental Health Ambassador</span>
+                <p style="color: var(--text-dim); margin: 16px 0 24px; font-size: 1.05rem;">
+                    Orchestrated a massive school-wide event involving 1,200+ students, focusing on wellness and resource education.
                 </p>
                 <ul class="entry-details">
-                    <li>Secured <span class="stat-accent">$5,000</span> in grants to fund event logistics and community resources.</li>
-                    <li>Orchestrated partnerships with 7+ NGOs and collaborated with Provincial leaders and the Mayor's office.</li>
-                    <li>Coordinated complex budgeting, resource allocation, and team-led marketing[cite: 14, 16].</li>
+                    <li>Secured $5,000 in grants to fund high-impact speakers and event infrastructure.</li>
+                    <li>Partnered with 7+ NGOs and collaborated with the Mayor's Office and Provincial leaders.</li>
+                    <li>Led a marketing and communications team to ensure 100% student engagement.</li>
                 </ul>
             </div>
         </section>
 
-        <section id="contact" style="text-align: center; margin-top: 80px;">
-            <p class="entry-subtitle" style="margin-bottom: 20px;">jihanahmed1850@gmail.com • (647) 509-2951 </p>
-            <div class="tag-grid" style="justify-content: center;">
-                <a href="https://www.linkedin.com/in/jihan-ahmed-973b9220a/" target="_blank" class="tag" style="background: #0077b5;">LinkedIn</a>
-                <a href="https://instagram.com/jihanahmed1850" target="_blank" class="tag" style="background: #e1306c;">Instagram</a>
+        <section id="contact">
+            <div class="connect-card">
+                <h2>Connect with me</h2>
+                <p>Available for speaking, advocacy, or leadership collaborations.</p>
+                <div class="social-links">
+                    <a href="mailto:jihanahmed1850@gmail.com" class="social-btn">Email</a>
+                    <a href="https://www.linkedin.com/in/jihan-ahmed-973b9220a/" target="_blank" class="social-btn">LinkedIn</a>
+                    <a href="https://instagram.com/jihanahmed1850" target="_blank" class="social-btn">Instagram</a>
+                    <a href="tel:6475092951" class="social-btn">Call</a>
+                </div>
             </div>
         </section>
+
+        <footer style="text-align: center; color: #9ca3af; font-size: 0.8rem; padding-top: 40px;">
+            &copy; 2025 Jihan Ahmed • Toronto, Canada
+        </footer>
     </div>
 
 </body>
