@@ -13,10 +13,9 @@
             --bg: #ffffff;
             --text-main: #111827;
             --text-dim: #6b7280;
-            /* Updated to your palette color #655560 */
             --accent: #655560; 
             --border: #f3f4f6;
-            --light-accent: #FCF7FF; /* Palette color #FCF7FF */
+            --light-accent: #FCF7FF; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -110,9 +109,9 @@
                 </div>
                 <span class="entry-subtitle">Facility - In Charge</span>
                 <ul class="entry-details">
-                    <li>Oversees facility operations and closing shifts for teams of 5-15 staff members.</li>
-                    <li>Maintains 100% compliance with Ontario Health and Safety Act and City policies.</li>
-                    <li>Supports delivery of 5+ recreational programs weekly for over 100 community participants.</li>
+                    <li>Oversees facility operations and closing shifts for teams of 5-15 staff members[cite: 5, 8].</li>
+                    <li>Maintains 100% compliance with Ontario Health and Safety Act and City policies[cite: 8, 9].</li>
+                    <li>Supports delivery of 5+ recreational programs weekly for over 100 community participants[cite: 7].</li>
                 </ul>
             </div>
 
@@ -121,11 +120,11 @@
                     <div class="entry-title">Doly Begum, MPP Office</div>
                     <div class="entry-date">July 2022 — July 2024</div>
                 </div>
-                <span class="entry-subtitle">Pollcat / Community Outreach</span>
+                <span class="entry-subtitle">Pollcat / Community Outreach Assistant</span>
                 <ul class="entry-details">
-                    <li>Led door-to-door data collection and legislative awareness initiatives for constituents.</li>
-                    <li>Organized community outreach programs and provided administrative event support.</li>
-                    <li>Engaged residents on key local issues to support strategy development for the MPP.</li>
+                    <li>Led door-to-door data collection and legislative awareness initiatives for residents[cite: 24, 26].</li>
+                    <li>Organized community events and provided administrative support to the MPP's office[cite: 21, 23].</li>
+                    <li>Engaged residents on key local issues to support strategy development for the MPP[cite: 24, 25].</li>
                 </ul>
             </div>
         </section>
@@ -139,8 +138,8 @@
                     <div class="entry-date">President</div>
                 </div>
                 <ul class="entry-details">
-                    <li>Led the largest student club at Satec, raising over $3,000 for equity initiatives.</li>
-                    <li>Grew social media reach and organizational engagement by 120%.</li>
+                    <li>Led the largest student club at Satec, raising over $3,000 in donations through equity initiatives[cite: 33].</li>
+                    <li>Grew social media reach and organizational engagement by 120%[cite: 33].</li>
                 </ul>
             </div>
 
@@ -150,8 +149,19 @@
                     <div class="entry-date">President</div>
                 </div>
                 <ul class="entry-details">
-                    <li>Represented TDSB in regional conferences, winning multiple awards for diplomatic excellence.</li>
-                    <li>Chaired conferences hosting 150+ competitors from across the GTA.</li>
+                    <li>Represented Satec in regional conferences, winning multiple awards for diplomatic excellence[cite: 33].</li>
+                    <li>Chaired conferences hosting over 150+ competitors from across the GTA[cite: 33].</li>
+                </ul>
+            </div>
+
+            <div class="entry">
+                <div class="entry-header">
+                    <div class="entry-title">TDSB Mental Health Ambassador</div>
+                    <div class="entry-date">Ambassador</div>
+                </div>
+                <ul class="entry-details">
+                    <li>Serving as a student voice for Toronto District School Board mental health initiatives[cite: 10, 11].</li>
+                    <li>Working with the TDSB to facilitate events and advocacy across Toronto East York[cite: 17].</li>
                 </ul>
             </div>
 
@@ -171,7 +181,7 @@
                     <div class="entry-date">President (2024)</div>
                 </div>
                 <ul class="entry-details">
-                    <li>Organized annual Iftar Nights with 200+ attendees and community guest speakers.</li>
+                    <li>Hosted annual Iftar Nights with 200+ in attendance, including well known guests[cite: 33].</li>
                 </ul>
             </div>
         </section>
@@ -180,13 +190,14 @@
             <h2>Featured Impact</h2>
             <div class="highlight-box">
                 <div class="entry-title" style="font-size: 1.5rem; margin-bottom: 8px;">Mental Health Day Event</div>
-                <span class="entry-subtitle" style="color: var(--text-main); opacity: 0.6;">TDSB Mental Health Ambassador</span>
+                <span class="entry-subtitle" style="color: var(--text-main); opacity: 0.6;">Lead Organizer</span>
                 <p style="color: var(--text-dim); margin: 16px 0 24px; font-size: 1.05rem;">
-                    A massive school-wide wellness initiative for 1,200+ students.
+                    A school-wide wellness initiative for 1,200+ students[cite: 13].
                 </p>
                 <ul class="entry-details">
-                    <li>Raised $5,000 in grants to provide professional speakers and resources.</li>
+                    <li>Secured $5,000 in grants to provide professional speakers and resources.</li>
                     <li>Collaborated with the Mayor’s Office, Provincial leaders, and 7+ NGOs.</li>
+                    <li>Coordinated logistics including scheduling, budgeting, and resource allocation[cite: 14].</li>
                 </ul>
             </div>
         </section>
@@ -194,7 +205,6 @@
         <section id="contact">
             <div class="connect-card">
                 <h2>Connect</h2>
-                <p>Collaborating on leadership, advocacy, and social impact.</p>
                 <div class="icon-links">
                     <a href="mailto:jihanahmed1850@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
                     <a href="https://www.linkedin.com/in/jihan-ahmed-973b9220a/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
@@ -208,5 +218,16 @@
         </footer>
     </div>
 
+    <script>
+        // Smooth scroll for nav links
+        document.querySelectorAll('.dock-container a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
