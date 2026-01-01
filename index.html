@@ -13,8 +13,10 @@
             --bg: #ffffff;
             --text-main: #111827;
             --text-dim: #6b7280;
-            --accent: #2563eb;
+            /* Updated to your palette color #655560 */
+            --accent: #655560; 
             --border: #f3f4f6;
+            --light-accent: #FCF7FF; /* Palette color #FCF7FF */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -38,6 +40,7 @@
         /* Hero */
         header { margin-bottom: 80px; padding-top: 40px; }
         .hero-text h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 16px; }
+        .hero-text span { color: var(--accent); }
         .hero-text p { font-size: 1.25rem; color: var(--text-dim); font-weight: 500; max-width: 600px; }
 
         section { margin-bottom: 72px; }
@@ -55,7 +58,7 @@
 
         /* Highlight Box */
         .highlight-box { 
-            background: #f9fafb; border: 1px solid var(--border); border-radius: 20px; padding: 32px; 
+            background: var(--light-accent); border: 1px solid var(--border); border-radius: 20px; padding: 32px; 
         }
 
         /* Connect Section */
@@ -92,7 +95,7 @@
     <div class="container">
         <header id="about">
             <div class="hero-text">
-                <h1>Jihan Ahmed</h1>
+                <h1>Hi, I'm <span>Jihan Ahmed</span></h1>
                 <p>Advocating for student mental health, equity, and civic empowerment across Toronto.</p>
             </div>
         </header>
@@ -103,7 +106,7 @@
             <div class="entry">
                 <div class="entry-header">
                     <div class="entry-title">City of Toronto, Parks & Recreation</div>
-                    <div class="entry-date">Sept 2023 — Present</div>
+                    <div class="entry-date">September 2023 — Present</div>
                 </div>
                 <span class="entry-subtitle">Facility - In Charge</span>
                 <ul class="entry-details">
@@ -201,7 +204,7 @@
         </section>
 
         <footer style="text-align: center; color: #9ca3af; font-size: 0.8rem; padding-top: 40px;">
-            &copy; 2025 Jihan Ahmed • Toronto, Canada
+            &copy; 2026 Jihan Ahmed • Toronto, Canada
         </footer>
     </div>
 
