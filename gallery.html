@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery — Jihan Ahmed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark: #121212;
+            --cream: #f4f1ea;
+            --accent: #4f46e5; 
+            --highlight: #ffd700; 
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--cream); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        h1, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; width: 100%; z-index: 1000;
+            position: sticky; top: 0; background: var(--cream);
+            border-bottom: 1.5px solid var(--dark);
+        }
+        .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; text-decoration: none; color: var(--dark); }
+        .back-btn { 
+            text-decoration: none; 
+            color: var(--dark); 
+            font-weight: 700; 
+            font-size: 0.9rem; 
+            border: 1.5px solid var(--dark);
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: var(--dark);
+            color: white;
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px var(--accent);
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 4rem auto 2rem;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        header h1 { font-size: 4rem; letter-spacing: -3px; line-height: 1; }
+        header p { margin-top: 1rem; font-size: 1.1rem; opacity: 0.8; }
+
+        .gallery-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 20px;
+        }
+
+        .gallery-card {
+            background: #fff;
+            border: 1.5px solid var(--dark);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+
+        .gallery-card:hover {
+            transform: scale(1.02) rotate(1deg);
+            box-shadow: 12px 12px 0px var(--dark);
+            z-index: 10;
+        }
+
+        .img-container {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-bottom: 1.5px solid var(--dark);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.5s;
+        }
+
+        .gallery-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        .card-info {
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .card-info h3 {
+            font-family: 'Space Grotesk';
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .gallery-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">JIHAN AHMED</a>
+        <a href="index.html" class="back-btn">← BACK HOME</a>
+    </nav>
+
+    <header>
+        <h1>Visual Archive</h1>
+        <p>A collection of moments from summits, conferences, and community advocacy.</p>
+    </header>
+
+    <div class="gallery-container">
+        
+        <div class="gallery-card">
+            <div class="img-container">
+                <img src="Parliment.jpeg" alt="Parliament Summit">
+            </div>
+            <div class="card-info">
+                <h3>Parliament Hill Summit</h3>
+            </div>
+        </div>
+
+        <div class="gallery-card">
+            <div class="img-container">
+                <img src="MUN.jpeg" alt="Model UN">
+            </div>
+            <div class="card-info">
+                <h3>Model United Nations</h3>
+            </div>
+        </div>
+
+        <div class="gallery-card">
+            <div class="img-container">
+                <img src="Mental-Health Day 1.jpeg" alt="Mental Health Day 1">
+            </div>
+            <div class="card-info">
+                <h3>Mental Health Day — Event I</h3>
+            </div>
+        </div>
+
+        <div class="gallery-card">
+            <div class="img-container">
+                <img src="Mental-Health Day 2.jpeg" alt="Mental Health Day 2">
+            </div>
+            <div class="card-info">
+                <h3>Mental Health Day — Event II</h3>
+            </div>
+        </div>
+
+        <div class="gallery-card">
+            <div class="img-container">
+                <img src="Mental-Health Day 3.jpeg" alt="Mental Health Day 3">
+            </div>
+            <div class="card-info">
+                <h3>Mental Health Day — Event III</h3>
+            </div>
+        </div>
+
+        <div class="gallery-card">
+            <div class="img-container">
+                <img src="Equity.jpeg" alt="Equity Club">
+            </div>
+            <div class="card-info">
+                <h3>Equity Advocacy</h3>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
