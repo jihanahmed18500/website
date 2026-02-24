@@ -14,6 +14,7 @@
             --highlight: #ffd700; 
         }
 
+        /* Subtle texture overlay */
         body::before {
             content: "";
             position: fixed;
@@ -40,9 +41,9 @@
             padding: 2.5rem 5%; width: 100%; z-index: 1000;
             position: sticky; top: 0; background: var(--cream);
         }
-        .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; text-decoration: none; color: var(--dark); }
+        .logo { font-weight: 700; font-size: 1.8rem; letter-spacing: -1.5px; text-decoration: none; color: var(--dark); }
         .nav-links { display: flex; list-style: none; gap: 2rem; }
-        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.9rem; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
         .nav-links a:hover { color: var(--accent); }
 
         .bento-wrapper {
@@ -55,51 +56,119 @@
             padding: 20px;
         }
 
+        /* Box Base Styles */
         .box {
             background: #fff;
-            border: 1.5px solid var(--dark);
+            border: 2px solid var(--dark);
             padding: 2.5rem;
             position: relative;
             z-index: 1;
             transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
         
+        /* Interactive "Lift" for clickable boxes */
+        .clickable-exp { cursor: pointer; }
+        .clickable-exp:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 10px 10px 0px var(--dark);
+            z-index: 10;
+        }
+
+        /* Bento Corner Variations */
         .br-1 { border-radius: 80px 20px 80px 20px; }
         .br-2 { border-radius: 20px 80px 20px 80px; }
         .br-3 { border-radius: 40px; }
 
-        .box:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 8px 8px 0px var(--dark);
-            z-index: 10;
+        /* HERO SECTION */
+        .hero-box { 
+            grid-column: span 12; 
+            background: var(--accent); 
+            color: white; 
+            border: none; 
+            padding: 6rem 2rem; 
+            text-align: center; 
+            cursor: default; 
         }
+        .hero-box h1 { 
+            font-size: 2.8rem; 
+            font-weight: 700; 
+            margin-bottom: 0.2rem; 
+            letter-spacing: -1px;
+        }
+        .hero-box .name-highlight { 
+            display: block; 
+            font-size: clamp(3rem, 8vw, 6rem); 
+            font-weight: 700; 
+            letter-spacing: -3px; 
+            line-height: 1; 
+            margin-top: 0.5rem;
+            color: var(--highlight);
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+        }
+        .hero-box p { font-size: 1.4rem; font-weight: 500; margin-top: 1.5rem; opacity: 0.9; }
 
-        .hero-box { grid-column: span 12; background: var(--accent); color: white; border: none; padding: 5rem; text-align: center; }
+        /* GRID SIZING */
         .role-box { grid-column: span 4; }
-        .project-box { grid-column: span 8; background: var(--highlight); }
+        .role-box h3 { font-size: 1.8rem; margin-bottom: 0.5rem; font-weight: 700; }
 
-        .tag { background: #000; color: #fff; padding: 4px 12px; font-size: 0.7rem; font-weight: 700; border-radius: 5px; margin-bottom: 1rem; display: inline-block; }
+        .project-box { grid-column: span 8; background: var(--highlight); }
+        .project-box h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
+
+        /* TAGS & STATS */
+        .tag { background: #000; color: #fff; padding: 6px 14px; font-size: 0.8rem; font-weight: 900; border-radius: 6px; margin-bottom: 1.2rem; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
         
         .project-stats { display: flex; gap: 2rem; margin: 1.5rem 0; }
-        .mini-stat { border-left: 3px solid var(--dark); padding-left: 15px; }
-        .mini-stat b { font-size: 1.5rem; display: block; font-family: 'Space Grotesk'; }
-        .mini-stat span { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #333; }
+        .mini-stat { border-left: 4px solid var(--dark); padding-left: 15px; }
+        .mini-stat b { font-size: 1.8rem; display: block; font-family: 'Space Grotesk'; }
+        .mini-stat span { font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #333; }
 
-        .contact-box { 
-            grid-column: span 12; 
-            background: var(--dark); 
-            color: white; 
-            text-align: center; 
-            padding: 5rem 2rem; 
-            margin-top: 2rem;
-        }
-
-        .socials { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
-        .socials a { color: white; text-decoration: none; font-weight: 600; font-size: 1.2rem; transition: 0.2s; }
+        /* CONTACT SECTION */
+        .contact-box { grid-column: span 12; background: var(--dark); color: white; text-align: center; padding: 6rem 2rem; margin-top: 2rem; cursor: default; }
+        .socials { display: flex; justify-content: center; gap: 4rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .socials a { color: white; text-decoration: none; font-weight: 800; font-size: 1.4rem; transition: 0.2s; }
         .socials a:hover { color: var(--highlight); }
 
+        /* MODAL POPUP */
+        #modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: var(--cream);
+            border: 3px solid var(--dark);
+            padding: 4rem;
+            border-radius: 40px;
+            text-align: center;
+            box-shadow: 15px 15px 0px var(--accent);
+            max-width: 500px;
+            width: 90%;
+        }
+        .modal-content h2 { font-size: 3rem; font-family: 'Space Grotesk'; margin-bottom: 1rem; }
+        .close-btn { 
+            margin-top: 2rem; 
+            display: inline-block; 
+            padding: 12px 35px; 
+            background: var(--dark); 
+            color: white; 
+            text-decoration: none; 
+            font-weight: 700; 
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .close-btn:hover { background: var(--accent); }
+
+        /* MOBILE ADJUSTMENTS */
         @media (max-width: 900px) {
             .role-box, .project-box { grid-column: span 12; }
+            .hero-box .name-highlight { font-size: 3.5rem; }
+            .hero-box h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -117,11 +186,12 @@
     <div class="bento-wrapper">
         
         <div class="box hero-box br-1">
-            <h1>Welcome to Jihan Ahmed's portfolio!</h1>
+            <h1>Welcome to the portfolio of</h1>
+            <span class="name-highlight">JIHAN AHMED!</span>
             <p>Advocate. Leader. Community Builder.</p>
         </div>
 
-        <div class="box project-box br-3" id="experience">
+        <div class="box project-box br-3 clickable-exp" id="experience">
             <span class="tag">FLAGSHIP EXPERIENCE</span>
             <h2>Mental Health Day</h2>
             <p>Orchestrated a student-led summit by facilitating partnerships with over 7 NGOs, including the MPP, Mayor, and Provincial leaders.</p>
@@ -131,46 +201,46 @@
             </div>
         </div>
 
-        <div class="box role-box br-2">
+        <div class="box role-box br-2 clickable-exp">
             <span class="tag">POLLCAT STRATEGIST</span>
             <h3>Political Campaigns</h3>
             <p>Directing data-driven outreach for MPP Doly Begum and Federal campaigns.</p>
         </div>
 
-        <div class="box role-box br-1">
-            <span class="tag">EXECUTIVE</span>
-            <h3>HOSA Future Health Professionals</h3>
-            <p>Leading competitive health science initiatives and professional development events.</p>
-        </div>
-
-        <div class="box role-box br-3">
+        <div class="box role-box br-1 clickable-exp">
             <span class="tag">NATIONAL DELEGATE</span>
             <h3>Forum for Young Canadians</h3>
             <p>Policy simulations and high-level debate at Parliament Hill.</p>
         </div>
 
-        <div class="box role-box br-1">
-            <span class="tag">AMBASSADOR</span>
-            <h3>TDSB Mental Health</h3>
-            <p>Representing student mental health needs across the TDSB.</p>
-        </div>
-
-        <div class="box role-box br-2">
+        <div class="box role-box br-3 clickable-exp">
             <span class="tag">PRESIDENT</span>
             <h3>Mayor’s Youth Council</h3>
-            <p>Bridging the gap between local government and youth.</p>
+            <p>Bridging the gap between local government and youth through policy advisory.</p>
         </div>
 
-        <div class="box role-box br-3">
+        <div class="box role-box br-1 clickable-exp">
             <span class="tag">PRESIDENT</span>
             <h3>Equity Club</h3>
             <p>Championing inclusive policies and diverse representation.</p>
         </div>
 
-        <div class="box role-box br-1">
+        <div class="box role-box br-2 clickable-exp">
             <span class="tag">PRESIDENT</span>
             <h3>Model UN</h3>
             <p>Directing diplomatic simulations and mentoring students.</p>
+        </div>
+
+        <div class="box role-box br-3 clickable-exp">
+            <span class="tag">EXECUTIVE</span>
+            <h3>HOSA Future Health Professionals</h3>
+            <p>Leading competitive health science initiatives and development events.</p>
+        </div>
+
+        <div class="box role-box br-1 clickable-exp">
+            <span class="tag">AMBASSADOR</span>
+            <h3>TDSB Mental Health</h3>
+            <p>Representing student mental health needs across the TDSB network.</p>
         </div>
 
         <div class="box contact-box br-3" id="contact">
@@ -183,6 +253,36 @@
         </div>
 
     </div>
+
+    <div id="modal-overlay">
+        <div class="modal-content">
+            <h2>Coming Soon</h2>
+            <p>I'm currently writing up the full story for this experience. Check back shortly!</p>
+            <div class="close-btn" onclick="closeModal()">Got it!</div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Logic
+        const experienceBoxes = document.querySelectorAll('.clickable-exp');
+        const overlay = document.getElementById('modal-overlay');
+
+        experienceBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                overlay.style.display = 'flex';
+            });
+        });
+
+        function closeModal() {
+            overlay.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == overlay) {
+                closeModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
