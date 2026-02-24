@@ -7,12 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --dark: #121212;
-            --cream: #f4f1ea;
-        }
-
-        /* Subtle Texture */
+        :root { --dark: #121212; --cream: #f4f1ea; }
+        
         body::before {
             content: "";
             position: fixed;
@@ -24,14 +20,8 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding-bottom: 80px; }
         
-        body { 
-            background-color: var(--cream); 
-            color: var(--dark); 
-            font-family: 'Inter', sans-serif;
-            padding-bottom: 80px;
-        }
-
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 2rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark);
@@ -60,13 +50,7 @@
             box-shadow: 0px 10px 30px rgba(0,0,0,0.05);
         }
 
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            background: #e0e0e0;
-        }
+        .card img { width: 100%; height: 100%; object-fit: cover; display: block; background: #e0e0e0; }
 
         .label {
             position: absolute;
@@ -79,10 +63,8 @@
             font-size: 0.85rem;
             border: 2px solid var(--dark);
             border-radius: 10px;
-            z-index: 10;
             box-shadow: 4px 4px 0px var(--dark);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -95,36 +77,34 @@
 
     <div class="container">
         <h1>Visual Archive</h1>
-        
         <div class="gallery-grid">
             <div class="card">
                 <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg" alt="House of Commons">
                 <div class="label">House of Commons</div>
             </div>
-
             <div class="card">
                 <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg" alt="MUN">
                 <div class="label">Model United Nations</div>
             </div>
-
             <div class="card">
                 <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg" alt="Mental Health Day">
                 <div class="label">Mental Health Day</div>
             </div>
-
             <div class="card">
                 <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg" alt="Mental Health Day">
                 <div class="label">Mental Health Day</div>
             </div>
-
             <div class="card">
                 <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h3.jpeg" alt="Mental Health Day">
                 <div class="label">Mental Health Day</div>
             </div>
-
             <div class="card">
                 <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg" alt="Equity Council">
                 <div class="label">Equity Council</div>
+            </div>
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg" alt="HOSA">
+                <div class="label">HOSA Executive</div>
             </div>
         </div>
     </div>
