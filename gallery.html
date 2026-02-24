@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About — Jihan Ahmed</title>
+    <title>Visual Archive — Jihan Ahmed</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --dark: #121212;
-            --cream: #f4f1ea;
-            --accent: #4f46e5; 
-            --highlight: #ffd700; 
+        :root { 
+            --dark: #121212; 
+            --cream: #f4f1ea; 
+            --accent: #4f46e5;
         }
-
+        
+        /* Grainy texture overlay */
         body::before {
             content: "";
             position: fixed;
@@ -25,81 +25,80 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding-bottom: 80px; }
         
-        body { 
-            background-color: var(--cream); 
-            color: var(--dark); 
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
-
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 2.5rem 5%; width: 100%; z-index: 1000;
-            position: sticky; top: 0; background: var(--cream);
-            border-bottom: 2px solid var(--dark);
+            padding: 2rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark);
+            position: sticky; top: 0; z-index: 1000;
         }
-        .logo { font-weight: 700; font-size: 1.8rem; letter-spacing: -1.5px; text-decoration: none; color: var(--dark); }
+        .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.5rem; }
         .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 12px; transition: 0.3s; }
         .back-btn:hover { background: var(--dark); color: white; }
 
-        .about-wrapper {
-            max-width: 1100px;
-            margin: 4rem auto;
+        .container { max-width: 1200px; margin: 4rem auto; padding: 0 20px; }
+        h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -3px; margin-bottom: 3rem; text-align: center; }
+
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
-        .box {
+        /* Interactive Card Styling */
+        .card {
             background: #fff;
             border: 2px solid var(--dark);
-            padding: 2.5rem;
-            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 24px;
+            overflow: hidden;
+            height: 450px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .box:hover {
-            transform: translate(-6px, -6px);
-            box-shadow: 10px 10px 0px var(--dark);
+        /* The "Lift" effect matching the index page */
+        .card:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 12px 12px 0px var(--dark);
         }
 
-        /* Coming Soon State */
-        .bio-main { grid-column: span 8; border-radius: 40px; }
-        .bio-main h2 { font-size: 3.5rem; margin-bottom: 1.5rem; letter-spacing: -2px; }
-        
-        .placeholder-text {
-            height: 20px;
-            background: #eee;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            width: 100%;
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            background: #e0e0e0;
+            transition: transform 0.5s ease;
         }
 
-        .bio-sidebar { grid-column: span 4; background: var(--accent); color: white; border-radius: 40px; border: none; }
-        .sidebar-item { margin-bottom: 2rem; }
-        .sidebar-item h4 { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; margin-bottom: 0.5rem; }
-        
-        .fact-box { grid-column: span 4; border-radius: 20px 80px 20px 80px; text-align: center; }
-        .fact-box.yellow { background: var(--highlight); }
-        .fact-box h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        /* Subtle zoom on image when hovering */
+        .card:hover img {
+            transform: scale(1.05);
+        }
 
-        .status-tag {
+        /* Labels that pop on hover */
+        .label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            color: var(--dark);
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 2px solid var(--dark);
+            border-radius: 10px;
+            box-shadow: 4px 4px 0px var(--dark);
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .card:hover .label {
             background: var(--dark);
             color: white;
-            padding: 4px 12px;
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 900px) {
-            .bio-main, .bio-sidebar, .fact-box { grid-column: span 12; }
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -107,50 +106,49 @@
 
     <nav>
         <a href="index.html" class="logo">JIHAN AHMED</a>
-        <a href="index.html" class="back-btn">← HOME</a>
+        <a href="index.html" class="back-btn">← BACK HOME</a>
     </nav>
 
-    <div class="about-wrapper">
-        
-        <div class="box bio-main">
-            <span class="status-tag">Drafting...</span>
-            <h2>The Story.</h2>
-            <p style="font-style: italic; opacity: 0.6;">I'm currently putting my mission into words. Full narrative coming soon.</p>
-            <div class="placeholder-text" style="width: 90%;"></div>
-            <div class="placeholder-text" style="width: 95%;"></div>
-            <div class="placeholder-text" style="width: 70%;"></div>
-        </div>
-
-        <div class="box bio-sidebar">
-            <div class="sidebar-item">
-                <h4>Based In</h4>
-                <p>Toronto, Ontario</p>
+    <div class="container">
+        <h1>Visual Archive</h1>
+        <div class="gallery-grid">
+            
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg" alt="House of Commons">
+                <div class="label">House of Commons</div>
             </div>
-            <div class="sidebar-item">
-                <h4>Focus Areas</h4>
-                <p>Advocacy • Policy • Strategy</p>
+
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg" alt="MUN">
+                <div class="label">Model United Nations</div>
             </div>
-            <div class="sidebar-item">
-                <h4>Status</h4>
-                <p>Updating Bio...</p>
+
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg" alt="Mental Health Day">
+                <div class="label">Mental Health Day</div>
             </div>
-        </div>
 
-        <div class="box fact-box yellow">
-            <h3>Coming Soon</h3>
-            <p>Fact #1 is being polished.</p>
-        </div>
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg" alt="Mental Health Day">
+                <div class="label">Mental Health Day</div>
+            </div>
 
-        <div class="box fact-box">
-            <h3>Coming Soon</h3>
-            <p>Fact #2 is in the works.</p>
-        </div>
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h3.jpeg" alt="Mental Health Day">
+                <div class="label">Mental Health Day</div>
+            </div>
 
-        <div class="box fact-box yellow">
-            <h3>Coming Soon</h3>
-            <p>Fact #3 arriving shortly.</p>
-        </div>
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg" alt="Equity Council">
+                <div class="label">Equity Council</div>
+            </div>
 
+            <div class="card">
+                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg" alt="HOSA">
+                <div class="label">Hosa Council</div>
+            </div>
+
+        </div>
     </div>
 
 </body>
