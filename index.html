@@ -7,98 +7,193 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --dark: #121212; --cream: #f4f1ea; --accent: #4f46e5; --highlight: #ffd700; }
+        :root {
+            --dark: #121212;
+            --cream: #f4f1ea;
+            --accent: #4f46e5; 
+            --highlight: #ffd700; 
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 100;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; }
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 5%; position: sticky; top: 0; background: var(--cream); z-index: 1000; border-bottom: 1.5px solid var(--dark); }
-        .logo { font-weight: 700; font-size: 1.2rem; text-decoration: none; color: var(--dark); }
+        
+        body { 
+            background-color: var(--cream); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; width: 100%; z-index: 1000;
+            position: sticky; top: 0; background: var(--cream);
+        }
+        .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; text-decoration: none; color: var(--dark); }
         .nav-links { display: flex; list-style: none; gap: 2rem; }
-        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.85rem; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
-        .box { background: #fff; border: 1.5px solid var(--dark); padding: 2rem; border-radius: 24px; transition: 0.3s; }
-        .box:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0px var(--dark); }
-        .hero { grid-column: span 12; background: var(--accent); color: white; border: none; text-align: center; padding: 5rem 2rem; border-radius: 40px; margin-bottom: 1rem; }
-        .wide { grid-column: span 8; }
-        .small { grid-column: span 4; }
-        .flagship { background: var(--highlight); }
-        .tag { background: #000; color: #fff; padding: 4px 10px; font-size: 0.65rem; font-weight: 700; border-radius: 4px; margin-bottom: 1rem; display: inline-block; }
-        .stats { display: flex; gap: 2rem; margin-top: 1.5rem; }
-        .stats b { font-size: 1.5rem; display: block; }
-        .stats span { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
-        .contact-box { grid-column: span 12; background: var(--dark); color: white; text-align: center; padding: 5rem 2rem; border-radius: 40px; margin-top: 1rem; }
-        .socials { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; }
-        .socials a { color: white; font-weight: 700; text-decoration: none; font-size: 1.2rem; }
-        @media (max-width: 900px) { .wide, .small { grid-column: span 12; } }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.9rem; }
+        .nav-links a:hover { color: var(--accent); }
+
+        .bento-wrapper {
+            max-width: 1300px;
+            margin: 0 auto 100px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(120px, auto);
+            gap: 1.5rem;
+            padding: 20px;
+        }
+
+        .box {
+            background: #fff;
+            border: 1.5px solid var(--dark);
+            padding: 2.5rem;
+            position: relative;
+            z-index: 1;
+            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .br-1 { border-radius: 80px 20px 80px 20px; }
+        .br-2 { border-radius: 20px 80px 20px 80px; }
+        .br-3 { border-radius: 40px; }
+
+        .box:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 8px 8px 0px var(--dark);
+            z-index: 10;
+        }
+
+        .hero-box { grid-column: span 12; background: var(--accent); color: white; border: none; padding: 5rem; text-align: center; }
+        .hero-box:hover { box-shadow: 8px 8px 0px rgba(79, 70, 229, 0.3); }
+
+        .role-box { grid-column: span 4; }
+        .project-box { grid-column: span 8; background: var(--highlight); }
+
+        .tag { background: #000; color: #fff; padding: 4px 12px; font-size: 0.7rem; font-weight: 700; border-radius: 5px; margin-bottom: 1rem; display: inline-block; }
+        
+        .project-stats { display: flex; gap: 2rem; margin: 1.5rem 0; }
+        .mini-stat { border-left: 3px solid var(--dark); padding-left: 15px; }
+        .mini-stat b { font-size: 1.5rem; display: block; font-family: 'Space Grotesk'; }
+        .mini-stat span { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #333; }
+
+        .contact-box { 
+            grid-column: span 12; 
+            background: var(--dark); 
+            color: white; 
+            text-align: center; 
+            padding: 5rem 2rem; 
+            margin-top: 2rem;
+            border: 1.5px solid rgba(255,255,255,0.1);
+        }
+        .contact-box:hover {
+            box-shadow: 8px 8px 0px var(--accent);
+        }
+
+        .socials { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
+        .socials a { color: white; text-decoration: none; font-weight: 600; font-size: 1.2rem; transition: 0.3s; }
+        .socials a:hover { color: var(--highlight); }
+
+        @media (max-width: 900px) {
+            .role-box, .project-box { grid-column: span 12; }
+            .hero-box { padding: 3rem 1.5rem; }
+            .project-stats { flex-direction: column; gap: 1rem; }
+        }
     </style>
 </head>
 <body>
+
     <nav>
         <a href="index.html" class="logo">JIHAN AHMED</a>
         <ul class="nav-links">
+            <li><a href="#experience">Experience</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-    <div class="container">
-        <div class="bento-grid">
-            <div class="box hero">
-                <h1>Jihan Ahmed</h1>
-                <p>Student advocate & community builder focused on mental health and equity.</p>
-            </div>
 
-            <div class="box wide">
-                <span class="tag">NATIONAL DELEGATE</span>
-                <h3>Forum for Young Canadians</h3>
-                <p>Engaging in Parliament Hill through policy simulations and high-level debate.</p>
-            </div>
-            <div class="box small">
-                <span class="tag">AMBASSADOR</span>
-                <h3>TDSB Mental Health</h3>
-                <p>Representing student mental health needs across Canada's largest school board.</p>
-            </div>
+    <div class="bento-wrapper">
+        
+        <div class="box hero-box br-1">
+            <h1>Welcome to Jihan Ahmed's portfolio!</h1>
+            <p>I am a student advocate and community builder focused on mental health, equity, and institutional change.</p>
+        </div>
 
-            <div class="box wide flagship">
-                <span class="tag">FLAGSHIP EXPERIENCE</span>
-                <h2>Mental Health Day</h2>
-                <p>Orchestrated a student-led summit by facilitating partnerships with 7+ NGOs and local leaders.</p>
-                <div class="stats">
-                    <div><b>$5,000</b><span>Grants Gained</span></div>
-                    <div><b>1,200+</b><span>Students Led</span></div>
+        <div class="box project-box br-3" id="experience">
+            <span class="tag">FLAGSHIP EXPERIENCE</span>
+            <h2>Mental Health Day</h2>
+            <p>Orchestrated a student-led summit by facilitating partnerships with over 7 NGOs. The process involved direct engagement with the MPP, Mayor, and Provincial leaders to coordinate support and resources.</p>
+            
+            <div class="project-stats">
+                <div class="mini-stat">
+                    <b>$5,000</b>
+                    <span>Grants Gained</span>
                 </div>
-            </div>
-            <div class="box small">
-                <span class="tag">LEADERSHIP</span>
-                <h3>Equity Club President</h3>
-                <p>Championing inclusive policies and diverse representation.</p>
-            </div>
-
-            <div class="box small">
-                <span class="tag">PRESIDENT</span>
-                <h3>Mayor's Youth Council</h3>
-                <p>Bridging the gap between municipal government and youth perspectives.</p>
-            </div>
-            <div class="box small">
-                <span class="tag">PRESIDENT</span>
-                <h3>Model United Nations</h3>
-                <p>Directing diplomatic simulations and mentoring students in global policy.</p>
-            </div>
-            <div class="box small">
-                <span class="tag">2024 PRESIDENT</span>
-                <h3>MSA</h3>
-                <p>Organizing large-scale student cultural events and fostering community outreach.</p>
-            </div>
-
-            <div class="box contact-box" id="contact">
-                <h2>Let's connect.</h2>
-                <div class="socials">
-                    <a href="mailto:Jihanahmed1850@gmail.com">Email</a>
-                    <a href="https://linkedin.com/in/jihan-ahmed-973b9220a/">LinkedIn</a>
-                    <a href="https://instagram.com/jihanahmed1850">Instagram</a>
+                <div class="mini-stat">
+                    <b>1,200+</b>
+                    <span>Students Led</span>
                 </div>
             </div>
         </div>
+
+        <div class="box role-box br-2">
+            <span class="tag">NATIONAL DELEGATE</span>
+            <h3>Forum for Young Canadians</h3>
+            <p>Stepped into the heart of Canadian democracy at Parliament Hill, practicing leadership through policy simulations and high-level debate.</p>
+        </div>
+
+        <div class="box role-box br-1">
+            <span class="tag">AMBASSADOR</span>
+            <h3>TDSB Mental Health</h3>
+            <p>Representing student mental health needs across the largest school board in Canada.</p>
+        </div>
+
+        <div class="box role-box br-3">
+            <span class="tag">PRESIDENT</span>
+            <h3>Mayor’s Youth Council</h3>
+            <p>Founder & leader bridging the gap between local government and youth perspectives.</p>
+        </div>
+
+        <div class="box role-box br-1">
+            <span class="tag">PRESIDENT</span>
+            <h3>Equity Club</h3>
+            <p>Championing inclusive policies and leading institutional space for diverse representation.</p>
+        </div>
+
+        <div class="box role-box br-2">
+            <span class="tag">PRESIDENT</span>
+            <h3>Model United Nations</h3>
+            <p>Directing diplomatic simulations and mentoring students in global policy and debate.</p>
+        </div>
+
+        <div class="box role-box br-3">
+            <span class="tag">2024 PRESIDENT</span>
+            <h3>MSA</h3>
+            <p>Organizing large-scale student cultural events and fostering community outreach.</p>
+        </div>
+
+        <div class="box contact-box br-3" id="contact">
+            <h2 style="font-size: 3rem; letter-spacing: -2px;">Let's connect.</h2>
+            <div class="socials">
+                <a href="mailto:Jihanahmed1850@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/jihan-ahmed-973b9220a/" target="_blank">LinkedIn</a>
+                <a href="https://instagram.com/jihanahmed1850" target="_blank">Instagram</a>
+            </div>
+            <p style="margin-top: 4rem; opacity: 0.5; font-size: 0.8rem;">&copy; 2025 Jihan Ahmed • Advocacy & Leadership</p>
+        </div>
+
     </div>
+
 </body>
 </html>
+
