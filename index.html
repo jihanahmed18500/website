@@ -51,7 +51,7 @@
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             grid-auto-rows: minmax(120px, auto);
-            gap: 1.5rem;
+            gap: 1.5rem; /* Space between boxes to prevent visual overlap */
             padding: 20px;
         }
 
@@ -60,21 +60,23 @@
             border: 1.5px solid var(--dark);
             padding: 2.5rem;
             position: relative;
-            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1; /* Keeps boxes on the same "floor" */
+            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
         
         .br-1 { border-radius: 80px 20px 80px 20px; }
         .br-2 { border-radius: 20px 80px 20px 80px; }
         .br-3 { border-radius: 40px; }
 
+        /* Fixed the shadow effect here */
         .box:hover {
-            transform: scale(1.01);
-            box-shadow: 10px 10px 0px var(--dark);
+            transform: translate(-4px, -4px); /* Moves up and left */
+            box-shadow: 8px 8px 0px var(--dark);
+            z-index: 10; /* Brings the hovered box to the very front */
         }
 
         .hero-box { grid-column: span 12; background: var(--accent); color: white; border: none; padding: 5rem; text-align: center; }
-        .hero-box h1 { font-size: clamp(2.5rem, 7vw, 5rem); line-height: 0.9; margin-bottom: 2rem; letter-spacing: -3px; }
-        .hero-box p { font-size: 1.3rem; max-width: 700px; margin: 0 auto; opacity: 0.9; font-weight: 300; }
+        .hero-box:hover { box-shadow: 8px 8px 0px rgba(79, 70, 229, 0.3); } /* Indigo shadow for indigo box */
 
         .role-box { grid-column: span 4; }
         .project-box { grid-column: span 8; background: var(--highlight); }
@@ -86,10 +88,23 @@
         .mini-stat b { font-size: 1.5rem; display: block; font-family: 'Space Grotesk'; }
         .mini-stat span { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #333; }
 
-        .contact-box { grid-column: span 12; background: var(--dark); color: white; text-align: center; padding: 5rem 2rem; }
+        /* Fixed Contact Box Clashing */
+        .contact-box { 
+            grid-column: span 12; 
+            background: var(--dark); 
+            color: white; 
+            text-align: center; 
+            padding: 5rem 2rem; 
+            margin-top: 2rem; /* Added gap between top boxes and contact */
+            border: 1.5px solid rgba(255,255,255,0.1); /* Subtle edge so black doesn't bleed */
+        }
+        .contact-box:hover {
+            box-shadow: 8px 8px 0px var(--accent); /* Indigo shadow so it's visible against the cream background */
+        }
+
         .socials { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
         .socials a { color: white; text-decoration: none; font-weight: 600; font-size: 1.2rem; transition: 0.3s; }
-        .socials a:hover { color: var(--highlight); transform: translateY(-3px); }
+        .socials a:hover { color: var(--highlight); }
 
         @media (max-width: 900px) {
             .role-box, .project-box { grid-column: span 12; }
