@@ -7,28 +7,52 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --dark: #121212; --cream: #f4f1ea; --accent: #4f46e5; }
+        :root {
+            --dark: #121212;
+            --cream: #f4f1ea;
+            --accent: #4f46e5; 
+        }
+
+        /* Subtle Texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 100;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             background-color: var(--cream); 
             color: var(--dark); 
             font-family: 'Inter', sans-serif;
-            padding-bottom: 80px;
+            overflow-x: hidden;
+            padding-bottom: 100px;
         }
 
-        /* Nav Bar */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 2rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark);
+            position: sticky; top: 0; z-index: 1000;
         }
         .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.5rem; }
-        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 12px; transition: 0.3s; }
+        .back-btn { 
+            text-decoration: none; 
+            color: var(--dark); 
+            font-weight: 700; 
+            border: 2px solid var(--dark); 
+            padding: 10px 20px; 
+            border-radius: 12px; 
+            transition: 0.3s; 
+        }
         .back-btn:hover { background: var(--dark); color: white; }
 
-        /* Gallery Layout */
         .container { max-width: 1200px; margin: 4rem auto; padding: 0 20px; }
-        h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -2px; margin-bottom: 3rem; text-align: center; }
+        h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -3px; margin-bottom: 3rem; text-align: center; }
 
         .gallery-grid {
             display: grid;
@@ -43,16 +67,26 @@
             overflow: hidden;
             height: 450px;
             position: relative;
-            transition: transform 0.3s ease;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .card:hover { transform: translateY(-10px); }
+        
+        .card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 12px 12px 0px var(--dark);
+        }
 
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            background: #e0e0e0; /* Gray placeholder while loading */
+            background: #e0e0e0;
+            filter: grayscale(100%);
+            transition: 0.5s;
+        }
+
+        .card:hover img {
+            filter: grayscale(0%);
         }
 
         .label {
@@ -66,7 +100,12 @@
             font-size: 0.9rem;
             border: 2px solid var(--dark);
             border-radius: 10px;
-            box-shadow: 4px 4px 0px var(--dark);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -82,32 +121,32 @@
         
         <div class="gallery-grid">
             <div class="card">
-                <img src="Parliment.jpeg" alt="Parliament Summit">
+                <img src="p1.jpeg" alt="Parliament Summit">
                 <div class="label">Parliament Summit</div>
             </div>
 
             <div class="card">
-                <img src="MUN.jpeg" alt="Model UN">
+                <img src="m1.jpeg" alt="Model UN">
                 <div class="label">Model United Nations</div>
             </div>
 
             <div class="card">
-                <img src="Mental-Health%20Day%201.jpeg" alt="Mental Health Day 1">
+                <img src="h1.jpeg" alt="Mental Health Day 1">
                 <div class="label">Mental Health Day I</div>
             </div>
 
             <div class="card">
-                <img src="Mental-Health%20Day%202.jpeg" alt="Mental Health Day 2">
+                <img src="h2.jpeg" alt="Mental Health Day 2">
                 <div class="label">Mental Health Day II</div>
             </div>
 
             <div class="card">
-                <img src="Mental-Health%20Day%203.jpeg" alt="Mental Health Day 3">
+                <img src="h3.jpeg" alt="Mental Health Day 3">
                 <div class="label">Mental Health Day III</div>
             </div>
 
             <div class="card">
-                <img src="Equity.jpeg" alt="Equity Advocacy">
+                <img src="e1.jpeg" alt="Equity Advocacy">
                 <div class="label">Equity Advocacy</div>
             </div>
         </div>
