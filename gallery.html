@@ -3,59 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery — Jihan Ahmed</title>
+    <title>Visual Archive — Jihan Ahmed</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --dark: #121212; --cream: #f4f1ea; --accent: #4f46e5; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding-bottom: 50px; }
         
+        body { 
+            background-color: var(--cream); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif;
+            padding-bottom: 80px;
+        }
+
+        /* Nav Bar */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 2rem 5%; background: var(--cream); border-bottom: 1.5px solid var(--dark);
+            padding: 2rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark);
         }
         .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.5rem; }
-        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 1.5px solid var(--dark); padding: 10px 20px; border-radius: 12px; }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 12px; transition: 0.3s; }
+        .back-btn:hover { background: var(--dark); color: white; }
 
+        /* Gallery Layout */
         .container { max-width: 1200px; margin: 4rem auto; padding: 0 20px; }
-        h1 { font-family: 'Space Grotesk'; font-size: 3.5rem; letter-spacing: -2px; margin-bottom: 2rem; }
+        h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -2px; margin-bottom: 3rem; text-align: center; }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .card {
-            background: #d1d1d1; /* Grey background so you know where the box is */
-            border: 1.5px solid var(--dark);
-            border-radius: 20px;
+            background: #fff;
+            border: 2px solid var(--dark);
+            border-radius: 24px;
             overflow: hidden;
-            height: 400px;
+            height: 450px;
             position: relative;
-            display: block;
+            transition: transform 0.3s ease;
         }
+        .card:hover { transform: translateY(-10px); }
 
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            background: #e0e0e0; /* Gray placeholder while loading */
         }
 
         .label {
             position: absolute;
-            bottom: 15px;
-            left: 15px;
+            bottom: 20px;
+            left: 20px;
             background: white;
-            color: black;
-            padding: 6px 12px;
+            color: var(--dark);
+            padding: 8px 16px;
             font-weight: 700;
-            font-size: 0.8rem;
-            border: 1.5px solid var(--dark);
-            border-radius: 8px;
-            z-index: 10;
+            font-size: 0.9rem;
+            border: 2px solid var(--dark);
+            border-radius: 10px;
+            box-shadow: 4px 4px 0px var(--dark);
         }
     </style>
 </head>
@@ -71,7 +82,7 @@
         
         <div class="gallery-grid">
             <div class="card">
-                <img src="Parliment.jpeg" alt="Parliament">
+                <img src="Parliment.jpeg" alt="Parliament Summit">
                 <div class="label">Parliament Summit</div>
             </div>
 
@@ -81,22 +92,22 @@
             </div>
 
             <div class="card">
-                <img src="Mental-Health%20Day%201.jpeg" alt="MH Day 1">
+                <img src="Mental-Health%20Day%201.jpeg" alt="Mental Health Day 1">
                 <div class="label">Mental Health Day I</div>
             </div>
 
             <div class="card">
-                <img src="Mental-Health%20Day%202.jpeg" alt="MH Day 2">
+                <img src="Mental-Health%20Day%202.jpeg" alt="Mental Health Day 2">
                 <div class="label">Mental Health Day II</div>
             </div>
 
             <div class="card">
-                <img src="Mental-Health%20Day%203.jpeg" alt="MH Day 3">
+                <img src="Mental-Health%20Day%203.jpeg" alt="Mental Health Day 3">
                 <div class="label">Mental Health Day III</div>
             </div>
 
             <div class="card">
-                <img src="Equity.jpeg" alt="Equity">
+                <img src="Equity.jpeg" alt="Equity Advocacy">
                 <div class="label">Equity Advocacy</div>
             </div>
         </div>
