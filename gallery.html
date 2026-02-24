@@ -154,3 +154,84 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Archive — Jihan Ahmed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --dark: #121212; --cream: #f4f1ea; --accent: #4f46e5; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding-bottom: 80px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); }
+        .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.5rem; }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 12px; }
+        .container { max-width: 1200px; margin: 4rem auto; padding: 0 20px; }
+        h1 { font-family: 'Space Grotesk'; font-size: 3.5rem; letter-spacing: -2px; margin-bottom: 3rem; text-align: center; }
+        
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
+        .card { 
+            background: #e0e0e0; /* Fallback gray */
+            border: 2px solid var(--dark); 
+            border-radius: 24px; 
+            overflow: hidden; 
+            height: 450px; 
+            position: relative; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            position: absolute;
+            top: 0; left: 0;
+        }
+
+        .label { 
+            position: absolute; 
+            bottom: 20px; 
+            left: 20px; 
+            background: white; 
+            color: var(--dark); 
+            padding: 8px 16px; 
+            font-weight: 700; 
+            font-size: 0.9rem; 
+            border: 2px solid var(--dark); 
+            border-radius: 10px; 
+            z-index: 10;
+        }
+
+        /* If image fails, this shows text */
+        .card::after {
+            content: "Image Loading...";
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">JIHAN AHMED</a>
+        <a href="index.html" class="back-btn">← BACK HOME</a>
+    </nav>
+    <div class="container">
+        <h1>Visual Archive</h1>
+        <div class="gallery-grid">
+            <div class="card"><img src="./p1.jpeg" alt="P1"><div class="label">Parliament Summit</div></div>
+            <div class="card"><img src="./m1.jpeg" alt="M1"><div class="label">Model United Nations</div></div>
+            <div class="card"><img src="./h1.jpeg" alt="H1"><div class="label">Mental Health Day I</div></div>
+            <div class="card"><img src="./h2.jpeg" alt="H2"><div class="label">Mental Health Day II</div></div>
+            <div class="card"><img src="./h3.jpeg" alt="H3"><div class="label">Mental Health Day III</div></div>
+            <div class="card"><img src="./e1.jpeg" alt="E1"><div class="label">Equity Advocacy</div></div>
+        </div>
+    </div>
+</body>
+</html>
