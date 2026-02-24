@@ -22,6 +22,8 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.5rem 5%; width: 100%; z-index: 1000;
             position: sticky; top: 0; background: rgba(244, 241, 234, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1.5px solid var(--dark);
         }
         .logo { font-weight: 700; font-size: 1.2rem; text-decoration: none; color: var(--dark); }
         .nav-links { display: flex; list-style: none; gap: 2rem; }
@@ -29,7 +31,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        /* Experience Grid */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -42,53 +43,50 @@
             border: 1.5px solid var(--dark);
             padding: 2rem;
             border-radius: 24px;
-            transition: 0.3s ease;
+            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .box:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0px var(--dark); }
 
-        .hero { grid-column: span 12; background: var(--accent); color: white; border: none; text-align: center; padding: 4rem 2rem; border-radius: 40px; }
-        .main-project { grid-column: span 8; background: var(--highlight); }
-        .side-role { grid-column: span 4; }
-        .small-role { grid-column: span 4; }
+        .hero { grid-column: span 12; background: var(--accent); color: white; border: none; text-align: center; padding: 5rem 2rem; border-radius: 40px; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -2px; line-height: 1; margin-bottom: 1rem; }
 
-        /* Separate Gallery Section */
-        .gallery-section { 
-            background: var(--dark); 
-            padding: 60px 0; 
-            margin: 40px 0;
-            color: white;
-        }
-        .gallery-title { text-align: center; margin-bottom: 40px; font-size: 2.5rem; }
+        /* Experience Card Sizing */
+        .wide { grid-column: span 8; }
+        .medium { grid-column: span 6; }
+        .small { grid-column: span 4; }
+
+        .flagship { background: var(--highlight); }
+
+        /* Gallery Styling */
+        .gallery-wrap { grid-column: span 12; margin: 2rem 0; }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
         }
         .gallery-card {
-            height: 300px;
+            height: 250px;
             border-radius: 20px;
             overflow: hidden;
+            border: 1.5px solid var(--dark);
             position: relative;
-            border: 1px solid #333;
         }
         .gallery-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: 0.5s; }
         .gallery-card:hover img { filter: grayscale(0); transform: scale(1.05); }
-        .gallery-label { position: absolute; bottom: 15px; left: 15px; background: white; color: black; padding: 5px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; }
+        .gallery-label { position: absolute; bottom: 10px; left: 10px; background: white; color: black; padding: 4px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; border: 1px solid var(--dark); }
 
         .tag { background: #000; color: #fff; padding: 4px 10px; font-size: 0.65rem; font-weight: 700; border-radius: 4px; margin-bottom: 1rem; display: inline-block; }
         .stats { display: flex; gap: 2rem; margin-top: 1.5rem; }
         .stats b { font-size: 1.5rem; display: block; }
         .stats span { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
 
-        .contact-box { grid-column: span 12; background: var(--accent); color: white; text-align: center; padding: 4rem; border-radius: 40px; border: none; }
-        .socials { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; }
-        .socials a { color: white; font-weight: 700; text-decoration: none; }
+        .contact-box { grid-column: span 12; background: var(--dark); color: white; text-align: center; padding: 5rem 2rem; border-radius: 40px; margin-top: 2rem; }
+        .socials { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; }
+        .socials a { color: white; font-weight: 700; text-decoration: none; font-size: 1.2rem; }
+        .socials a:hover { color: var(--highlight); }
 
         @media (max-width: 900px) {
-            .main-project, .side-role, .small-role { grid-column: span 12; }
+            .wide, .medium, .small { grid-column: span 12; }
         }
     </style>
 </head>
@@ -97,7 +95,7 @@
     <nav>
         <a href="#" class="logo">JIHAN AHMED</a>
         <ul class="nav-links">
-            <li><a href="#experience">Experience</a></li>
+            <li><a href="#work">Experience</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -105,98 +103,98 @@
 
     <div class="container">
         <div class="bento-grid">
+            
             <div class="box hero">
-                <h1 style="font-size: 3.5rem; letter-spacing: -2px;">Jihan Ahmed</h1>
-                <p>Advocating for mental health, equity, and the next generation of leaders.</p>
+                <h1>Jihan Ahmed</h1>
+                <p>Student advocate & community builder focused on mental health and equity.</p>
             </div>
 
-            <div class="box main-project" id="experience">
-                <span class="tag">FLAGSHIP</span>
+            <div class="box wide" id="work">
+                <span class="tag">NATIONAL DELEGATE</span>
+                <h3>Forum for Young Canadians</h3>
+                <p>Engaging in the heart of Canadian democracy at Parliament Hill through policy simulations and high-level debate on national challenges.</p>
+            </div>
+
+            <div class="box small">
+                <span class="tag">AMBASSADOR</span>
+                <h3>TDSB Mental Health</h3>
+                <p>Representing student mental health needs across the largest school board in Canada, advising on policy and peer support.</p>
+            </div>
+
+            <div class="box wide flagship">
+                <span class="tag">FLAGSHIP EXPERIENCE</span>
                 <h2>Mental Health Day</h2>
-                <p>Facilitated a summit with 7+ NGOs, engaging the MPP and Mayor to provide wellness tools to the student body.</p>
+                <p>Orchestrated a student-led summit by facilitating partnerships with 7+ NGOs. Coordinated with the MPP and Mayor to provide wellness resources to the student body.</p>
                 <div class="stats">
                     <div><b>$5,000</b><span>Grants Gained</span></div>
                     <div><b>1,200+</b><span>Students Led</span></div>
                 </div>
             </div>
 
-            <div class="box side-role">
-                <span class="tag">DELEGATE</span>
-                <h3>Forum for Young Canadians</h3>
-                <p>Stepped into the heart of Canadian democracy at Parliament Hill for policy simulations.</p>
-            </div>
-
-            <div class="box small-role">
-                <span class="tag">PRESIDENT</span>
-                <h3>Mayor's Youth Council</h3>
-                <p>Bridging the gap between municipal government and youth perspectives.</p>
-            </div>
-
-            <div class="box small-role">
-                <span class="tag">PRESIDENT</span>
-                <h3>Equity Club</h3>
+            <div class="box small">
+                <span class="tag">LEADERSHIP</span>
+                <h3>Equity Club President</h3>
                 <p>Championing inclusive policies and leading institutional space for diverse representation.</p>
             </div>
 
-            <div class="box small-role">
-                <span class="tag">PRESIDENT</span>
-                <h3>Model UN</h3>
-                <p>Directing global policy simulations and student diplomacy.</p>
+            <div class="gallery-wrap" id="gallery">
+                <h2 style="margin-bottom: 1.5rem; letter-spacing: -1px;">Visual Archive</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-card">
+                        <img src="Parliment.jpeg">
+                        <div class="gallery-label">Parliament Summit</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="MUN.jpeg">
+                        <div class="gallery-label">Model UN</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="Mental-Health Day 1.jpeg">
+                        <div class="gallery-label">Mental Health Day I</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="Mental-Health Day 2.jpeg">
+                        <div class="gallery-label">Mental Health Day II</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="Mental-Health Day 3.jpeg">
+                        <div class="gallery-label">Mental Health Day III</div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="Equity.jpeg">
+                        <div class="gallery-label">Equity Advocacy</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <section class="gallery-section" id="gallery">
-        <h2 class="gallery-title">Impact Gallery</h2>
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <img src="Parliment.jpeg">
-                <div class="gallery-label">Parliament Summit</div>
-            </div>
-            <div class="gallery-card">
-                <img src="MUN.jpeg">
-                <div class="gallery-label">Model UN</div>
-            </div>
-            <div class="gallery-card">
-                <img src="Mental-Health Day 1.jpeg">
-                <div class="gallery-label">Mental Health Day I</div>
-            </div>
-            <div class="gallery-card">
-                <img src="Mental-Health Day 2.jpeg">
-                <div class="gallery-label">Mental Health Day II</div>
-            </div>
-            <div class="gallery-card">
-                <img src="Mental-Health Day 3.jpeg">
-                <div class="gallery-label">Mental Health Day III</div>
-            </div>
-            <div class="gallery-card">
-                <img src="Equity.jpeg">
-                <div class="gallery-label">Equity Advocacy</div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="bento-grid">
-            <div class="box small-role">
+            <div class="box small">
                 <span class="tag">PRESIDENT</span>
+                <h3>Mayor's Youth Council</h3>
+                <p>Bridging the gap between municipal government and youth perspectives to drive local change.</p>
+            </div>
+
+            <div class="box small">
+                <span class="tag">PRESIDENT</span>
+                <h3>Model United Nations</h3>
+                <p>Directing diplomatic simulations and mentoring students in global policy and international debate.</p>
+            </div>
+
+            <div class="box small">
+                <span class="tag">2024 PRESIDENT</span>
                 <h3>MSA</h3>
-                <p>Organizing large-scale cultural events and community outreach.</p>
-            </div>
-            <div class="box small-role" style="grid-column: span 8;">
-                <span class="tag">AMBASSADOR</span>
-                <h3>TDSB Mental Health</h3>
-                <p>Representing student mental health needs across the largest school board in Canada.</p>
+                <p>Organizing large-scale student cultural events and fostering community outreach and inclusion.</p>
             </div>
 
             <div class="box contact-box" id="contact">
-                <h2>Let's build something.</h2>
+                <h2 style="font-size: 3rem; letter-spacing: -2px;">Let's connect.</h2>
                 <div class="socials">
                     <a href="mailto:Jihanahmed1850@gmail.com">Email</a>
-                    <a href="https://linkedin.com">LinkedIn</a>
+                    <a href="https://linkedin.com/in/jihan-ahmed-973b9220a/">LinkedIn</a>
                     <a href="https://instagram.com/jihanahmed1850">Instagram</a>
                 </div>
+                <p style="margin-top: 3rem; opacity: 0.5; font-size: 0.8rem;">&copy; 2025 Jihan Ahmed • Advocacy & Leadership</p>
             </div>
+
         </div>
     </div>
 
