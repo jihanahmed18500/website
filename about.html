@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Jihan Ahmed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark: #121212;
+            --cream: #f4f1ea;
+            --accent: #4f46e5; 
+            --highlight: #ffd700; 
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--cream); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; width: 100%; z-index: 1000;
+            position: sticky; top: 0; background: var(--cream);
+            border-bottom: 2px solid var(--dark);
+        }
+        .logo { font-weight: 700; font-size: 1.8rem; letter-spacing: -1.5px; text-decoration: none; color: var(--dark); }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 12px; transition: 0.3s; }
+        .back-btn:hover { background: var(--dark); color: white; }
+
+        .about-wrapper {
+            max-width: 1100px;
+            margin: 4rem auto;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            padding: 20px;
+        }
+
+        .box {
+            background: #fff;
+            border: 2px solid var(--dark);
+            padding: 2.5rem;
+            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .box:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 10px 10px 0px var(--dark);
+        }
+
+        /* Bio Section */
+        .bio-main { grid-column: span 8; border-radius: 40px; }
+        .bio-main h2 { font-size: 3rem; margin-bottom: 1.5rem; letter-spacing: -2px; }
+        .bio-main p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem; }
+
+        /* Sidebar stats */
+        .bio-sidebar { grid-column: span 4; background: var(--accent); color: white; border-radius: 40px; border: none; }
+        .sidebar-item { margin-bottom: 2rem; }
+        .sidebar-item h4 { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; margin-bottom: 0.5rem; }
+        .sidebar-item p { font-size: 1.2rem; font-weight: 600; font-family: 'Space Grotesk'; }
+
+        /* Quick Facts */
+        .fact-box { grid-column: span 4; border-radius: 20px 80px 20px 80px; text-align: center; }
+        .fact-box.yellow { background: var(--highlight); }
+        .fact-box h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        @media (max-width: 900px) {
+            .bio-main, .bio-sidebar, .fact-box { grid-column: span 12; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">JIHAN AHMED</a>
+        <a href="index.html" class="back-btn">← HOME</a>
+    </nav>
+
+    <div class="about-wrapper">
+        
+        <div class="box bio-main">
+            <h2>The Mission.</h2>
+            <p>I am a student advocate and community leader dedicated to bridging the gap between youth voices and systemic change. My work spans from local municipal advisory to national policy simulations at Parliament Hill.</p>
+            <p>Whether I'm directing data-driven political outreach or orchestrating mental health summits, my goal is always the same: to build inclusive, equitable spaces where every student feels represented and empowered.</p>
+            <p>Currently, I am focused on expanding mental health resources across the TDSB and mentoring the next generation of diplomatic leaders through Model UN.</p>
+        </div>
+
+        <div class="box bio-sidebar">
+            <div class="sidebar-item">
+                <h4>Based In</h4>
+                <p>Toronto, Ontario</p>
+            </div>
+            <div class="sidebar-item">
+                <h4>Focus Areas</h4>
+                <p>Public Policy, Mental Health Advocacy, Political Strategy</p>
+            </div>
+            <div class="sidebar-item">
+                <h4>Current Obsession</h4>
+                <p>Model UN Strategy & Grassroots Organizing</p>
+            </div>
+        </div>
+
+        <div class="box fact-box yellow">
+            <h3>Advocacy</h3>
+            <p>Leading with empathy and data to drive real policy changes.</p>
+        </div>
+
+        <div class="box fact-box">
+            <h3>Leadership</h3>
+            <p>Mentoring over 1,200+ students through various councils.</p>
+        </div>
+
+        <div class="box fact-box yellow">
+            <h3>Diplomacy</h3>
+            <p>Navigating complex partnerships with NGOs and government.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
