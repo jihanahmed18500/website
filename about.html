@@ -66,21 +66,37 @@
             box-shadow: 10px 10px 0px var(--dark);
         }
 
-        /* Bio Section */
+        /* Coming Soon State */
         .bio-main { grid-column: span 8; border-radius: 40px; }
-        .bio-main h2 { font-size: 3rem; margin-bottom: 1.5rem; letter-spacing: -2px; }
-        .bio-main p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem; }
+        .bio-main h2 { font-size: 3.5rem; margin-bottom: 1.5rem; letter-spacing: -2px; }
+        
+        .placeholder-text {
+            height: 20px;
+            background: #eee;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            width: 100%;
+        }
 
-        /* Sidebar stats */
         .bio-sidebar { grid-column: span 4; background: var(--accent); color: white; border-radius: 40px; border: none; }
         .sidebar-item { margin-bottom: 2rem; }
         .sidebar-item h4 { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; margin-bottom: 0.5rem; }
-        .sidebar-item p { font-size: 1.2rem; font-weight: 600; font-family: 'Space Grotesk'; }
-
-        /* Quick Facts */
+        
         .fact-box { grid-column: span 4; border-radius: 20px 80px 20px 80px; text-align: center; }
         .fact-box.yellow { background: var(--highlight); }
         .fact-box h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        .status-tag {
+            background: var(--dark);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
 
         @media (max-width: 900px) {
             .bio-main, .bio-sidebar, .fact-box { grid-column: span 12; }
@@ -97,10 +113,12 @@
     <div class="about-wrapper">
         
         <div class="box bio-main">
-            <h2>The Mission.</h2>
-            <p>I am a student advocate and community leader dedicated to bridging the gap between youth voices and systemic change. My work spans from local municipal advisory to national policy simulations at Parliament Hill.</p>
-            <p>Whether I'm directing data-driven political outreach or orchestrating mental health summits, my goal is always the same: to build inclusive, equitable spaces where every student feels represented and empowered.</p>
-            <p>Currently, I am focused on expanding mental health resources across the TDSB and mentoring the next generation of diplomatic leaders through Model UN.</p>
+            <span class="status-tag">Drafting...</span>
+            <h2>The Story.</h2>
+            <p style="font-style: italic; opacity: 0.6;">I'm currently putting my mission into words. Full narrative coming soon.</p>
+            <div class="placeholder-text" style="width: 90%;"></div>
+            <div class="placeholder-text" style="width: 95%;"></div>
+            <div class="placeholder-text" style="width: 70%;"></div>
         </div>
 
         <div class="box bio-sidebar">
@@ -110,27 +128,27 @@
             </div>
             <div class="sidebar-item">
                 <h4>Focus Areas</h4>
-                <p>Public Policy, Mental Health Advocacy, Political Strategy</p>
+                <p>Advocacy • Policy • Strategy</p>
             </div>
             <div class="sidebar-item">
-                <h4>Current Obsession</h4>
-                <p>Model UN Strategy & Grassroots Organizing</p>
+                <h4>Status</h4>
+                <p>Updating Bio...</p>
             </div>
         </div>
 
         <div class="box fact-box yellow">
-            <h3>Advocacy</h3>
-            <p>Leading with empathy and data to drive real policy changes.</p>
+            <h3>Coming Soon</h3>
+            <p>Fact #1 is being polished.</p>
         </div>
 
         <div class="box fact-box">
-            <h3>Leadership</h3>
-            <p>Mentoring over 1,200+ students through various councils.</p>
+            <h3>Coming Soon</h3>
+            <p>Fact #2 is in the works.</p>
         </div>
 
         <div class="box fact-box yellow">
-            <h3>Diplomacy</h3>
-            <p>Navigating complex partnerships with NGOs and government.</p>
+            <h3>Coming Soon</h3>
+            <p>Fact #3 arriving shortly.</p>
         </div>
 
     </div>
