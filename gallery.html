@@ -5,100 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Archive — Jihan Ahmed</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
     <style>
         :root { 
             --dark: #121212; 
             --cream: #f4f1ea; 
-            --accent: #4f46e5;
+            --accent: #4f46e5; 
+            --film-bg: #1a1a1a;
         }
         
-        /* Grainy texture overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 100;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--cream); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; 
+            transition: background-color 0.8s ease;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding-bottom: 80px; }
-        
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 2rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark);
-            position: sticky; top: 0; z-index: 1000;
+        /* Nav & Header stay in the Cream zone */
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1.5rem 5%; border-bottom: 2px solid var(--dark); 
+            background: var(--cream); position: sticky; top: 0; z-index: 1000; 
         }
         .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.5rem; }
-        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 12px; transition: 0.3s; }
-        .back-btn:hover { background: var(--dark); color: white; }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 8px 16px; border-radius: 10px; font-size: 0.8rem; }
 
-        .container { max-width: 1200px; margin: 4rem auto; padding: 0 20px; }
-        h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -3px; margin-bottom: 3rem; text-align: center; }
+        .header { text-align: center; padding: 4rem 20px 2rem; }
+        .header h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -3px; text-transform: uppercase; }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+        /* The DARK ZONE - Cinematic focus */
+        .film-section {
+            background: var(--film-bg);
+            padding: 60px 0;
+            border-top: 4px solid var(--dark);
+            border-bottom: 4px solid var(--dark);
+            box-shadow: inset 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        /* Interactive Card Styling */
-        .card {
-            background: #fff;
-            border: 2px solid var(--dark);
-            border-radius: 24px;
-            overflow: hidden;
-            height: 450px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        .film-viewport {
+            display: flex;
+            overflow-x: scroll;
+            scrollbar-width: none;
+            width: 100%;
+            cursor: grab;
+        }
+        .film-viewport::-webkit-scrollbar { display: none; }
+
+        .film-reel {
+            display: flex;
+            gap: 25px;
+            padding: 40px 15vw;
+            background-image: 
+                radial-gradient(circle, #333 4px, transparent 5px), 
+                radial-gradient(circle, #333 4px, transparent 5px);
+            background-size: 45px 45px;
+            background-position: 0 10px, 0 calc(100% - 10px);
+            background-repeat: repeat-x;
         }
 
-        /* The "Lift" effect matching the index page */
-        .card:hover {
-            transform: translate(-8px, -8px);
-            box-shadow: 12px 12px 0px var(--dark);
+        .film-frame {
+            flex: 0 0 500px;
+            height: 350px;
+            background: black;
+            padding: 12px;
+            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            filter: grayscale(80%) brightness(0.6);
+            transform: scale(0.9);
         }
 
-        .card img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            display: block; 
-            background: #e0e0e0;
-            transition: transform 0.5s ease;
-        }
-
-        /* Subtle zoom on image when hovering */
-        .card:hover img {
+        /* Special "Active" effect - the photo "develops" when centered */
+        .film-frame.active, .film-frame:hover {
+            filter: grayscale(0%) brightness(1);
             transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(79, 70, 229, 0.3);
         }
 
-        /* Labels that pop on hover */
-        .label {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: white;
-            color: var(--dark);
-            padding: 8px 16px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            border: 2px solid var(--dark);
-            border-radius: 10px;
-            box-shadow: 4px 4px 0px var(--dark);
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            z-index: 10;
+        .film-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid #222;
         }
 
-        .card:hover .label {
+        .caption {
+            font-family: 'Courier Prime', monospace;
+            color: #555;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* BENTO SCRUB BAR */
+        .controls-wrapper {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .bento-scrub {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 24px;
+            background: #d1cdc4;
+            border: 3px solid var(--dark);
+            border-radius: 6px;
+            outline: none;
+            position: relative;
+        }
+
+        .bento-scrub::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 80px;
+            height: 18px;
             background: var(--dark);
-            color: white;
-            transform: scale(1.1);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .bento-scrub::-webkit-slider-thumb:hover {
+            background: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .film-frame { flex: 0 0 320px; height: 220px; }
+            .film-section { padding: 30px 0; }
         }
     </style>
 </head>
@@ -106,50 +142,72 @@
 
     <nav>
         <a href="index.html" class="logo">JIHAN AHMED</a>
-        <a href="index.html" class="back-btn">← BACK HOME</a>
+        <a href="index.html" class="back-btn">← BACK TO HOME</a>
     </nav>
 
-    <div class="container">
+    <div class="header">
         <h1>Visual Archive</h1>
-        <div class="gallery-grid">
-            
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg" alt="House of Commons">
-                <div class="label">House of Commons</div>
-            </div>
+    </div>
 
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg" alt="MUN">
-                <div class="label">Model United Nations</div>
+    <div class="film-section">
+        <div class="film-viewport" id="viewport">
+            <div class="film-reel">
+                <div class="film-frame"><img src="Parliment.jpeg"><div class="caption"><span>ROLL:01 — J.AHMED</span><span>FR: 001</span></div></div>
+                <div class="film-frame"><img src="MUN.jpeg"><div class="caption"><span>ROLL:01 — J.AHMED</span><span>FR: 002</span></div></div>
+                <div class="film-frame"><img src="h1.jpeg"><div class="caption"><span>ROLL:01 — J.AHMED</span><span>FR: 003</span></div></div>
+                <div class="film-frame"><img src="h2.jpeg"><div class="caption"><span>ROLL:01 — J.AHMED</span><span>FR: 004</span></div></div>
+                <div class="film-frame"><img src="h.jpeg"><div class="caption"><span>ROLL:01 — J.AHMED</span><span>FR: 005</span></div></div>
+                <div class="film-frame"><img src="Equity.jpeg"><div class="caption"><span>ROLL:01 — J.AHMED</span><span>FR: 006</span></div></div>
             </div>
-
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg" alt="Mental Health Day">
-                <div class="label">Mental Health Day</div>
-            </div>
-
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg" alt="Mental Health Day">
-                <div class="label">Mental Health Day</div>
-            </div>
-
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h3.jpeg" alt="Mental Health Day">
-                <div class="label">Mental Health Day</div>
-            </div>
-
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg" alt="Equity Council">
-                <div class="label">Equity Council</div>
-            </div>
-
-            <div class="card">
-                <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg" alt="HOSA">
-                <div class="label">Hosa Council</div>
-            </div>
-
         </div>
     </div>
+
+    <div class="controls-wrapper">
+        <input type="range" min="0" max="1000" value="0" class="bento-scrub" id="scrubBar">
+    </div>
+
+    <script>
+        const viewport = document.getElementById('viewport');
+        const scrubBar = document.getElementById('scrubBar');
+        const frames = document.querySelectorAll('.film-frame');
+
+        let targetX = 0;
+        let currentX = 0;
+        const ease = 0.08;
+
+        scrubBar.addEventListener('input', () => {
+            const scrollWidth = viewport.scrollWidth - viewport.clientWidth;
+            targetX = (scrubBar.value / 1000) * scrollWidth;
+        });
+
+        function lerpScroll() {
+            currentX += (targetX - currentX) * ease;
+            viewport.scrollLeft = currentX;
+
+            // Highlight the frame closest to the center
+            frames.forEach(frame => {
+                const rect = frame.getBoundingClientRect();
+                const center = window.innerWidth / 2;
+                if (Math.abs(rect.left + rect.width / 2 - center) < 150) {
+                    frame.classList.add('active');
+                } else {
+                    frame.classList.remove('active');
+                }
+            });
+
+            requestAnimationFrame(lerpScroll);
+        }
+
+        viewport.addEventListener('scroll', () => {
+            if (Math.abs(viewport.scrollLeft - currentX) > 10) {
+                targetX = viewport.scrollLeft;
+                const scrollWidth = viewport.scrollWidth - viewport.clientWidth;
+                scrubBar.value = (targetX / scrollWidth) * 1000;
+            }
+        });
+
+        lerpScroll();
+    </script>
 
 </body>
 </html>
