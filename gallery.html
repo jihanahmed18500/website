@@ -44,16 +44,14 @@
 
         .film-viewport {
             display: flex;
-            overflow-x: scroll;
-            scrollbar-width: none;
+            overflow-x: hidden; /* Auto-play works best when we hide the scrollbar */
             width: 100%;
         }
-        .film-viewport::-webkit-scrollbar { display: none; }
 
         .film-reel {
             display: flex;
             gap: 25px;
-            padding: 40px 15vw;
+            padding: 40px 0;
             background-image: 
                 radial-gradient(circle, #333 4px, transparent 5px), 
                 radial-gradient(circle, #333 4px, transparent 5px);
@@ -68,12 +66,6 @@
             background: black;
             padding: 12px;
             transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
-        .film-frame:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(79, 70, 229, 0.4);
-            z-index: 10;
         }
 
         .film-frame img {
@@ -135,7 +127,6 @@
         @media (max-width: 768px) {
             .film-frame { flex: 0 0 320px; height: 300px; }
             .film-frame img { height: 200px; }
-            .header h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -152,56 +143,13 @@
 
     <div class="film-section">
         <div class="film-viewport" id="viewport">
-            <div class="film-reel">
-                
-                <div class="film-frame">
-                    <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg">
-                    <div class="caption-container">
-                        <span class="main-caption">House of Commons</span>
-                        <div class="meta-data"><span>R:01 — J.AHMED</span><span>FR: 001</span></div>
-                    </div>
-                </div>
-
-                <div class="film-frame">
-                    <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg">
-                    <div class="caption-container">
-                        <span class="main-caption">Model United Nations</span>
-                        <div class="meta-data"><span>R:01 — J.AHMED</span><span>FR: 002</span></div>
-                    </div>
-                </div>
-
-                <div class="film-frame">
-                    <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg">
-                    <div class="caption-container">
-                        <span class="main-caption">Mental Health Day</span>
-                        <div class="meta-data"><span>R:01 — J.AHMED</span><span>FR: 003</span></div>
-                    </div>
-                </div>
-
-                <div class="film-frame">
-                    <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg">
-                    <div class="caption-container">
-                        <span class="main-caption">Mental Health Day</span>
-                        <div class="meta-data"><span>R:01 — J.AHMED</span><span>FR: 004</span></div>
-                    </div>
-                </div>
-
-                <div class="film-frame">
-                    <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg">
-                    <div class="caption-container">
-                        <span class="main-caption">HOSA Council</span>
-                        <div class="meta-data"><span>R:01 — J.AHMED</span><span>FR: 005</span></div>
-                    </div>
-                </div>
-
-                <div class="film-frame">
-                    <img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg">
-                    <div class="caption-container">
-                        <span class="main-caption">Equity Council</span>
-                        <div class="meta-data"><span>R:01 — J.AHMED</span><span>FR: 006</span></div>
-                    </div>
-                </div>
-
+            <div class="film-reel" id="reel">
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg"><div class="caption-container"><span class="main-caption">House of Commons</span><div class="meta-data"><span>R:01</span><span>FR: 01</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg"><div class="caption-container"><span class="main-caption">Model United Nations</span><div class="meta-data"><span>R:01</span><span>FR: 02</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 03</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 04</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg"><div class="caption-container"><span class="main-caption">HOSA Council</span><div class="meta-data"><span>R:01</span><span>FR: 05</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg"><div class="caption-container"><span class="main-caption">Equity Council</span><div class="meta-data"><span>R:01</span><span>FR: 06</span></div></div></div>
             </div>
         </div>
     </div>
@@ -212,30 +160,61 @@
 
     <script>
         const viewport = document.getElementById('viewport');
+        const reel = document.getElementById('reel');
         const scrubBar = document.getElementById('scrubBar');
+
+        // Clone the reel for seamless loop
+        const clone = reel.innerHTML;
+        reel.innerHTML += clone; 
 
         let targetX = 0;
         let currentX = 0;
-        const ease = 0.08;
+        let isUserInteracting = false;
+        let interactionTimer;
+        const ease = 0.05;
+        const autoSpeed = 0.8; // Speed of the auto-drift
 
+        // Handle Slider Input
         scrubBar.addEventListener('input', () => {
-            const scrollWidth = viewport.scrollWidth - viewport.clientWidth;
-            targetX = (scrubBar.value / 1000) * scrollWidth;
+            isUserInteracting = true;
+            clearTimeout(interactionTimer);
+            
+            const maxScroll = reel.scrollWidth / 2;
+            targetX = (scrubBar.value / 1000) * maxScroll;
+
+            // Restart auto-play after 3 seconds of no activity
+            interactionTimer = setTimeout(() => { isUserInteracting = false; }, 3000);
         });
 
         function lerpScroll() {
+            const maxScroll = reel.scrollWidth / 2;
+
+            if (!isUserInteracting) {
+                // Gentle drift forward
+                targetX += autoSpeed;
+                
+                // Update slider position to match drift
+                scrubBar.value = (targetX / maxScroll) * 1000;
+            }
+
+            // Smooth glide math
             currentX += (targetX - currentX) * ease;
             viewport.scrollLeft = currentX;
+
+            // INFINITE LOOP LOGIC
+            // If we've scrolled past the first set of images, jump back instantly
+            if (currentX >= maxScroll) {
+                targetX -= maxScroll;
+                currentX -= maxScroll;
+            }
+            // If scrubbing backwards past the start, jump forward
+            if (currentX < 0) {
+                targetX += maxScroll;
+                currentX += maxScroll;
+            }
+
             requestAnimationFrame(lerpScroll);
         }
-
-        viewport.addEventListener('scroll', () => {
-            if (Math.abs(viewport.scrollLeft - currentX) > 10) {
-                targetX = viewport.scrollLeft;
-                const scrollWidth = viewport.scrollWidth - viewport.clientWidth;
-                scrubBar.value = (targetX / scrollWidth) * 1000;
-            }
-        });
 
         lerpScroll();
     </script>
