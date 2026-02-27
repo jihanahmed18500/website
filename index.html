@@ -26,7 +26,6 @@
         .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--dark); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
         
-        /* Bulletproof Nav Resume Button */
         .nav-resume { background: var(--dark); color: white !important; padding: 10px 18px; border-radius: 12px; transition: 0.3s; border: 2px solid var(--dark); }
         .nav-resume:hover { background: transparent; color: var(--dark) !important; transform: translateY(-2px); }
 
@@ -46,8 +45,6 @@
         .mini-stat b { font-size: 1.8rem; display: block; }
 
         .job-box { grid-column: span 12; background: var(--toronto-blue); color: white; border: none; }
-        .job-box .tag { background: white; color: var(--toronto-blue); }
-
         .role-box { grid-column: span 4; }
         .tag { background: #000; color: #fff; padding: 5px 12px; font-size: 0.7rem; font-weight: 900; border-radius: 5px; margin-bottom: 1rem; display: inline-block; text-transform: uppercase; }
         
@@ -71,7 +68,7 @@
             <li><a href="about.html">About</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="https://raw.githubusercontent.com/jihanahmed18500/website/main/Jihan%20Ahmed%20Resume%202026.docx" class="nav-resume" download="Jihan_Ahmed_Resume_2026.docx">Resume ↓</a></li>
+            <li><a href="Jihan%20Ahmed%20Resume%202026.docx" class="nav-resume" download="Jihan_Ahmed_Resume_2026.docx">Resume ↓</a></li>
         </ul>
     </nav>
 
@@ -93,7 +90,7 @@
         </div>
 
         <div class="box job-box br-2 clickable-exp">
-            <span class="tag">City of Toronto</span>
+            <span class="tag" style="background: white; color: var(--toronto-blue);">City of Toronto</span>
             <h3>Facility in Charge</h3>
             <p>Leading operational management and public safety for municipal facilities.</p>
         </div>
@@ -144,7 +141,7 @@
         </div>
     </div>
 
-    <div id="modal-overlay"><div class="modal-content"><h2>Coming Soon</h2><p>Full breakdown arriving shortly.</p><div class="close-btn" onclick="closeModal()">Got it!</div></div></div>
+    <div id="modal-overlay"><div class="modal-content"><h2>Coming Soon</h2><p>Full breakdown arriving shortly.</p><div class="close-btn" onclick="closeBtn()">Got it!</div></div></div>
 
     <script>
         const experienceBoxes = document.querySelectorAll('.clickable-exp');
@@ -152,8 +149,8 @@
         experienceBoxes.forEach(box => { 
             box.addEventListener('click', () => { overlay.style.display = 'flex'; }); 
         });
-        function closeModal() { overlay.style.display = 'none'; }
-        window.onclick = function(event) { if (event.target == overlay) closeModal(); }
+        function closeBtn() { overlay.style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == overlay) closeBtn(); }
     </script>
 </body>
 </html>
