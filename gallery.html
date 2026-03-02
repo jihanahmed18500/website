@@ -10,7 +10,6 @@
         :root { 
             --dark: #121212; 
             --cream: #f4f1ea; 
-            --accent: #4f46e5; 
             --film-bg: #1a1a1a;
         }
         
@@ -20,26 +19,27 @@
             background-color: var(--cream); 
             color: var(--dark); 
             font-family: 'Inter', sans-serif; 
-            overflow: hidden; 
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
         }
 
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 1.5rem 5%; border-bottom: 2px solid var(--dark); 
+            padding: 1.2rem 5%; border-bottom: 2px solid var(--dark); 
             background: var(--cream); position: sticky; top: 0; z-index: 1000; 
         }
-        .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.5rem; }
-        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 8px 16px; border-radius: 10px; font-size: 0.8rem; }
+        .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.2rem; }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; }
 
-        .header { text-align: center; padding: 3rem 20px 1rem; }
-        .header h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: -3px; text-transform: uppercase; }
+        .header { text-align: center; padding: 2rem 20px 1rem; }
+        .header h1 { font-family: 'Space Grotesk'; font-size: clamp(2rem, 10vw, 4rem); letter-spacing: -2px; text-transform: uppercase; }
 
+        /* Film Section Adjustments */
         .film-section {
             background: var(--film-bg);
-            padding: 60px 0;
-            border-top: 4px solid var(--dark);
-            border-bottom: 4px solid var(--dark);
-            box-shadow: inset 0 20px 40px rgba(0,0,0,0.5);
+            padding: 40px 0;
+            border-top: 3px solid var(--dark);
+            border-bottom: 3px solid var(--dark);
+            box-shadow: inset 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .film-viewport {
@@ -50,35 +50,34 @@
 
         .film-reel {
             display: flex;
-            gap: 25px;
-            padding: 40px 0;
+            gap: 15px; /* Tighter gap for mobile */
+            padding: 30px 0;
             background-image: 
-                radial-gradient(circle, #333 4px, transparent 5px), 
-                radial-gradient(circle, #333 4px, transparent 5px);
-            background-size: 45px 45px;
-            background-position: 0 10px, 0 calc(100% - 10px);
+                radial-gradient(circle, #333 3px, transparent 4px), 
+                radial-gradient(circle, #333 3px, transparent 4px);
+            background-size: 35px 35px;
+            background-position: 0 5px, 0 calc(100% - 5px);
             background-repeat: repeat-x;
         }
 
+        /* Responsive Frame Sizes */
         .film-frame {
-            flex: 0 0 500px;
-            height: 380px;
+            flex: 0 0 450px; /* Desktop Size */
+            height: 350px;
             background: black;
-            padding: 12px;
-            transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            padding: 10px;
+            transition: 0.4s;
         }
 
         .film-frame img {
             width: 100%;
-            height: 280px;
+            height: 250px;
             object-fit: cover;
-            border: 1px solid #222;
             display: block;
-            background: #222;
         }
 
         .caption-container {
-            margin-top: 12px;
+            margin-top: 8px;
             font-family: 'Courier Prime', monospace;
             color: #888;
         }
@@ -86,47 +85,48 @@
         .main-caption {
             display: block;
             color: #eee;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
         }
 
-        .meta-data {
-            font-size: 0.65rem;
-            display: flex;
-            justify-content: space-between;
-            opacity: 0.6;
-        }
+        .meta-data { font-size: 0.6rem; display: flex; justify-content: space-between; opacity: 0.5; }
 
+        /* Scrubber Bar Mobile Fix */
         .controls-wrapper {
-            max-width: 600px;
-            margin: 2.5rem auto;
-            padding: 0 20px;
+            max-width: 90%;
+            margin: 2rem auto;
         }
 
         .bento-scrub {
             -webkit-appearance: none;
             width: 100%;
-            height: 20px;
+            height: 15px;
             background: #d1cdc4;
-            border: 3px solid var(--dark);
+            border: 2px solid var(--dark);
             border-radius: 4px;
             outline: none;
         }
 
-        .bento-scrub::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 80px;
-            height: 14px;
-            background: var(--dark);
-            border-radius: 2px;
-            cursor: pointer;
+        /* MOBILE MEDIA QUERY */
+        @media (max-width: 768px) {
+            .header { padding: 1.5rem 10px 0.5rem; }
+            .film-section { padding: 25px 0; }
+            
+            .film-frame {
+                flex: 0 0 280px; /* Smaller frames for phones */
+                height: 240px;
+            }
+            
+            .film-frame img {
+                height: 160px;
+            }
+
+            .main-caption { font-size: 0.7rem; }
         }
 
-        @media (max-width: 768px) {
-            .film-frame { flex: 0 0 320px; height: 300px; }
-            .film-frame img { height: 200px; }
+        @media (max-width: 480px) {
+            .film-frame { flex: 0 0 240px; height: 210px; }
+            .film-frame img { height: 130px; }
         }
     </style>
 </head>
@@ -134,7 +134,7 @@
 
     <nav>
         <a href="index.html" class="logo">JIHAN AHMED</a>
-        <a href="index.html" class="back-btn">← BACK TO HOME</a>
+        <a href="index.html" class="back-btn">← HOME</a>
     </nav>
 
     <div class="header">
@@ -167,7 +167,7 @@
         const reel = document.getElementById('reel');
         const scrubBar = document.getElementById('scrubBar');
 
-        // Clone the reel for seamless loop
+        // Infinite Loop Clone
         const clone = reel.innerHTML;
         reel.innerHTML += clone; 
 
@@ -176,44 +176,38 @@
         let isUserInteracting = false;
         let interactionTimer;
         const ease = 0.05;
-        const autoSpeed = 0.6; // Slightly slower auto-drift for more elegance
+        
+        // Speed check for mobile (slower drift on smaller screens looks better)
+        const autoSpeed = window.innerWidth < 768 ? 0.4 : 0.6; 
 
-        // Handle Slider Input
         scrubBar.addEventListener('input', () => {
             isUserInteracting = true;
             clearTimeout(interactionTimer);
-            
             const maxScroll = reel.scrollWidth / 2;
             targetX = (scrubBar.value / 1000) * maxScroll;
-
             interactionTimer = setTimeout(() => { isUserInteracting = false; }, 3000);
+        });
+
+        // Touch event to pause auto-scroll when user swiping manually
+        viewport.addEventListener('touchstart', () => { isUserInteracting = true; });
+        viewport.addEventListener('touchend', () => { 
+            clearTimeout(interactionTimer);
+            interactionTimer = setTimeout(() => { isUserInteracting = false; }, 3000); 
         });
 
         function lerpScroll() {
             const maxScroll = reel.scrollWidth / 2;
-
             if (!isUserInteracting) {
                 targetX += autoSpeed;
                 scrubBar.value = (targetX / maxScroll) * 1000;
             }
-
             currentX += (targetX - currentX) * ease;
             viewport.scrollLeft = currentX;
-
-            if (currentX >= maxScroll) {
-                targetX -= maxScroll;
-                currentX -= maxScroll;
-            }
-            if (currentX < 0) {
-                targetX += maxScroll;
-                currentX += maxScroll;
-            }
-
+            if (currentX >= maxScroll) { targetX -= maxScroll; currentX -= maxScroll; }
+            if (currentX < 0) { targetX += maxScroll; currentX += maxScroll; }
             requestAnimationFrame(lerpScroll);
         }
-
         lerpScroll();
     </script>
-
 </body>
 </html>
