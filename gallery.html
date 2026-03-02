@@ -44,7 +44,7 @@
 
         .film-viewport {
             display: flex;
-            overflow-x: hidden; /* Auto-play works best when we hide the scrollbar */
+            overflow-x: hidden;
             width: 100%;
         }
 
@@ -144,12 +144,16 @@
     <div class="film-section">
         <div class="film-viewport" id="viewport">
             <div class="film-reel" id="reel">
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg"><div class="caption-container"><span class="main-caption">House of Commons</span><div class="meta-data"><span>R:01</span><span>FR: 01</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg"><div class="caption-container"><span class="main-caption">Model United Nations</span><div class="meta-data"><span>R:01</span><span>FR: 02</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 03</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 04</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg"><div class="caption-container"><span class="main-caption">HOSA Council</span><div class="meta-data"><span>R:01</span><span>FR: 05</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg"><div class="caption-container"><span class="main-caption">Equity Council</span><div class="meta-data"><span>R:01</span><span>FR: 06</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/sen.jpeg"><div class="caption-container"><span class="main-caption">Senate of Canada</span><div class="meta-data"><span>R:01</span><span>FR: 01</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/mtl.jpeg"><div class="caption-container"><span class="main-caption">SSUNS 2025 Team</span><div class="meta-data"><span>R:01</span><span>FR: 02</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/it.jpeg"><div class="caption-container"><span class="main-caption">I-Think Ceremony</span><div class="meta-data"><span>R:01</span><span>FR: 03</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/for.jpeg"><div class="caption-container"><span class="main-caption">Forum for Young Canadians</span><div class="meta-data"><span>R:01</span><span>FR: 04</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg"><div class="caption-container"><span class="main-caption">House of Commons</span><div class="meta-data"><span>R:01</span><span>FR: 05</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg"><div class="caption-container"><span class="main-caption">Model United Nations</span><div class="meta-data"><span>R:01</span><span>FR: 06</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 07</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 08</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg"><div class="caption-container"><span class="main-caption">HOSA Council</span><div class="meta-data"><span>R:01</span><span>FR: 09</span></div></div></div>
+                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg"><div class="caption-container"><span class="main-caption">Equity Council</span><div class="meta-data"><span>R:01</span><span>FR: 10</span></div></div></div>
             </div>
         </div>
     </div>
@@ -172,7 +176,7 @@
         let isUserInteracting = false;
         let interactionTimer;
         const ease = 0.05;
-        const autoSpeed = 0.8; // Speed of the auto-drift
+        const autoSpeed = 0.6; // Slightly slower auto-drift for more elegance
 
         // Handle Slider Input
         scrubBar.addEventListener('input', () => {
@@ -182,7 +186,6 @@
             const maxScroll = reel.scrollWidth / 2;
             targetX = (scrubBar.value / 1000) * maxScroll;
 
-            // Restart auto-play after 3 seconds of no activity
             interactionTimer = setTimeout(() => { isUserInteracting = false; }, 3000);
         });
 
@@ -190,24 +193,17 @@
             const maxScroll = reel.scrollWidth / 2;
 
             if (!isUserInteracting) {
-                // Gentle drift forward
                 targetX += autoSpeed;
-                
-                // Update slider position to match drift
                 scrubBar.value = (targetX / maxScroll) * 1000;
             }
 
-            // Smooth glide math
             currentX += (targetX - currentX) * ease;
             viewport.scrollLeft = currentX;
 
-            // INFINITE LOOP LOGIC
-            // If we've scrolled past the first set of images, jump back instantly
             if (currentX >= maxScroll) {
                 targetX -= maxScroll;
                 currentX -= maxScroll;
             }
-            // If scrubbing backwards past the start, jump forward
             if (currentX < 0) {
                 targetX += maxScroll;
                 currentX += maxScroll;
