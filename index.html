@@ -32,7 +32,6 @@
         
         h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
 
-        /* --- UPDATED NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 1.8rem 5%; position: sticky; top: 0; background: var(--cream); 
@@ -40,49 +39,19 @@
         }
         
         .logo { font-weight: 700; font-size: 1.6rem; letter-spacing: -1px; text-decoration: none; color: var(--dark); }
-        
         .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 700; font-size: 1rem; text-transform: uppercase; transition: 0.2s; }
+        .nav-links a:not(.nav-resume):hover { color: var(--accent); transform: translateY(-2px); }
         
-        /* Bigger Nav Buttons */
-        .nav-links a { 
-            text-decoration: none; 
-            color: var(--dark); 
-            font-weight: 700; 
-            font-size: 1rem; /* Increased from 0.75rem */
-            text-transform: uppercase; 
-            transition: 0.2s;
-        }
+        .nav-resume { background: var(--dark); color: white !important; padding: 12px 20px; border-radius: 12px; transition: 0.3s; border: 2px solid var(--dark); }
+        .nav-resume:hover { background: transparent; color: var(--dark) !important; }
 
-        .nav-links a:not(.nav-resume):hover {
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-        
-        .nav-resume { 
-            background: var(--dark); 
-            color: white !important; 
-            padding: 12px 20px; /* Increased padding */
-            border-radius: 12px; 
-            transition: 0.3s; 
-            border: 2px solid var(--dark);
-        }
-
-        .nav-resume:hover {
-            background: transparent;
-            color: var(--dark) !important;
-        }
-
-        /* --- REST OF STYLES --- */
         .bento-wrapper { 
             max-width: 1300px; margin: 0 auto 100px; display: grid; 
             grid-template-columns: repeat(12, 1fr); gap: 1.2rem; padding: 15px; 
         }
 
-        .box { 
-            background: #fff; border: 2px solid var(--dark); padding: 1.8rem; 
-            position: relative; transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1); 
-        }
-        
+        .box { background: #fff; border: 2px solid var(--dark); padding: 1.8rem; position: relative; transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
         .clickable-exp { cursor: pointer; }
         .clickable-exp:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0px var(--dark); }
         
@@ -109,16 +78,29 @@
         @media (max-width: 768px) {
             nav { padding: 1.2rem 4%; flex-direction: column; gap: 1rem; }
             .logo { font-size: 1.4rem; }
-            .nav-links { gap: 1.2rem; }
             .bento-wrapper { grid-template-columns: 1fr; gap: 1rem; padding: 10px; }
             .box, .hero-box, .project-box, .job-box, .role-box, .contact-box { grid-column: span 12 !important; padding: 1.5rem; }
-            .hero-box { padding: 3rem 1rem; }
             .project-stats { flex-direction: column; gap: 1rem; }
         }
 
-        #modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(8px); }
-        .modal-content { background: var(--cream); border: 3px solid var(--dark); padding: 2rem; border-radius: 25px; text-align: center; width: 90%; max-width: 400px; }
-        .close-btn { margin-top: 1.5rem; display: inline-block; padding: 10px 25px; background: var(--dark); color: white; font-weight: 700; border-radius: 10px; }
+        /* --- DYNAMIC MODAL --- */
+        #modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); display: none; justify-content: center; 
+            align-items: center; z-index: 2000; backdrop-filter: blur(8px); 
+            padding: 20px;
+        }
+        .modal-content { 
+            background: var(--cream); border: 3px solid var(--dark); padding: 2.5rem; 
+            border-radius: 30px; text-align: left; width: 100%; max-width: 600px;
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-content h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--accent); }
+        .modal-content p { line-height: 1.6; font-size: 1.05rem; margin-bottom: 1.5rem; }
+        .close-btn { 
+            display: inline-block; padding: 12px 30px; background: var(--dark); 
+            color: white; font-weight: 700; border-radius: 12px; cursor: pointer; text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -139,7 +121,7 @@
             <p>Advocate. Leader. Community Builder.</p>
         </div>
 
-        <div class="box project-box br-3 clickable-exp">
+        <div class="box project-box br-3 clickable-exp" data-bio="mental-health">
             <span class="tag">Flagship Project</span>
             <h2>Mental Health Day</h2>
             <p>Orchestrated a student-led summit for 1,200+ students, facilitating partnerships with over 7 NGOs.</p>
@@ -149,43 +131,43 @@
             </div>
         </div>
 
-        <div class="box job-box br-2 clickable-exp">
+        <div class="box job-box br-2 clickable-exp" data-bio="facility">
             <span class="tag" style="background: white; color: var(--toronto-blue);">City of Toronto</span>
             <h3>Facility in Charge</h3>
             <p>Leading operational management and public safety for municipal facilities.</p>
         </div>
 
-        <div class="box role-box br-1 clickable-exp">
+        <div class="box role-box br-1 clickable-exp" data-bio="pollcat">
             <span class="tag">Strategy</span>
             <h3>Pollcat</h3>
             <p>Directing data outreach for Provincial and Federal campaigns.</p>
         </div>
 
-        <div class="box role-box br-3 clickable-exp">
+        <div class="box role-box br-3 clickable-exp" data-bio="forum">
             <span class="tag">Diplomacy</span>
             <h3>Forum for Young Canadians</h3>
             <p>National delegate engaging in Parliament Hill simulations.</p>
         </div>
 
-        <div class="box role-box br-2 clickable-exp">
+        <div class="box role-box br-2 clickable-exp" data-bio="myc">
             <span class="tag">Advisory</span>
             <h3>Mayor’s Youth Council</h3>
             <p>Founder and President bridging local government and youth voice.</p>
         </div>
 
-        <div class="box role-box br-2 clickable-exp">
+        <div class="box role-box br-2 clickable-exp" data-bio="equity">
             <span class="tag">Advocacy</span>
             <h3>Equity Club</h3>
             <p>Leading inclusive school policy and community drives.</p>
         </div>
 
-        <div class="box role-box br-1 clickable-exp">
+        <div class="box role-box br-1 clickable-exp" data-bio="mun">
             <span class="tag">Leadership</span>
             <h3>Model UN</h3>
             <p>President directing international diplomatic simulations.</p>
         </div>
 
-        <div class="box role-box br-3 clickable-exp">
+        <div class="box role-box br-3 clickable-exp" data-bio="hosa">
             <span class="tag">Health</span>
             <h3>HOSA Council</h3>
             <p>Executive leading future health professional initiatives.</p>
@@ -203,19 +185,70 @@
 
     <div id="modal-overlay">
         <div class="modal-content">
-            <h2>Coming Soon</h2>
-            <p>Full breakdown arriving shortly.</p>
-            <div class="close-btn" onclick="closeBtn()">Got it!</div>
+            <h2 id="modal-title">Experience</h2>
+            <p id="modal-text">Bio content goes here.</p>
+            <div class="close-btn" onclick="closeBtn()">Close</div>
         </div>
     </div>
 
     <script>
+        const bios = {
+            'mental-health': {
+                title: 'Mental Health Day',
+                text: 'Last year, as a Grade 11 student and Mental Health Ambassador at the TDSB, I led the planning and organization of our school’s Mental Health Day. I am passionate about creating supportive and inclusive spaces where students feel seen, heard, and empowered to care for their well-being. <br><br> I worked closely with staff, community organizations, and fellow student leaders to design a full-day initiative that included assemblies, workshops, yoga and mindfulness sessions, and creative activities. My goal was to reduce stigma around mental health and provide students with practical tools they can use in their daily lives. <br><br> This experience strengthened my leadership, communication, and event planning skills while deepening my commitment to student advocacy.'
+            },
+            'facility': {
+                title: 'Facility In Charge',
+                text: 'As a Facility In Charge with the City of Toronto, I oversee the day-to-day operations of municipal recreation facilities. This means supervising staff, coordinating programs and permit groups, upholding health and safety standards, and stepping up as part of the on-site emergency response team when needed. The role has pushed me to stay calm under pressure, juggle competing priorities, and make sure everyone who walks through the door has a safe and positive experience.'
+            },
+            'pollcat': {
+                title: 'Pollcat (Political Organizing)',
+                text: 'I worked on campaigns at both the provincial and federal level, supporting MPP Doly Begum and the Ontario NDP as well as the Federal Liberal Party. My work included canvassing door to door, engaging with constituents, and handling data entry and tracking. Through these experiences I got a firsthand look at how political organizing works at multiple levels of government.'
+            },
+            'forum': {
+                title: 'Forum for Young Canadians',
+                text: 'I travelled to Ottawa through the Forum for Young Canadians, where I took part in government simulations and worked alongside senators and members of parliament. The program put me in some remarkable rooms with remarkable people, including Prime Minister Mark Carney, gaining a deeper appreciation for how policy and leadership intersect at the federal level.'
+            },
+            'myc': {
+                title: "Mayor's Youth Council",
+                text: "I founded the Mayor's Youth Council, a group dedicated to bringing youth voices into civic conversations at City Hall. Since launching it I have organized meetings, led recruitment efforts, and taken the council out to canvass in the community, all with the goal of making local government more accessible and responsive to young people."
+            },
+            'equity': {
+                title: 'Equity Club President',
+                text: 'As President of my school\'s Equity Club for two years I led events aimed at shining a light on equity issues in my community. Over that time we raised over $3,500 in donations, gave away AirPods to students who engaged with our programming, and ran initiatives focused on fighting racism and bullying. It was a meaningful way to turn conversations about equity into something tangible for the people around me.'
+            },
+            'mun': {
+                title: 'Model United Nations',
+                text: 'I helped run two Model UN conferences that brought together over 350 students all over Canada, managing everything that goes into pulling off an event of that scale. Alongside that I competed in numerous conferences across Ontario and came away with multiple awards, which pushed me to keep sharpening my research, public speaking, and debate skills.'
+            },
+            'hosa': {
+                title: 'HOSA Executive',
+                text: 'As an executive member of my school\'s HOSA chapter, I helped train and prepare members for competition, supporting them in building the skills needed to succeed in health science events. I also attended the 2026 Spring Leadership Conference, where I represented our chapter alongside some of the best student health science competitors around.'
+            }
+        };
+
         const experienceBoxes = document.querySelectorAll('.clickable-exp');
         const overlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+
         experienceBoxes.forEach(box => { 
-            box.addEventListener('click', () => { overlay.style.display = 'flex'; }); 
+            box.addEventListener('click', () => { 
+                const bioKey = box.getAttribute('data-bio');
+                if (bios[bioKey]) {
+                    modalTitle.innerText = bios[bioKey].title;
+                    modalText.innerHTML = bios[bioKey].text;
+                    overlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Prevent background scroll
+                }
+            }); 
         });
-        function closeBtn() { overlay.style.display = 'none'; }
+
+        function closeBtn() { 
+            overlay.style.display = 'none'; 
+            document.body.style.overflow = 'auto'; // Re-enable scroll
+        }
+
         window.onclick = function(event) { if (event.target == overlay) closeBtn(); }
     </script>
 </body>
