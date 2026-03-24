@@ -19,7 +19,8 @@
             background-color: var(--cream); 
             color: var(--dark); 
             font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+            /* Let the body scroll vertically */
+            overflow-x: hidden; 
         }
 
         nav { 
@@ -30,103 +31,101 @@
         .logo { font-family: 'Space Grotesk'; font-weight: 700; text-decoration: none; color: var(--dark); font-size: 1.2rem; }
         .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; border: 2px solid var(--dark); padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; }
 
-        .header { text-align: center; padding: 2rem 20px 1rem; }
-        .header h1 { font-family: 'Space Grotesk'; font-size: clamp(2rem, 10vw, 4rem); letter-spacing: -2px; text-transform: uppercase; }
+        .header { text-align: center; padding: 3rem 20px 2rem; background: var(--cream); }
+        .header h1 { font-family: 'Space Grotesk'; font-size: clamp(2.5rem, 10vw, 5rem); letter-spacing: -3px; text-transform: uppercase; line-height: 0.9; }
 
-        /* Film Section Adjustments */
-        .film-section {
+        /* Vertical Film Section */
+        .film-container {
             background: var(--film-bg);
-            padding: 40px 0;
-            border-top: 3px solid var(--dark);
-            border-bottom: 3px solid var(--dark);
-            box-shadow: inset 0 10px 30px rgba(0,0,0,0.5);
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            border-top: 4px solid var(--dark);
+            border-bottom: 4px solid var(--dark);
         }
 
-        .film-viewport {
+        .film-strip {
             display: flex;
-            overflow-x: hidden;
+            flex-direction: column; /* Vertical Stack */
+            gap: 40px;
             width: 100%;
-        }
-
-        .film-reel {
-            display: flex;
-            gap: 15px; /* Tighter gap for mobile */
-            padding: 30px 0;
+            max-width: 600px;
+            padding: 60px 20px;
+            /* Film Sprockets on the sides */
             background-image: 
-                radial-gradient(circle, #333 3px, transparent 4px), 
-                radial-gradient(circle, #333 3px, transparent 4px);
-            background-size: 35px 35px;
-            background-position: 0 5px, 0 calc(100% - 5px);
-            background-repeat: repeat-x;
+                radial-gradient(circle, #333 6px, transparent 7px), 
+                radial-gradient(circle, #333 6px, transparent 7px);
+            background-size: 40px 50px;
+            background-position: 10px 0, calc(100% - 10px) 0;
+            background-repeat: repeat-y;
         }
 
-        /* Responsive Frame Sizes */
         .film-frame {
-            flex: 0 0 450px; /* Desktop Size */
-            height: 350px;
+            width: 100%;
             background: black;
-            padding: 10px;
-            transition: 0.4s;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease;
+        }
+
+        .film-frame:hover {
+            transform: scale(1.02);
         }
 
         .film-frame img {
             width: 100%;
-            height: 250px;
+            height: auto;
+            max-height: 450px;
             object-fit: cover;
             display: block;
+            background: #222;
         }
 
         .caption-container {
-            margin-top: 8px;
+            margin-top: 15px;
             font-family: 'Courier Prime', monospace;
             color: #888;
+            border-top: 1px solid #333;
+            padding-top: 10px;
         }
 
         .main-caption {
             display: block;
             color: #eee;
-            font-size: 0.8rem;
+            font-size: 1rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
         }
 
-        .meta-data { font-size: 0.6rem; display: flex; justify-content: space-between; opacity: 0.5; }
-
-        /* Scrubber Bar Mobile Fix */
-        .controls-wrapper {
-            max-width: 90%;
-            margin: 2rem auto;
+        .meta-data {
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.6;
         }
 
-        .bento-scrub {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 15px;
-            background: #d1cdc4;
-            border: 2px solid var(--dark);
-            border-radius: 4px;
-            outline: none;
+        /* Fixed Indicator for Auto-Drift Status */
+        .drift-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 100;
         }
 
-        /* MOBILE MEDIA QUERY */
         @media (max-width: 768px) {
-            .header { padding: 1.5rem 10px 0.5rem; }
-            .film-section { padding: 25px 0; }
-            
-            .film-frame {
-                flex: 0 0 280px; /* Smaller frames for phones */
-                height: 240px;
-            }
-            
-            .film-frame img {
-                height: 160px;
-            }
-
-            .main-caption { font-size: 0.7rem; }
-        }
-
-        @media (max-width: 480px) {
-            .film-frame { flex: 0 0 240px; height: 210px; }
-            .film-frame img { height: 130px; }
+            .film-strip { padding: 40px 45px; } /* More side padding for sprockets on mobile */
+            .film-frame { padding: 10px; }
         }
     </style>
 </head>
@@ -138,76 +137,59 @@
     </nav>
 
     <div class="header">
-        <h1>Visual Archive</h1>
+        <h1>Visual <br><span style="color: var(--accent)">Archive</span></h1>
     </div>
 
-    <div class="film-section">
-        <div class="film-viewport" id="viewport">
-            <div class="film-reel" id="reel">
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/sen.jpeg"><div class="caption-container"><span class="main-caption">Senate of Canada</span><div class="meta-data"><span>R:01</span><span>FR: 01</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/mtl.jpeg"><div class="caption-container"><span class="main-caption">SSUNS 2025 Team</span><div class="meta-data"><span>R:01</span><span>FR: 02</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/it.jpeg"><div class="caption-container"><span class="main-caption">I-Think Ceremony</span><div class="meta-data"><span>R:01</span><span>FR: 03</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/for.jpeg"><div class="caption-container"><span class="main-caption">Forum for Young Canadians</span><div class="meta-data"><span>R:01</span><span>FR: 04</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg"><div class="caption-container"><span class="main-caption">House of Commons</span><div class="meta-data"><span>R:01</span><span>FR: 05</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg"><div class="caption-container"><span class="main-caption">Model United Nations</span><div class="meta-data"><span>R:01</span><span>FR: 06</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 07</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 08</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg"><div class="caption-container"><span class="main-caption">HOSA Council</span><div class="meta-data"><span>R:01</span><span>FR: 09</span></div></div></div>
-                <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg"><div class="caption-container"><span class="main-caption">Equity Council</span><div class="meta-data"><span>R:01</span><span>FR: 10</span></div></div></div>
-            </div>
+    <div class="film-container">
+        <div class="film-strip" id="strip">
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/sen.jpeg"><div class="caption-container"><span class="main-caption">Senate of Canada</span><div class="meta-data"><span>R:01</span><span>FR: 01</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/mtl.jpeg"><div class="caption-container"><span class="main-caption">SSUNS 2025 Team</span><div class="meta-data"><span>R:01</span><span>FR: 02</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/it.jpeg"><div class="caption-container"><span class="main-caption">I-Think Ceremony</span><div class="meta-data"><span>R:01</span><span>FR: 03</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/for.jpeg"><div class="caption-container"><span class="main-caption">Forum for Young Canadians</span><div class="meta-data"><span>R:01</span><span>FR: 04</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/p1.jpeg"><div class="caption-container"><span class="main-caption">House of Commons</span><div class="meta-data"><span>R:01</span><span>FR: 05</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/m1.jpeg"><div class="caption-container"><span class="main-caption">Model United Nations</span><div class="meta-data"><span>R:01</span><span>FR: 06</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h1.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 07</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h2.jpeg"><div class="caption-container"><span class="main-caption">Mental Health Day</span><div class="meta-data"><span>R:01</span><span>FR: 08</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/h.jpeg"><div class="caption-container"><span class="main-caption">HOSA Council</span><div class="meta-data"><span>R:01</span><span>FR: 09</span></div></div></div>
+            <div class="film-frame"><img src="https://raw.githubusercontent.com/jihanahmed18500/website/main/e1.jpeg"><div class="caption-container"><span class="main-caption">Equity Council</span><div class="meta-data"><span>R:01</span><span>FR: 10</span></div></div></div>
         </div>
     </div>
 
-    <div class="controls-wrapper">
-        <input type="range" min="0" max="1000" value="0" class="bento-scrub" id="scrubBar">
-    </div>
+    <div class="drift-indicator" id="indicator">Auto-Drift Active</div>
 
     <script>
-        const viewport = document.getElementById('viewport');
-        const reel = document.getElementById('reel');
-        const scrubBar = document.getElementById('scrubBar');
+        let isUserScrolling = false;
+        let scrollTimer;
+        const driftSpeed = 0.5; // Speed of downward drift
+        const indicator = document.getElementById('indicator');
 
-        // Infinite Loop Clone
-        const clone = reel.innerHTML;
-        reel.innerHTML += clone; 
+        // Detect manual scrolling
+        window.addEventListener('wheel', () => handleManualScroll());
+        window.addEventListener('touchstart', () => handleManualScroll());
 
-        let targetX = 0;
-        let currentX = 0;
-        let isUserInteracting = false;
-        let interactionTimer;
-        const ease = 0.05;
-        
-        // Speed check for mobile (slower drift on smaller screens looks better)
-        const autoSpeed = window.innerWidth < 768 ? 0.4 : 0.6; 
-
-        scrubBar.addEventListener('input', () => {
-            isUserInteracting = true;
-            clearTimeout(interactionTimer);
-            const maxScroll = reel.scrollWidth / 2;
-            targetX = (scrubBar.value / 1000) * maxScroll;
-            interactionTimer = setTimeout(() => { isUserInteracting = false; }, 3000);
-        });
-
-        // Touch event to pause auto-scroll when user swiping manually
-        viewport.addEventListener('touchstart', () => { isUserInteracting = true; });
-        viewport.addEventListener('touchend', () => { 
-            clearTimeout(interactionTimer);
-            interactionTimer = setTimeout(() => { isUserInteracting = false; }, 3000); 
-        });
-
-        function lerpScroll() {
-            const maxScroll = reel.scrollWidth / 2;
-            if (!isUserInteracting) {
-                targetX += autoSpeed;
-                scrubBar.value = (targetX / maxScroll) * 1000;
-            }
-            currentX += (targetX - currentX) * ease;
-            viewport.scrollLeft = currentX;
-            if (currentX >= maxScroll) { targetX -= maxScroll; currentX -= maxScroll; }
-            if (currentX < 0) { targetX += maxScroll; currentX += maxScroll; }
-            requestAnimationFrame(lerpScroll);
+        function handleManualScroll() {
+            isUserScrolling = true;
+            indicator.innerText = "Manual Control";
+            indicator.style.opacity = "1";
+            
+            clearTimeout(scrollTimer);
+            // Resume auto-drift after 4 seconds of inactivity
+            scrollTimer = setTimeout(() => {
+                isUserScrolling = false;
+                indicator.innerText = "Auto-Drift Active";
+                indicator.style.opacity = "0.5";
+            }, 4000);
         }
-        lerpScroll();
+
+        function autoDrift() {
+            if (!isUserScrolling) {
+                window.scrollBy(0, driftSpeed);
+            }
+            requestAnimationFrame(autoDrift);
+        }
+
+        // Start the drift
+        autoDrift();
     </script>
 </body>
 </html>
