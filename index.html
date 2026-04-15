@@ -137,6 +137,12 @@
             <p>Leading operational management and public safety for municipal facilities.</p>
         </div>
 
+        <div class="box role-box br-1 clickable-exp" data-bio="ambassador">
+            <span class="tag">Advocacy</span>
+            <h3>TDSB Ambassador</h3>
+            <p>Implementing board-wide mental health and digital safety initiatives.</p>
+        </div>
+
         <div class="box role-box br-1 clickable-exp" data-bio="pollcat">
             <span class="tag">Strategy</span>
             <h3>Pollcat</h3>
@@ -193,6 +199,10 @@
 
     <script>
         const bios = {
+            'ambassador': {
+                title: 'TDSB Mental Health Ambassador',
+                text: 'For the past two years, I have been assisting the TDSB in implementing mental health initiatives in both elementary and high schools. <br><br>I have led 10 social media and digital safety events in collaboration with the TDSB and the Internet Child Exploitation Unit (TPS ICE), helping to educate parents about the risks associated with social media and the digital world. I have also mentored many future ambassadors and contributed to program development.'
+            },
             'mental-health': {
                 title: 'Mental Health Day',
                 text: 'Last year, as a Grade 11 student and Mental Health Ambassador at the TDSB, I led the planning and organization of our school’s Mental Health Day. I am passionate about creating supportive and inclusive spaces where students feel seen, heard, and empowered to care for their well-being. <br><br> I worked closely with staff, community organizations, and fellow student leaders to design a full-day initiative that included assemblies, workshops, yoga and mindfulness sessions, and creative activities. My goal was to reduce stigma around mental health and provide students with practical tools they can use in their daily lives. <br><br> This experience strengthened my leadership, communication, and event planning skills while deepening my commitment to student advocacy.'
@@ -239,14 +249,14 @@
                     modalTitle.innerText = bios[bioKey].title;
                     modalText.innerHTML = bios[bioKey].text;
                     overlay.style.display = 'flex';
-                    document.body.style.overflow = 'hidden'; // Prevent background scroll
+                    document.body.style.overflow = 'hidden'; 
                 }
             }); 
         });
 
         function closeBtn() { 
             overlay.style.display = 'none'; 
-            document.body.style.overflow = 'auto'; // Re-enable scroll
+            document.body.style.overflow = 'auto'; 
         }
 
         window.onclick = function(event) { if (event.target == overlay) closeBtn(); }
