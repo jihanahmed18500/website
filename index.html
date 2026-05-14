@@ -75,23 +75,17 @@
         .socials a { color: white; text-decoration: none; font-weight: 800; font-size: 0.9rem; }
 
         .video-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            margin-bottom: 1.5rem;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 3px solid var(--teal);
-            background: #000;
+            width: 100%; aspect-ratio: 16/9; min-height: 200px;
+            margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden;
+            border: 3px solid var(--teal); background: #000;
         }
 
         @media (max-width: 1024px) { .role-box { grid-column: span 6; } }
 
         @media (max-width: 768px) {
             nav { padding: 1.2rem 4%; flex-direction: column; gap: 1rem; }
-            .logo { font-size: 1.4rem; }
             .bento-wrapper { grid-template-columns: 1fr; gap: 1rem; padding: 10px; }
             .box, .hero-box, .project-box, .job-box, .role-box, .contact-box { grid-column: span 12 !important; padding: 1.5rem; }
-            .project-stats { flex-direction: column; gap: 1rem; }
         }
 
         #modal-overlay { 
@@ -119,6 +113,7 @@
         <a href="index.html" class="logo">JIHAN AHMED</a>
         <ul class="nav-links">
             <li><a href="about.html">About</a></li>
+            <li><a href="perspectives.html">My Perspectives</a></li> <!-- CONNECTED LINK -->
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="https://docs.google.com/document/d/1TCzqBW9-hDBrQjL8sHlkXNgKkW3g5mez/edit?usp=sharing" class="nav-resume" target="_blank">Resume ↓</a></li>
         </ul>
@@ -131,6 +126,7 @@
             <p>Advocate. Leader. Community Builder.</p>
         </div>
 
+        <!-- MENTAL HEALTH DAY -->
         <div class="box project-box br-3 clickable-exp" data-bio="mental-health">
             <span class="tag">Flagship Project</span>
             <h2>Mental Health Day</h2>
@@ -141,10 +137,11 @@
             </div>
         </div>
 
+        <!-- CULTURE & WELLNESS DAY -->
         <div class="box project-box br-2 clickable-exp" data-bio="culture-wellness" style="background: var(--teal); color: white; border-color: var(--highlight);">
             <span class="tag" style="background: var(--highlight); color: var(--teal);">Community Impact</span>
             <h2>Culture & Wellness Day</h2>
-            <p>A multicultural showcase reaching 1,200 students with 20+ club collaborations and high-value incentives.</p>
+            <p>A multicultural showcase reaching 1,200 students with 20+ club collaborations and $1,500+ in prizes.</p>
             <div class="project-stats">
                 <div class="mini-stat" style="border-color: var(--highlight);"><b>$3,000</b><span>Grants</span></div>
                 <div class="mini-stat" style="border-color: var(--highlight);"><b>10</b><span>Prizes Given</span></div>
@@ -227,7 +224,7 @@
             },
             'ambassador': {
                 title: 'TDSB Mental Health Ambassador',
-                text: 'For the past two years, support has been provided to the TDSB in implementing mental health initiatives board-wide. This role included leading 10 digital safety events with the TPS Internet Child Exploitation Unit (TPS ICE) to educate parents on social media risks. Contributions also include mentoring future ambassadors and program development.'
+                text: 'For the past two years, support has been provided to the TDSB in implementing mental health initiatives board-wide. This role included leading 10 digital safety events with the TPS Internet Child Exploitation Unit (TPS ICE) to educate parents on social media risks.'
             },
             'mental-health': {
                 title: 'Mental Health Day',
@@ -275,13 +272,11 @@
                 if (bios[bioKey]) {
                     modalTitle.innerText = bios[bioKey].title;
                     modalText.innerHTML = bios[bioKey].text;
-                    
                     if (bios[bioKey].video) {
                         videoWrapper.innerHTML = `<div class="video-container">${bios[bioKey].video}</div>`;
                     } else {
                         videoWrapper.innerHTML = '';
                     }
-
                     overlay.style.display = 'flex';
                     document.body.style.overflow = 'hidden'; 
                 }
