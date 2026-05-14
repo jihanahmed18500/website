@@ -74,6 +74,16 @@
         .socials { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
         .socials a { color: white; text-decoration: none; font-weight: 800; font-size: 0.9rem; }
 
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid var(--teal);
+            background: #000;
+        }
+
         @media (max-width: 1024px) { .role-box { grid-column: span 6; } }
 
         @media (max-width: 768px) {
@@ -95,7 +105,7 @@
             border-radius: 30px; text-align: left; width: 100%; max-width: 600px;
             max-height: 90vh; overflow-y: auto;
         }
-        .modal-content h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--accent); }
+        .modal-content h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--teal); }
         .modal-content p { line-height: 1.6; font-size: 1.05rem; margin-bottom: 1.5rem; }
         .close-btn { 
             display: inline-block; padding: 12px 30px; background: var(--dark); 
@@ -202,6 +212,7 @@
     <div id="modal-overlay">
         <div class="modal-content">
             <h2 id="modal-title">Experience</h2>
+            <div id="video-wrapper"></div>
             <p id="modal-text">Bio content goes here.</p>
             <div class="close-btn" onclick="closeBtn()">Close</div>
         </div>
@@ -211,6 +222,7 @@
         const bios = {
             'culture-wellness': {
                 title: 'Culture and Wellness Day',
+                video: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/z2M51BQBIZg" title="Recap Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
                 text: 'Building on previous advocacy work, the "Culture and Wellness Day" reached 1,200 students to bridge heritage and mental health. The centerpiece was a multicultural showcase highlighting unique diversities, demonstrating that common ground can be found in wellness. <br><br>Collaborations with 20 student clubs allowed for specialized activities exploring diverse stress-management techniques. To encourage active student engagement, 10 high-value prizes were distributed, totaling over $1,500 in value, including iPads and AirPods. This initiative emphasized that unique identities foster unique, culturally resonant ways to navigate student life.'
             },
             'ambassador': {
@@ -255,6 +267,7 @@
         const overlay = document.getElementById('modal-overlay');
         const modalTitle = document.getElementById('modal-title');
         const modalText = document.getElementById('modal-text');
+        const videoWrapper = document.getElementById('video-wrapper');
 
         experienceBoxes.forEach(box => { 
             box.addEventListener('click', () => { 
@@ -262,6 +275,13 @@
                 if (bios[bioKey]) {
                     modalTitle.innerText = bios[bioKey].title;
                     modalText.innerHTML = bios[bioKey].text;
+                    
+                    if (bios[bioKey].video) {
+                        videoWrapper.innerHTML = `<div class="video-container">${bios[bioKey].video}</div>`;
+                    } else {
+                        videoWrapper.innerHTML = '';
+                    }
+
                     overlay.style.display = 'flex';
                     document.body.style.overflow = 'hidden'; 
                 }
@@ -270,7 +290,8 @@
 
         function closeBtn() { 
             overlay.style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
+            document.body.style.overflow = 'auto';
+            videoWrapper.innerHTML = ''; 
         }
 
         window.onclick = function(event) { if (event.target == overlay) closeBtn(); }
