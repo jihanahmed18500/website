@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Perspectives — Jihan Ahmed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --dark: #121212; 
+            --cream: #f4f1ea; 
+            --highlight: #ffd700; 
+            --teal: #006064;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; line-height: 1.6; }
+        h1, h2, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1.8rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); 
+        }
+        
+        .logo { font-weight: 700; font-size: 1.6rem; text-decoration: none; color: var(--dark); }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); padding: 8px 16px; border-radius: 10px; transition: 0.2s; }
+        .back-btn:hover { background: var(--dark); color: white; }
+
+        .blog-container { max-width: 800px; margin: 80px auto; padding: 0 20px; text-align: center; }
+
+        .post-card {
+            background: white;
+            border: 2px solid var(--dark);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 10px 10px 0px var(--teal);
+            margin-bottom: 60px;
+            text-align: left;
+            position: relative;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: var(--highlight);
+            color: var(--dark);
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            border-radius: 5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-card h1 { font-size: 3rem; line-height: 1; margin-bottom: 1.5rem; letter-spacing: -1.5px; }
+        .status-badge { position: absolute; top: 20px; right: 20px; background: var(--dark); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
+
+        .blog-content p { font-size: 1.2rem; margin-bottom: 1.5rem; color: #666; filter: blur(2px); pointer-events: none; }
+
+        .coming-soon-overlay {
+            margin-top: 2rem;
+            padding: 20px;
+            background: var(--highlight);
+            border: 2px solid var(--dark);
+            border-radius: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">JIHAN AHMED</a>
+        <a href="index.html" class="back-btn">← Portfolio</a>
+    </nav>
+
+    <div class="blog-container">
+        <article class="post-card">
+            <div class="status-badge">COMING SOON</div>
+            <span class="category-tag">Reflections</span>
+            <h1>What Nobody Tells You</h1>
+            
+            <div class="blog-content">
+                <p>There is a specific kind of silence that comes with doing things out of order. Most people see the result—finishing high school in three years—and assume it was a linear sprint. What nobody tells you is that it feels more like a constant negotiation between who you were and who you are trying to become...</p>
+            </div>
+
+            <div class="coming-soon-overlay">
+                🚧 This piece is currently being finalized. Check back soon for the full release.
+            </div>
+        </article>
+
+        <p style="font-family: 'Space Grotesk'; font-weight: 500; color: #888;">More perspectives in development.</p>
+    </div>
+
+</body>
+</html>
