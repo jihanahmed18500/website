@@ -6,7 +6,7 @@
     <title>My Perspectives — Jihan Ahmed</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --dark: #121212; --cream: #f4f1ea; --highlight: #ffd700; --teal: #006064; }
+        :root { --dark: #121212; --cream: #f4f1ea; --highlight: #ffd700; --teal: #006064; --indigo: #1e1b4b; }
         body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding: 0; margin: 0; }
         
         nav { 
@@ -17,20 +17,20 @@
         .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); padding: 8px 16px; border-radius: 10px; transition: 0.2s; }
         .back-btn:hover { background: var(--dark); color: white; }
 
-        header { text-align: center; padding: 60px 20px; }
-        header h1 { font-family: 'Space Grotesk'; font-size: 4rem; letter-spacing: -2px; }
+        header { text-align: center; padding: 80px 20px 40px; }
+        header h1 { font-family: 'Space Grotesk'; font-size: 4rem; letter-spacing: -2px; margin: 0; }
 
         .bento-grid { max-width: 1100px; margin: 0 auto 100px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding: 20px; }
         
         .post-box { 
-            background: var(--teal); color: white; border: 2px solid var(--dark); 
+            border: 2px solid var(--dark); 
             padding: 2.5rem; border-radius: 30px; cursor: pointer; transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px;
         }
         .post-box:hover { transform: translate(-5px, -5px); box-shadow: 10px 10px 0px var(--dark); }
         
         .tag { background: var(--highlight); color: var(--dark); padding: 5px 12px; font-size: 0.75rem; font-weight: 900; border-radius: 5px; text-transform: uppercase; align-self: flex-start; }
-        h2 { font-family: 'Space Grotesk'; font-size: 2.2rem; margin: 1.5rem 0 1rem; line-height: 1.1; }
+        h2 { font-family: 'Space Grotesk'; font-size: 2.2rem; margin: 1.5rem 0 1rem; line-height: 1.1; color: white; }
         p { color: #e0e0e0; font-size: 1rem; line-height: 1.5; margin-bottom: auto; }
         .read-link { margin-top: 2rem; font-weight: 700; color: var(--highlight); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
     </style>
@@ -44,11 +44,10 @@
 
     <header>
         <h1>My Perspectives</h1>
-        <p>Reflections on leadership, advocacy, and unconventional paths.</p>
     </header>
 
     <div class="bento-grid">
-        <a href="what-nobody-tells-you.html" class="post-box">
+        <a href="what-nobody-tells-you.html" class="post-box" style="background: var(--teal);">
             <div>
                 <span class="tag">Reflections</span>
                 <h2>What Nobody Tells You</h2>
@@ -57,7 +56,7 @@
             <div class="read-link">Read Full Entry →</div>
         </a>
 
-        <a href="chasing-fulfillment.html" class="post-box">
+        <a href="chasing-fulfillment.html" class="post-box" style="background: var(--indigo);">
             <div>
                 <span class="tag">Purpose</span>
                 <h2>Chasing Fulfillment</h2>
