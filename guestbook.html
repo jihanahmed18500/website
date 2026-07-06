@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Pulse Wall — Jihan Ahmed</title>
+    <title>The Wall — Jihan Ahmed</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -39,7 +39,7 @@
         .submit-btn { width: 100%; padding: 16px; background: var(--dark); color: white; border: none; border-radius: 12px; font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; }
         .submit-btn:hover { background: var(--highlight); color: var(--dark); box-shadow: 4px 4px 0px var(--indigo); }
 
-        /* --- THE WALL OF PULSE TILES --- */
+        /* --- THE WALL OF BENTO TILES --- */
         .wall-header { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; letter-spacing: -1.5px; }
         
         #messages-wall { 
@@ -97,38 +97,38 @@
         <!-- FORM SUBMISSION -->
         <section class="form-section">
             <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -1px; text-align: center;">Leave a Mark</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">Add your network connection, endorsement, or perspective to the system grid.</p>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">Add your connection, endorsement, or perspective to the collective board.</p>
             
             <form id="resonance-form">
                 <div class="form-group">
                     <label for="user-name">Identity / Organization</label>
-                    <input type="text" id="user-name" class="form-input" placeholder="Name or agency identifier..." required autocomplete="off">
+                    <input type="text" id="user-name" class="form-input" placeholder="Name or collective identifier..." required autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label for="user-message">Impact Statement / Reflection</label>
-                    <textarea id="user-message" class="form-input" rows="4" placeholder="Drop a statement or peer reflection..." required></textarea>
+                    <label for="user-message">Statement / Note</label>
+                    <textarea id="user-message" class="form-input" rows="4" placeholder="Drop a reflection or peer endorsement..." required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Transmit</button>
+                <button type="submit" class="submit-btn">Leave Mark</button>
             </form>
         </section>
 
-        <!-- THE GRID WALL -->
-        <h2 class="wall-header">The Pulse Wall</h2>
+        <!-- THE BOARD -->
+        <h2 class="wall-header">The Wall</h2>
         <div id="messages-wall">
-            <p style="color: #666; font-style: italic; text-align: center; grid-column: 1/-1;">Syncing data network...</p>
+            <p style="color: #666; font-style: italic; text-align: center; grid-column: 1/-1;">Connecting to board...</p>
         </div>
     </div>
 
     <script>
         // --- SUPABASE CONFIGURATION ---
         const SUPABASE_URL = "https://bcxbmgopxesuodmjuiff.supabase.co"; 
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjeGJtZ29weGVzdW9kbWp1aWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMDA3MTksImV4cCI6MjA5ODg3NjcxOX0.quMtZVhPsK9fDzHF85Tnkhc4HKLkESeTb42alAskoBs"; 
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjeGJtZ29weGVzdW9kbWp1aWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMDA3MTksImV4cCI6MjA5ODg3NjcxOX0.quMtZVhPsK9fDzHF85Tnkhc4HKLkESeTb42alAskoBs; 
 
         const form = document.getElementById('resonance-form');
         const wall = document.getElementById('messages-wall');
         const cardThemes = ['card-teal', 'card-indigo', 'card-coral', 'card-gold'];
 
-        // Fetch logs
+        // Fetch entries
         async function fetchMessages() {
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/guestbook?select=*&order=created_at.desc`, {
@@ -140,23 +140,23 @@
                     }
                 });
                 
-                if (!response.ok) throw new Error("Sync failure anomaly.");
+                if (!response.ok) throw new Error("Sync anomaly.");
                 const data = await response.json();
                 renderMessages(data);
             } catch (error) {
                 console.error(error);
                 wall.innerHTML = `
                     <div class="resonance-card card-coral" style="grid-column: 1/-1; max-width: 500px; margin: 0 auto; text-align: center;">
-                        <div class="msg-text">Network segment offline. Syncing public database clusters. Check back in a brief moment.</div>
+                        <div class="msg-text">Database sync offline. Refreshing parameters momentarily.</div>
                     </div>
                 `;
             }
         }
 
-        // Render cards with dynamic asymmetries
+        // Render structural tiles with subtle tilts
         function renderMessages(messages) {
             if (!messages || messages.length === 0) {
-                wall.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; grid-column: 1/-1; margin-top: 20px;">The wall is completely open. Be the first to add an entry!</p>`;
+                wall.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; grid-column: 1/-1; margin-top: 20px;">The wall is completely clear. Be the first to add an entry!</p>`;
                 return;
             }
             wall.innerHTML = '';
@@ -165,7 +165,7 @@
                 const date = new Date(msg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 const assignedTheme = cardThemes[index % cardThemes.length];
                 
-                // Generates subtle tilt rotations (-3deg to 3deg)
+                // Applies slight random rotation angles (-3deg to 3deg)
                 const randomRotation = ((index * 7) % 7) - 3;
                 
                 const card = document.createElement('div');
@@ -183,7 +183,7 @@
             });
         }
 
-        // Submit actions
+        // Post entries
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('user-name').value;
@@ -191,7 +191,7 @@
             const submitBtn = form.querySelector('.submit-btn');
 
             submitBtn.disabled = true;
-            submitBtn.innerText = "Transmitting...";
+            submitBtn.innerText = "Posting...";
 
             try {
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
@@ -205,15 +205,15 @@
                     body: JSON.stringify({ name, message })
                 });
 
-                if (!res.ok) throw new Error("Write rejected.");
+                if (!res.ok) throw new Error("Write blocked.");
 
                 form.reset();
                 fetchMessages();
             } catch (error) {
-                alert("Transmission interrupted. Ensure database credentials are full strings.");
+                alert("Submission failed. Double check your API public access key layout.");
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerText = "Transmit";
+                submitBtn.innerText = "Leave Mark";
             }
         });
 
