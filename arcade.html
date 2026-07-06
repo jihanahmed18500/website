@@ -18,7 +18,7 @@
         body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
         h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
 
-        /* --- MOBILE-FIRST NAV --- */
+        /* --- NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 1rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); 
@@ -43,7 +43,7 @@
         .choice-btn { display: block; width: 100%; text-align: left; padding: 12px 16px; background: white; border: 2px solid var(--dark); border-radius: 12px; margin-bottom: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .choice-btn:hover { background: var(--highlight); }
 
-        /* --- WORDLE RESPONSIVE GRID --- */
+        /* --- WORDLE GRID --- */
         #wordle-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 6px; max-width: 280px; margin: 20px auto; }
         .wordle-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
         .wordle-tile { 
@@ -58,23 +58,53 @@
             font-weight: 700; 
             text-transform: uppercase; 
             background: white; 
+            border-radius: 4px;
         }
+        
+        /* --- TILES STATE STYLES --- */
         .wordle-tile.correct { background-color: #6cab64 !important; color: white; border-color: #6cab64; }
         .wordle-tile.present { background-color: #c9b458 !important; color: white; border-color: #c9b458; }
         .wordle-tile.absent { background-color: #787c7e !important; color: white; border-color: #787c7e; }
         
-        #wordle-input-container { display: flex; justify-content: center; gap: 8px; margin-top: 1.5rem; width: 100%; }
-        #wordle-guess { padding: 10px; border: 2px solid var(--dark); border-radius: 8px; font-size: 1rem; width: 130px; text-transform: uppercase; text-align: center; font-weight: 700; letter-spacing: 2px; }
-        #wordle-btn { padding: 10px 16px; background: var(--indigo); color: white; border: 2px solid var(--dark); border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; }
-        #wordle-message { text-align: center; margin-top: 1rem; font-weight: 700; color: var(--teal); min-height: 24px; padding: 0 10px; font-size: 0.95rem; }
+        /* --- INTERACTIVE VIRTUAL KEYBOARD --- */
+        #keyboard-container { max-width: 500px; margin: 30px auto 0; display: flex; flex-direction: column; gap: 8px; }
+        .keyboard-row { display: flex; justify-content: center; gap: 4px; width: 100%; }
+        .key { 
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            background-color: #d3d6da;
+            color: var(--dark);
+            border: 0;
+            padding: 0;
+            height: 48px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: background-color 0.1s ease;
+        }
+        .key:active, .key:hover { background-color: #bbb; }
+        .key.wide-key { flex: 1.5; font-size: 0.75rem; }
+        
+        /* --- KEYBOARD STATE STYLES --- */
+        .key.correct { background-color: #6cab64 !important; color: white; }
+        .key.present { background-color: #c9b458 !important; color: white; }
+        .key.absent { background-color: #787c7e !important; color: white; }
 
-        /* --- MOBILE MEDIA QUERY --- */
+        #wordle-message { text-align: center; margin-top: 1.5rem; font-weight: 700; color: var(--teal); min-height: 24px; padding: 0 10px; font-size: 0.95rem; }
+
+        /* --- MOBILE ADAPTATIONS --- */
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
             .game-card { padding: 1.5rem 1rem; border-radius: 16px; }
             .game-title h2 { font-size: 1.5rem; }
-            #wordle-input-container { flex-direction: column; align-items: center; }
-            #wordle-guess, #wordle-btn { width: 100%; max-width: 280px; margin: 0; }
+            .key { height: 42px; font-size: 0.8rem; }
+            .key.wide-key { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -107,20 +137,31 @@
             </div>
         </section>
 
-        <!-- GAME 2: WORDLE -->
+        <!-- GAME 2: REAL WORDLE ENGINE -->
         <section class="game-card" style="border-color: var(--indigo); box-shadow: 8px 8px 0px var(--indigo);">
             <div class="game-title">
                 <h2>Legal & Policy Wordle</h2>
                 <span class="game-tag" style="background: var(--indigo); color: white;">6-Letter Puzzle</span>
             </div>
-            <p style="text-align: center; color: #444; margin-bottom: 1rem; font-size: 0.95rem;">Guess the hidden 6-letter term related to jurisprudence, governance, and statutory frameworks.</p>
+            <p style="text-align: center; color: #444; margin-bottom: 1.5rem; font-size: 0.95rem;">Guess the hidden 6-letter term related to jurisprudence, governance, and statutory frameworks.</p>
             
             <div id="wordle-grid"></div>
-
-            <div id="wordle-input-container">
-                <input type="text" id="wordle-guess" maxlength="6" placeholder="GUESS">
-                <button id="wordle-btn" onclick="makeWordleGuess()">Submit</button>
+            
+            <!-- VIRTUAL KEYBOARD ENGINE -->
+            <div id="keyboard-container">
+                <div class="keyboard-row">
+                    <button class="key" data-key="Q">Q</button><button class="key" data-key="W">W</button><button class="key" data-key="E">E</button><button class="key" data-key="R">R</button><button class="key" data-key="T">T</button><button class="key" data-key="Y">Y</button><button class="key" data-key="U">U</button><button class="key" data-key="I">I</button><button class="key" data-key="O">O</button><button class="key" data-key="P">P</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key" data-key="A">A</button><button class="key" data-key="S">S</button><button class="key" data-key="D">D</button><button class="key" data-key="F">F</button><button class="key" data-key="G">G</button><button class="key" data-key="H">H</button><button class="key" data-key="J">J</button><button class="key" data-key="K">K</button><button class="key" data-key="L">L</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key wide-key" data-key="ENTER">Enter</button>
+                    <button class="key" data-key="Z">Z</button><button class="key" data-key="X">X</button><button class="key" data-key="C">C</button><button class="key" data-key="V">V</button><button class="key" data-key="B">B</button><button class="key" data-key="N">N</button><button class="key" data-key="M">M</button>
+                    <button class="key wide-key" data-key="BACKSPACE">Del</button>
+                </div>
             </div>
+
             <div id="wordle-message"></div>
         </section>
 
@@ -184,11 +225,15 @@
         function resetSim() { budget = 5000; wellness = 50; equity = 50; currentStep = 0; updateSimUI(); }
 
         // ==========================================
-        // EXPANDED 6-LETTER THEMED WORDLE WORD POOL (24 WORDS)
+        // DYNAMIC WORDLE VIRTUAL KEYBOARD ENGINE
         // ==========================================
         const wordPool = ["POLICY", "VOTING", "SENATE", "COURTS", "RIGHTS", "DEBATE", "STATUTE", "EQUITY", "SYSTEM", "REFORM", "AGENCY", "BALLOT", "CIVICS", "CLAUSE", "DECREE", "ETHICS", "HEARNG", "JUSTIC", "LAWYER", "OFFICE", "REPUBLIC", "RULING", "TREATY", "VETOES"];
         const secretWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-        let currentWordleRow = 0; const maxGuesses = 6;
+        let currentWordleRow = 0; 
+        let currentTileIndex = 0;
+        const maxGuesses = 6;
+        let gameOver = false;
+        let currentGuess = [];
 
         function initWordle() {
             const grid = document.getElementById('wordle-grid'); grid.innerHTML = '';
@@ -199,21 +244,100 @@
                 }
                 grid.appendChild(row);
             }
+            
+            // Connect On-Screen Buttons
+            document.querySelectorAll('.key').forEach(keyBtn => {
+                keyBtn.addEventListener('click', () => {
+                    const keyValue = keyBtn.getAttribute('data-key');
+                    handleInput(keyValue);
+                });
+            });
+
+            // Connect Physical Keyboards for desktop visitors
+            window.addEventListener('keydown', (e) => {
+                const key = e.key.toUpperCase();
+                if (key === 'ENTER') handleInput('ENTER');
+                else if (key === 'BACKSPACE') handleInput('BACKSPACE');
+                else if (/^[A-Z]$/.test(key)) handleInput(key);
+            });
         }
-        function makeWordleGuess() {
-            const inputElement = document.getElementById('wordle-guess'); let guess = inputElement.value.toUpperCase().trim();
+
+        function handleInput(key) {
+            if (gameOver) return;
             const messageElement = document.getElementById('wordle-message');
-            if (guess.length !== 6) { messageElement.innerText = "Word must be exactly 6 letters long."; return; }
             messageElement.innerText = "";
-            for (let i = 0; i < 6; i++) {
-                let tile = document.getElementById(`tile-${currentWordleRow}-${i}`); let letter = guess[i]; tile.innerText = letter;
-                if (secretWord[i] === letter) tile.classList.add('correct');
-                else if (secretWord.includes(letter)) tile.classList.add('present');
-                else tile.classList.add('absent');
+
+            if (key === 'BACKSPACE') {
+                if (currentTileIndex > 0) {
+                    currentTileIndex--;
+                    currentGuess.pop();
+                    let activeTile = document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`);
+                    activeTile.innerText = "";
+                }
+            } 
+            else if (key === 'ENTER') {
+                if (currentGuess.length === 6) {
+                    processGuess();
+                } else {
+                    messageElement.innerText = "Word must be exactly 6 letters long.";
+                }
+            } 
+            else {
+                if (currentGuess.length < 6) {
+                    let activeTile = document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`);
+                    activeTile.innerText = key;
+                    currentGuess.push(key);
+                    currentTileIndex++;
+                }
             }
-            if (guess === secretWord) { messageElement.innerText = "🎉 Puzzle solved successfully."; document.getElementById('wordle-btn').disabled = true; return; }
-            currentWordleRow++; inputElement.value = "";
-            if (currentWordleRow >= maxGuesses) { messageElement.innerText = `Game Over. The correct term was: ${secretWord}`; document.getElementById('wordle-btn').disabled = true; }
+        }
+
+        function processGuess() {
+            const finalString = currentGuess.join("");
+            const messageElement = document.getElementById('wordle-message');
+            
+            // Evaluates letters and colors tiles
+            for (let i = 0; i < 6; i++) {
+                let tile = document.getElementById(`tile-${currentWordleRow}-${i}`);
+                let letter = finalString[i];
+                let targetKeyBtn = document.querySelector(`.key[data-key="${letter}"]`);
+
+                if (secretWord[i] === letter) {
+                    tile.classList.add('correct');
+                    updateKeyStyle(targetKeyBtn, 'correct');
+                } else if (secretWord.includes(letter)) {
+                    tile.classList.add('present');
+                    updateKeyStyle(targetKeyBtn, 'present');
+                } else {
+                    tile.classList.add('absent');
+                    updateKeyStyle(targetKeyBtn, 'absent');
+                }
+            }
+
+            if (finalString === secretWord) {
+                messageElement.innerText = "🎉 Puzzle solved successfully.";
+                gameOver = true;
+                return;
+            }
+
+            currentWordleRow++;
+            currentTileIndex = 0;
+            currentGuess = [];
+
+            if (currentWordleRow >= maxGuesses) {
+                messageElement.innerText = `Game Over. The correct term was: ${secretWord}`;
+                gameOver = true;
+            }
+        }
+
+        function updateKeyStyle(keyBtn, status) {
+            if (!keyBtn) return;
+            // Prevents over-writing green statuses back to yellow or gray
+            if (keyBtn.classList.contains('correct')) return;
+            if (keyBtn.classList.contains('present') && status === 'absent') return;
+            
+            keyBtn.classList.remove('present', 'absent');
+            keyBtn.classList.add(status);
         }
 
         updateSimUI();
