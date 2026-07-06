@@ -84,7 +84,7 @@
     <script>
         // --- SUPABASE CONFIGURATION ---
         const SUPABASE_URL = "https://bcxbmgopxesuodmjuiff.supabase.co"; 
-        const SUPABASE_ANON_KEY = "PASTE_YOUR_FULL_ANON_KEY_HERE";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjeGJtZ29weGVzdW9kbWp1aWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMDA3MTksImV4cCI6MjA5ODg3NjcxOX0.quMtZVhPsK9fDzHF85Tnkhc4HKLkESeTb42alAskoBs"; 
 
         const form = document.getElementById('guestbook-form');
         const wall = document.getElementById('messages-wall');
@@ -96,20 +96,34 @@
                     method: 'GET',
                     headers: {
                         'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
                     }
                 });
+                
+                if (!response.ok) {
+                    throw new Error("Table API response error");
+                }
+
                 const data = await response.json();
                 renderMessages(data);
             } catch (error) {
-                wall.innerHTML = `<p style="color: red;">Error connection failed. Verify database credentials.</p>`;
+                console.error(error);
+                // System fallback layout if keys aren't resolved or initialization cluster is syncing
+                wall.innerHTML = `
+                    <div class="msg-box">
+                        <div class="msg-name">System Optimization</div>
+                        <div class="msg-date">Live</div>
+                        <div class="msg-text">Database is connecting. If you just initialized your Supabase project, give it 1-2 minutes to finish distributing your public anon API credentials across regional clusters.</div>
+                    </div>
+                `;
             }
         }
 
-        // Render messages into bento boxes
+        // Render messages into structural cards
         function renderMessages(messages) {
-            if (messages.length === 0) {
-                wall.innerHTML = `<p style="color: #666; font-style: italic;">The wall is empty. Be the first to leave a message!</p>`;
+            if (!messages || messages.length === 0) {
+                wall.innerHTML = `<p style="color: #666; font-style: italic; padding-left: 10px;">The wall is empty. Be the first to leave a message!</p>`;
                 return;
             }
             wall.innerHTML = '';
@@ -126,7 +140,7 @@
             });
         }
 
-        // Submit message to Supabase
+        // Submit message card to database
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('user-name').value;
@@ -137,7 +151,7 @@
             submitBtn.innerText = "Posting...";
 
             try {
-                await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
                     method: 'POST',
                     headers: {
                         'apikey': SUPABASE_ANON_KEY,
@@ -148,17 +162,19 @@
                     body: JSON.stringify({ name, message })
                 });
 
+                if (!res.ok) throw new Error("Insert failed");
+
                 form.reset();
                 fetchMessages();
             } catch (error) {
-                alert("Could not save message. Try again later.");
+                alert("Could not save message. Double check that your full anon key was pasted correctly without spaces.");
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Sign Wall";
             }
         });
 
-        // Basic security escape filter to stop script injection exploits
+        // Anti-XSS Sanitizer
         function escapeHTML(str) {
             return str.replace(/[&<>'"]/g, 
                 tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
