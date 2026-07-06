@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook — Jihan Ahmed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --dark: #121212; 
+            --cream: #f4f1ea; 
+            --highlight: #ffd700; 
+            --teal: #006064; 
+            --indigo: #1e1b4b; 
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
+        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); 
+        }
+        .logo { font-weight: 700; font-size: 1.4rem; text-decoration: none; color: var(--dark); }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; transition: 0.2s; }
+        .back-btn:hover { background: var(--dark); color: white; }
+
+        .container { max-width: 800px; margin: 40px auto; padding: 0 15px; }
+        
+        /* --- FORM STYLES --- */
+        .form-card { background: white; border: 2px solid var(--dark); border-radius: 24px; padding: 2rem; margin-bottom: 40px; box-shadow: 8px 8px 0px var(--dark); }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 6px; letter-spacing: 0.5px; }
+        .form-input { width: 100%; padding: 12px; border: 2px solid var(--dark); border-radius: 10px; font-family: 'Inter'; font-size: 1rem; background: var(--cream); color: var(--dark); }
+        .form-input:focus { outline: none; background: white; }
+        .submit-btn { width: 100%; padding: 14px; background: var(--teal); color: white; border: 2px solid var(--dark); border-radius: 10px; font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; transition: 0.2s; }
+        .submit-btn:hover { background: var(--highlight); color: var(--dark); transform: translateY(-2px); }
+
+        /* --- MESSAGES WALL STYLES --- */
+        .wall-title { font-size: 2rem; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        #messages-wall { display: flex; flex-direction: column; gap: 1.5rem; }
+        .msg-box { background: white; border: 2px solid var(--dark); padding: 1.5rem; border-radius: 20px; box-shadow: 6px 6px 0px var(--indigo); transition: 0.2s; position: relative; }
+        .msg-name { font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.2rem; color: var(--teal); margin-bottom: 6px; }
+        .msg-text { font-size: 1.05rem; line-height: 1.5; color: #222; }
+        .msg-date { font-size: 0.75rem; color: #777; position: absolute; top: 1.5rem; right: 1.5rem; }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
+            .form-card { padding: 1.5rem 1rem; }
+            .msg-date { position: relative; top: auto; right: auto; display: block; margin-top: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">JIHAN AHMED</a>
+        <a href="index.html" class="back-btn">← Portfolio</a>
+    </nav>
+
+    <div class="container">
+        <section class="form-card">
+            <h2 style="font-size: 2rem; margin-bottom: 1.5rem; letter-spacing: -1px;">Endorsements & Notes</h2>
+            <form id="guestbook-form">
+                <div class="form-group">
+                    <label for="user-name">Your Name / Organization</label>
+                    <input type="text" id="user-name" class="form-input" placeholder="e.g., Jane Doe or TDSB Student Caucus" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="user-message">Message / Endorsement</label>
+                    <textarea id="user-message" class="form-input" rows="4" placeholder="Leave a note or reflection here..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Sign Wall</button>
+            </form>
+        </section>
+
+        <h2 class="wall-title">Recent Entries</h2>
+        <div id="messages-wall">
+            <p style="color: #666; font-style: italic;">Loading the wall...</p>
+        </div>
+    </div>
+
+    <script>
+        // --- SUPABASE CONFIGURATION ---
+        const SUPABASE_URL = "https://bcxbmgopxesuodmjuiff.supabase.co"; 
+        const SUPABASE_ANON_KEY = "PASTE_YOUR_FULL_ANON_KEY_HERE";
+
+        const form = document.getElementById('guestbook-form');
+        const wall = document.getElementById('messages-wall');
+
+        // Fetch messages from Supabase
+        async function fetchMessages() {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/guestbook?select=*&order=created_at.desc`, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                const data = await response.json();
+                renderMessages(data);
+            } catch (error) {
+                wall.innerHTML = `<p style="color: red;">Error connection failed. Verify database credentials.</p>`;
+            }
+        }
+
+        // Render messages into bento boxes
+        function renderMessages(messages) {
+            if (messages.length === 0) {
+                wall.innerHTML = `<p style="color: #666; font-style: italic;">The wall is empty. Be the first to leave a message!</p>`;
+                return;
+            }
+            wall.innerHTML = '';
+            messages.forEach(msg => {
+                const date = new Date(msg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const box = document.createElement('div');
+                box.className = 'msg-box';
+                box.innerHTML = `
+                    <div class="msg-name">${escapeHTML(msg.name)}</div>
+                    <div class="msg-date">${date}</div>
+                    <div class="msg-text">${escapeHTML(msg.message)}</div>
+                `;
+                wall.appendChild(box);
+            });
+        }
+
+        // Submit message to Supabase
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('user-name').value;
+            const message = document.getElementById('user-message').value;
+            const submitBtn = form.querySelector('.submit-btn');
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Posting...";
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ name, message })
+                });
+
+                form.reset();
+                fetchMessages();
+            } catch (error) {
+                alert("Could not save message. Try again later.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Sign Wall";
+            }
+        });
+
+        // Basic security escape filter to stop script injection exploits
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // Initialize wall on page load
+        fetchMessages();
+    </script>
+</body>
+</html>
