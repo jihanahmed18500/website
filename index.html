@@ -3,86 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wall — Jihan Ahmed</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Jihan Ahmed — Student Advocate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { 
             --dark: #121212; 
             --cream: #f4f1ea; 
+            --accent: #4f46e5; 
             --highlight: #ffd700; 
-            --teal: #006064; 
-            --indigo: #1e1b4b; 
-            --coral: #ff6b6b;
+            --toronto-blue: #003da5;
+            --teal: #006064;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
+        body::before { 
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); 
+            opacity: 0.03; pointer-events: none; z-index: 100; 
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            background-color: var(--cream); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+        }
+        
         h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
 
-        /* --- NAVIGATION --- */
+        /* --- MOBILE-FIRST NAVIGATION --- */
         nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 1rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1rem 5%; 
+            position: sticky; 
+            top: 0; 
+            background: var(--cream); 
+            z-index: 1000; 
+            border-bottom: 2px solid var(--dark); 
         }
-        .logo { font-weight: 700; font-size: 1.4rem; text-decoration: none; color: var(--dark); }
-        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; transition: 0.2s; }
-        .back-btn:hover { background: var(--dark); color: white; }
-
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         
-        /* --- INPUT FORM --- */
-        .form-section { max-width: 650px; margin: 0 auto 60px; background: white; border: 3px solid var(--dark); border-radius: 30px; padding: 2.5rem; box-shadow: 8px 8px 0px var(--dark); }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 8px; letter-spacing: 1px; color: #555; }
-        .form-input { width: 100%; padding: 14px; border: 2px solid var(--dark); border-radius: 12px; font-family: 'Inter'; font-size: 1rem; background: var(--cream); color: var(--dark); transition: transform 0.2s; }
-        .form-input:focus { outline: none; background: white; transform: scale(1.01); }
-        .submit-btn { width: 100%; padding: 16px; background: var(--dark); color: white; border: none; border-radius: 12px; font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; }
-        .submit-btn:hover { background: var(--highlight); color: var(--dark); box-shadow: 4px 4px 0px var(--indigo); }
-
-        /* --- THE WALL OF BENTO TILES --- */
-        .wall-header { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; letter-spacing: -1.5px; }
+        .logo { font-weight: 700; font-size: 1.4rem; letter-spacing: -1px; text-decoration: none; color: var(--dark); }
         
-        #messages-wall { 
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            grid-auto-rows: minmax(180px, auto);
-            gap: 2rem;
-            padding: 10px 0;
+        .nav-links { 
+            display: flex; 
+            list-style: none; 
+            gap: 1rem; 
+            align-items: center; 
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .resonance-card { 
-            background: white; 
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--dark); 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+        }
+        
+        .nav-resume { 
+            background: var(--dark); 
+            color: white !important; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            font-size: 0.8rem !important;
+        }
+
+        /* --- RESPONSIVE BENTO GRID --- */
+        .bento-wrapper { 
+            max-width: 1300px; 
+            margin: 0 auto 50px; 
+            display: grid; 
+            grid-template-columns: repeat(12, 1fr); 
+            gap: 1rem; 
+            padding: 15px; 
+        }
+
+        .box { 
+            background: #fff; 
             border: 2px solid var(--dark); 
-            padding: 1.8rem; 
-            border-radius: 24px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        .resonance-card:hover { 
-            transform: scale(1.05) rotate(0deg) !important; 
-            z-index: 10;
-            box-shadow: 0px 15px 30px rgba(0,0,0,0.1);
+            padding: 1.5rem; 
+            position: relative; 
+            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1); 
         }
 
-        /* Card Accents */
-        .card-teal { box-shadow: 6px 6px 0px var(--teal); border-top: 6px solid var(--teal); }
-        .card-indigo { box-shadow: 6px 6px 0px var(--indigo); border-top: 6px solid var(--indigo); }
-        .card-coral { box-shadow: 6px 6px 0px var(--coral); border-top: 6px solid var(--coral); }
-        .card-gold { box-shadow: 6px 6px 0px var(--highlight); border-top: 6px solid var(--highlight); background: #fffdf3; }
+        .clickable-exp { cursor: pointer; }
+        .clickable-exp:hover { transform: translate(-4px, -4px); box-shadow: 6px 6px 0px var(--dark); }
+        
+        .br-1 { border-radius: 30px 10px; } 
+        .br-2 { border-radius: 10px 30px; } 
+        .br-3 { border-radius: 20px; }
 
-        .msg-text { font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.5; color: #111; margin-bottom: 1.5rem; font-weight: 500; }
-        .msg-meta { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #ddd; padding-top: 10px; }
-        .msg-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; }
-        .msg-date { font-size: 0.75rem; color: #777; font-weight: 600; }
+        .hero-box { grid-column: span 12; background: var(--accent); color: white; border: none; padding: 3rem 1rem; text-align: center; }
+        .hero-box .name-highlight { display: block; font-size: clamp(2rem, 8vw, 5rem); font-weight: 700; color: var(--highlight); letter-spacing: -1px; }
+
+        .project-box { grid-column: span 12; background: var(--highlight); }
+        .project-stats { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+        .mini-stat b { font-size: 1.2rem; display: block; }
+
+        .job-box { grid-column: span 12; background: var(--toronto-blue); color: white; border: none; }
+        .role-box { grid-column: span 4; }
+
+        .tag { background: #000; color: #fff; padding: 4px 8px; font-size: 0.6rem; font-weight: 900; border-radius: 4px; margin-bottom: 0.8rem; display: inline-block; }
+        
+        .contact-box { grid-column: span 12; background: var(--dark); color: white; text-align: center; padding: 2.5rem 1rem; }
+        .socials { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .socials a { color: white; text-decoration: none; font-weight: 800; font-size: 0.8rem; }
+
+        .video-container {
+            width: 100%; aspect-ratio: 16/9; margin-bottom: 1.5rem; 
+            border-radius: 15px; overflow: hidden; border: 3px solid var(--teal); background: #000;
+        }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 1024px) { 
+            .role-box { grid-column: span 6; } 
+        }
 
         @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
-            .form-section { padding: 1.5rem 1rem; border-radius: 20px; }
-            #messages-wall { grid-template-columns: 1fr; gap: 1.5rem; }
-            .resonance-card { transform: none !important; }
+            nav { padding: 1rem; flex-direction: column; gap: 0.8rem; text-align: center; }
+            .nav-links { gap: 0.8rem; }
+            .bento-wrapper { grid-template-columns: 1fr; padding: 10px; }
+            .box, .hero-box, .project-box, .job-box, .role-box, .contact-box { 
+                grid-column: span 12 !important; 
+                padding: 1.2rem; 
+            }
+            .hero-box { padding: 2rem 1rem; }
+        }
+
+        /* --- MODAL --- */
+        #modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); display: none; justify-content: center; 
+            align-items: center; z-index: 2000; backdrop-filter: blur(8px); 
+            padding: 15px;
+        }
+        .modal-content { 
+            background: var(--cream); border: 3px solid var(--dark); padding: 1.5rem; 
+            border-radius: 20px; width: 100%; max-width: 500px;
+            max-height: 85vh; overflow-y: auto;
+        }
+        .modal-content h2 { font-size: 1.5rem; margin-bottom: 0.8rem; color: var(--teal); }
+        .modal-content p { line-height: 1.5; font-size: 0.95rem; margin-bottom: 1.2rem; }
+        .close-btn { 
+            display: block; width: 100%; text-align: center; padding: 12px; 
+            background: var(--dark); color: white; font-weight: 700; border-radius: 10px; cursor: pointer;
         }
     </style>
 </head>
@@ -90,140 +159,161 @@
 
     <nav>
         <a href="index.html" class="logo">JIHAN AHMED</a>
-        <a href="index.html" class="back-btn">← Portfolio</a>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="perspectives.html">Perspectives</a></li>
+            <li><a href="arcade.html">Arcade</a></li>
+            <li><a href="guestbook.html">The Wall</a></li> <!-- UPDATED -->
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="https://docs.google.com/document/d/1TCzqBW9-hDBrQjL8sHlkXNgKkW3g5mez/edit?usp=sharing" class="nav-resume" target="_blank">Resume ↓</a></li>
+        </ul>
     </nav>
 
-    <div class="container">
-        <!-- FORM SUBMISSION -->
-        <section class="form-section">
-            <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -1px; text-align: center;">Leave a Mark</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 2rem; font-size: 0.95rem;">Add your connection, endorsement, or perspective to the collective board.</p>
-            
-            <form id="resonance-form">
-                <div class="form-group">
-                    <label for="user-name">Identity / Organization</label>
-                    <input type="text" id="user-name" class="form-input" placeholder="Name or collective identifier..." required autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label for="user-message">Statement / Note</label>
-                    <textarea id="user-message" class="form-input" rows="4" placeholder="Drop a reflection or peer endorsement..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Leave Mark</button>
-            </form>
-        </section>
+    <div class="bento-wrapper">
+        <div class="box hero-box br-1">
+            <h1>Student Leader & Advocate</h1>
+            <span class="name-highlight">JIHAN AHMED!</span>
+            <p>Advocate. Leader. Community Builder.</p>
+        </div>
 
-        <!-- THE BOARD -->
-        <h2 class="wall-header">The Wall</h2>
-        <div id="messages-wall">
-            <p style="color: #666; font-style: italic; text-align: center; grid-column: 1/-1;">Connecting to board...</p>
+        <div class="box project-box br-3 clickable-exp" data-bio="mental-health">
+            <span class="tag">Flagship Project</span>
+            <h2>Mental Health Day</h2>
+            <p>Orchestrated a student-led summit for 1,200+ students reaching over 1,250 peers.</p>
+            <div class="project-stats">
+                <div class="mini-stat"><b>$5,000</b><span>Grants</span></div>
+                <div class="mini-stat"><b>1,200+</b><span>Attendees</span></div>
+            </div>
+        </div>
+
+        <div class="box project-box br-2 clickable-exp" data-bio="culture-wellness" style="background: var(--teal); color: white; border-color: var(--highlight);">
+            <span class="tag" style="background: var(--highlight); color: var(--teal);">Community Impact</span>
+            <h2>Culture & Wellness Day</h2>
+            <p>A multicultural showcase featuring collaborations with over 20 clubs in late April 2026.</p>
+            <div class="project-stats">
+                <div class="mini-stat" style="border-color: var(--highlight);"><b>$3,000</b><span>Grants</span></div>
+                <div class="mini-stat" style="border-color: var(--highlight);"><b>10</b><span>Prizes Given</span></div>
+            </div>
+        </div>
+
+        <div class="box job-box br-2 clickable-exp" data-bio="facility">
+            <span class="tag" style="background: white; color: var(--toronto-blue);">City of Toronto</span>
+            <h3>Facility in Charge</h3>
+            <p>Operational management and public safety for City of Toronto municipal facilities.</p>
+        </div>
+
+        <div class="box role-box br-1 clickable-exp" data-bio="ambassador">
+            <span class="tag">Advocacy</span>
+            <h3>TDSB Ambassador</h3>
+            <p>Implementing board-wide mental health and digital safety initiatives.</p>
+        </div>
+
+        <div class="box role-box br-1 clickable-exp" data-bio="pollcat">
+            <span class="tag">Strategy</span>
+            <h3>Pollcat</h3>
+            <p>Directing data outreach for Provincial and Federal political campaigns.</p>
+        </div>
+
+        <div class="box role-box br-3 clickable-exp" data-bio="forum">
+            <span class="tag">Diplomacy</span>
+            <h3>Forum for Young Canadians</h3>
+            <p>Engaging in Parliament Hill simulations as a national delegate.</p>
+        </div>
+
+        <div class="box role-box br-2 clickable-exp" data-bio="myc">
+            <span class="tag">Advisory</span>
+            <h3>Mayor’s Youth Council</h3>
+            <p>Founder and President establishing a platform for youth voice with municipal leaders.</p>
+        </div>
+
+        <div class="box role-box br-2 clickable-exp" data-bio="equity">
+            <span class="tag">Advocacy</span>
+            <h3>Equity Club</h3>
+            <p>Leading inclusive school policy and the 2024 Equity Drive for Yonge Street Mission.</p>
+        </div>
+
+        <div class="box contact-box br-3" id="contact">
+            <h2>Let's connect.</h2>
+            <div class="socials">
+                <a href="mailto:Jihanahmed1850@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/jihan-ahmed-973b9220a/" target="_blank">LinkedIn</a>
+                <a href="https://www.instagram.com/jihanahmed1850/" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modal-title">Experience</h2>
+            <div id="video-wrapper"></div>
+            <p id="modal-text">Bio content goes here.</p>
+            <div class="close-btn" onclick="closeBtn()">Close</div>
         </div>
     </div>
 
     <script>
-        // --- SUPABASE CONFIGURATION ---
-        const SUPABASE_URL = "https://bcxbmgopxesuodmjuiff.supabase.co"; 
-        const SUPABASE_ANON_KEY = "PASTE_YOUR_FULL_ANON_KEY_HERE"; 
-
-        const form = document.getElementById('resonance-form');
-        const wall = document.getElementById('messages-wall');
-        const cardThemes = ['card-teal', 'card-indigo', 'card-coral', 'card-gold'];
-
-        // Fetch entries
-        async function fetchMessages() {
-            try {
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/guestbook?select=*&order=created_at.desc`, {
-                    method: 'GET',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                if (!response.ok) throw new Error("Sync anomaly.");
-                const data = await response.json();
-                renderMessages(data);
-            } catch (error) {
-                console.error(error);
-                wall.innerHTML = `
-                    <div class="resonance-card card-coral" style="grid-column: 1/-1; max-width: 500px; margin: 0 auto; text-align: center;">
-                        <div class="msg-text">Database sync offline. Refreshing parameters momentarily.</div>
-                    </div>
-                `;
+        const bios = {
+            'culture-wellness': {
+                title: 'Culture and Wellness Day',
+                video: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/z2M51BQBIZg" frameborder="0" allowfullscreen></iframe>',
+                text: 'A multicultural showcase in April 2026 reaching 1,200 students with 20+ club collaborations.'
+            },
+            'ambassador': {
+                title: 'TDSB Mental Health Ambassador',
+                text: 'Supporting board-wide mental health and digital safety initiatives.'
+            },
+            'mental-health': {
+                title: 'Mental Health Day',
+                text: 'Led a summit at SATEC @ W. A. Porter reaching over 1,250 students with keynote speakers and meditation.'
+            },
+            'facility': {
+                title: 'Facility In Charge',
+                text: 'Operational management for municipal recreation facilities with the City of Toronto.'
+            },
+            'pollcat': {
+                title: 'Pollcat',
+                text: 'Data outreach for Provincial and Federal political campaigns.'
+            },
+            'forum': {
+                title: 'Forum for Young Canadians',
+                text: 'Engaging in Parliament Hill simulations as a national delegate.'
+            },
+            'myc': {
+                title: "Mayor's Youth Council",
+                text: "Founded to establish a formal platform for youth to work with municipal leaders."
+            },
+            'equity': {
+                title: 'Equity Club President',
+                text: 'Directed the 2024 Equity Drive resulting in over $2,300 in donations for Yonge Street Mission.'
             }
-        }
+        };
 
-        // Render structural tiles with subtle tilts
-        function renderMessages(messages) {
-            if (!messages || messages.length === 0) {
-                wall.innerHTML = `<p style="color: #666; font-style: italic; text-align: center; grid-column: 1/-1; margin-top: 20px;">The wall is completely clear. Be the first to add an entry!</p>`;
-                return;
-            }
-            wall.innerHTML = '';
-            
-            messages.forEach((msg, index) => {
-                const date = new Date(msg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                const assignedTheme = cardThemes[index % cardThemes.length];
-                
-                // Applies slight random rotation angles (-3deg to 3deg)
-                const randomRotation = ((index * 7) % 7) - 3;
-                
-                const card = document.createElement('div');
-                card.className = `resonance-card ${assignedTheme}`;
-                card.style.transform = `rotate(${randomRotation}deg)`;
-                
-                card.innerHTML = `
-                    <div class="msg-text">"${escapeHTML(msg.message)}"</div>
-                    <div class="msg-meta">
-                        <div class="msg-name">${escapeHTML(msg.name)}</div>
-                        <div class="msg-date">${date}</div>
-                    </div>
-                `;
-                wall.appendChild(card);
-            });
-        }
+        const experienceBoxes = document.querySelectorAll('.clickable-exp');
+        const overlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const videoWrapper = document.getElementById('video-wrapper');
 
-        // Post entries
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('user-name').value;
-            const message = document.getElementById('user-message').value;
-            const submitBtn = form.querySelector('.submit-btn');
-
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Posting...";
-
-            try {
-                const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
-                    method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
-                    },
-                    body: JSON.stringify({ name, message })
-                });
-
-                if (!res.ok) throw new Error("Write blocked.");
-
-                form.reset();
-                fetchMessages();
-            } catch (error) {
-                alert("Submission failed. Double check your API public access key layout.");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Leave Mark";
-            }
+        experienceBoxes.forEach(box => { 
+            box.addEventListener('click', () => { 
+                const bioKey = box.getAttribute('data-bio');
+                if (bios[bioKey]) {
+                    modalTitle.innerText = bios[bioKey].title;
+                    modalText.innerHTML = bios[bioKey].text;
+                    videoWrapper.innerHTML = bios[bioKey].video ? `<div class="video-container">${bios[bioKey].video}</div>` : '';
+                    overlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; 
+                }
+            }); 
         });
 
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
+        function closeBtn() { 
+            overlay.style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+            videoWrapper.innerHTML = ''; 
         }
 
-        fetchMessages();
+        window.onclick = function(event) { if (event.target == overlay) closeBtn(); }
     </script>
 </body>
 </html>
