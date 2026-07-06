@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcade — Jihan Ahmed</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght=500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { 
             --dark: #121212; 
@@ -13,6 +13,7 @@
             --teal: #006064; 
             --indigo: #1e1b4b; 
             --coral: #ff6b6b;
+            --toronto-blue: #003da5;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,22 +46,23 @@
         .choice-btn { display: block; width: 100%; text-align: left; padding: 14px 18px; background: white; border: 2px solid var(--dark); border-radius: 12px; margin-bottom: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.2s; line-height: 1.4; }
         .choice-btn:hover { background: var(--highlight); transform: translateY(-1px); }
 
+        /* --- PLAYABLE CANVAS ARCADE LAYOUT --- */
+        .arcade-display-wrapper { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; margin: 20px auto 0; position: relative; }
+        #canvas-frame { background: var(--dark); border: 4px solid var(--dark); border-radius: 16px; display: block; max-width: 100%; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); touch-action: none; }
+        .start-btn { padding: 12px 24px; font-family: 'Space Grotesk'; font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); border-radius: 8px; cursor: pointer; background: var(--toronto-blue); color: white; font-size: 1rem; transition: 0.2s; }
+        .start-btn:hover { background: var(--highlight); color: var(--dark); }
+
+        /* --- RESPONSIVE MOBILE TOUCH D-PAD --- */
+        .mobile-controller { display: none; grid-template-areas: ". up ." "left . right" ". down ."; gap: 8px; width: 160px; height: 160px; margin-top: 15px; }
+        .dpad-btn { background: white; border: 2px solid var(--dark); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; cursor: pointer; user-select: none; -webkit-user-select: none; box-shadow: 2px 2px 0px var(--dark); }
+        .dpad-btn:active { background: var(--highlight); }
+        .dpad-up { grid-area: up; } .dpad-down { grid-area: down; } .dpad-left { grid-area: left; } .dpad-right { grid-area: right; }
+
         /* --- WORDLE GRID --- */
         #wordle-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 6px; max-width: 280px; margin: 20px auto; }
         .wordle-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
         .wordle-tile { 
-            aspect-ratio: 1/1; 
-            width: 100%; 
-            border: 2px solid #ccc; 
-            text-align: center; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(1.1rem, 4vw, 1.5rem); 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            background: white; 
-            border-radius: 4px;
+            aspect-ratio: 1/1; width: 100%; border: 2px solid #ccc; text-align: center; display: flex; align-items: center; justify-content: center; font-size: clamp(1.1rem, 4vw, 1.5rem); font-weight: 700; text-transform: uppercase; background: white; border-radius: 4px;
         }
         
         .wordle-tile.correct { background-color: #6cab64 !important; color: white; border-color: #6cab64; }
@@ -86,6 +88,7 @@
             nav { flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
             .game-card { padding: 1.5rem 1rem; border-radius: 16px; }
             .game-title h2 { font-size: 1.5rem; }
+            .mobile-controller { display: grid; }
             .key { height: 42px; font-size: 0.8rem; }
             .key.wide-key { font-size: 0.7rem; }
         }
@@ -100,7 +103,37 @@
 
     <div class="container">
         
-        <!-- GAME 1: EXPANDED HARDCORE SIMULATOR -->
+        <!-- CANVAS ARCADE GAME FRAME -->
+        <section class="game-card" style="border-color: var(--toronto-blue); box-shadow: 8px 8px 0px var(--toronto-blue);">
+            <div class="game-title">
+                <h2>Campaign Trail: Toronto Outrun</h2>
+                <span class="game-tag" style="background: var(--toronto-blue); color: white;">Interactive Action Puzzler</span>
+            </div>
+            <p style="margin-bottom: 1.2rem; color: #444; font-size: 0.95rem;">Use <b>Arrow Keys / WASD</b> or the <b>On-Screen D-Pad</b> to steer your blue character box. Catch floating golden star briefcases while dodging bad media cameras with expanding shockwaves! Difficulty escalates with every pickup.</p>
+            
+            <div class="sim-progress" id="camp-progress">Press Start to Begin Campaign Run</div>
+            <div class="sim-stats">
+                <div class="stat-box">Time Left <span id="camp-timer">35s</span></div>
+                <div class="stat-box">Morale <span id="camp-morale">100%</span></div>
+                <div class="stat-box">Pledged Votes <span id="camp-votes">0</span></div>
+            </div>
+
+            <div class="arcade-display-wrapper">
+                <canvas id="canvas-frame" width="600" height="360"></canvas>
+                
+                <!-- MOBILE INTERACTIVE CONTROLS -->
+                <div class="mobile-controller">
+                    <button class="dpad-btn dpad-up" id="btn-up">▲</button>
+                    <button class="dpad-btn dpad-left" id="btn-left">◀</button>
+                    <button class="dpad-btn dpad-right" id="btn-right">▶</button>
+                    <button class="dpad-btn dpad-down" id="btn-down">▼</button>
+                </div>
+
+                <button class="start-btn" id="start-game-btn" onclick="startCampaignGame()">Start Campaign</button>
+            </div>
+        </section>
+
+        <!-- GAME: POLICY SUMMIT BALANCER -->
         <section class="game-card" style="border-color: var(--teal); box-shadow: 8px 8px 0px var(--teal);">
             <div class="game-title">
                 <h2>Summit Budget Balancer</h2>
@@ -121,7 +154,7 @@
             </div>
         </section>
 
-        <!-- GAME 2: WORDLE ENGINE -->
+        <!-- GAME: WORDLE ENGINE -->
         <section class="game-card" style="border-color: var(--indigo); box-shadow: 8px 8px 0px var(--indigo);">
             <div class="game-title">
                 <h2>Legal & Policy Wordle</h2>
@@ -152,226 +185,308 @@
 
     <script>
         // ==========================================
-        // GAME 1: EXPERANDED ENGINE & SCENARIOS
+        // 2D CANVAS GAME ENGINE
         // ==========================================
-        let budget, wellness, equity, currentStep;
-        let activeScenarios = [];
+        const canvas = document.getElementById('canvas-frame');
+        const ctx = canvas.getContext('2d');
+        
+        let player, ballots, obstacles, gameClockInterval, animationFrameId;
+        let runningVotes, runningMorale, timeLeft, activePlayGame, globalSpeedMultiplier, animationTick;
 
-        const masterScenarios = [
-            {
-                text: "An out-of-province motivational speaker offers a keynote on systemic resilience, but their appearance and travel logistics consume $2,500 of your budget.",
-                choices: [
-                    { text: "Approve the speaker. High prestige will drive significant student engagement metrics.", cost: 2500, wellness: 30, equity: -5 },
-                    { text: "Deny and source local grass-roots workshop leaders from community recreation centers.", cost: 700, wellness: 10, equity: 25 }
-                ]
-            },
-            {
-                text: "To optimize turnout, your outreach team recommends purchasing high-value digital tech door prizes (iPads/AirPods). Activists argue this capital should go entirely to structural accessibility features.",
-                choices: [
-                    { text: "Purchase the tech assets to aggressively drive up multi-school registration tallies.", cost: 1600, wellness: 15, equity: -15 },
-                    { text: "Reallocate funds to cover full transit subsidies and digital ASL translation feeds.", cost: 600, wellness: 5, equity: 30 }
-                ]
-            },
-            {
-                text: "A prominent tech corporation offers to fund your digital safety breakout streams, contributing $1,500 extra if they can gather optional user-metrics surveys from student devices.",
-                choices: [
-                    { text: "Accept the corporate partnership to expand overall fiscal operating scale.", cost: -1500, wellness: 5, equity: -25 },
-                    { text: "Decline to maintain structural participant data privacy standards.", cost: 0, wellness: 10, equity: 15 }
-                ]
-            },
-            {
-                text: "The venue catering team flags that providing complete certified Halal, Kosher, and allergen-safe meals across all student delegations will trigger an unexpected $1,400 overhead surcharge.",
-                choices: [
-                    { text: "Absorb the surcharge. Broad culinary inclusion is a non-negotiable metric.", cost: 1400, wellness: 15, equity: 30 },
-                    { text: "Deploy a generic standard menu box to safeguard remaining contingency funds.", cost: 400, wellness: -15, equity: -25 }
-                ]
-            },
-            {
-                text: "School board compliance inspectors flag that your post-summit venue space layout requires hiring extra licensed safety marshals to meet updated spatial regulatory codes.",
-                choices: [
-                    { text: "Pay the premium fee to guarantee institutional space alignment.", cost: 1100, wellness: 10, equity: 5 },
-                    { text: "Compress attendee capacity caps by 35% to bypass the marshal quota entirely.", cost: 0, wellness: -25, equity: -20 }
-                ]
-            },
-            {
-                text: "An equity student group requests a prominent gallery wall space, but local media tracking components argue it could spark friction with more conservative administrative benefactors.",
-                choices: [
-                    { text: "Provide the space completely. Unfiltered student voice takes execution precedence.", cost: 200, wellness: 20, equity: 25 },
-                    { text: "Relocate the presentation to a secondary digital module format to avoid optics risk.", cost: 0, wellness: -15, equity: -20 }
-                ]
-            },
-            {
-                text: "Sudden regional transit delays threaten to block three high-priority student panels from arriving at the central hub on opening morning.",
-                choices: [
-                    { text: "Deploy emergency chartered shuttle lines to pick up the stranded delegates.", cost: 950, wellness: 20, equity: 15 },
-                    { text: "Proceed on schedule, asking the panels to present asynchronously via pre-recorded videos.", cost: 100, wellness: -15, equity: -10 }
-                ]
-            },
-            {
-                text: "A student advocacy collective asks to run an unscheduled public accountability forum detailing local municipal policy discrepancies during the lunchtime slot.",
-                choices: [
-                    { text: "Sanction the forum and hire professional neutral moderators to guide the dialogue safely.", cost: 800, wellness: 15, equity: 20 },
-                    { text: "Deny the structural addition to protect strict operational timelines and board rules.", cost: 0, wellness: -20, equity: -15 }
-                ]
-            },
-            {
-                text: "A local printing agency quotes a high rate to print tactile mental health resource guides and local shelter directories for every single attendee.",
-                choices: [
-                    { text: "Print the physical booklets to guarantee access to students without reliable data plans.", cost: 1000, wellness: 25, equity: 15 },
-                    { text: "Host all data on a central website and print a single master QR code signpost instead.", cost: 150, wellness: 5, equity: -10 }
-                ]
-            },
-            {
-                text: "Severe seasonal weather warnings demand that you either install immediate heavy-duty tent heating clusters outside or cancel the outdoor cultural bazaar segment entirely.",
-                choices: [
-                    { text: "Rent the industrial heating infrastructure to protect the student vendors' hard work.", cost: 1200, wellness: 20, equity: 15 },
-                    { text: "Move the event into standard hallways, reducing student vendor booth footprints by half.", cost: 100, wellness: -20, equity: -15 }
-                ]
-            },
-            {
-                text: "The audio-visual vendor experiences a main board blowout right before the policy simulation finals. A replacement board hire will require upfront emergency capital.",
-                choices: [
-                    { text: "Secure the professional replacement unit to ensure crisp main-stage presentation fidelity.", cost: 750, wellness: 15, equity: 5 },
-                    { text: "Rely on portable school gym megaphones, adjusting the venue seating blocks to adapt.", cost: 0, wellness: -20, equity: -10 }
-                ]
-            },
-            {
-                text: "A group of regional schools requests multi-language transcription and real-time captioning support for international student delegates joining your plenary sessions.",
-                choices: [
-                    { text: "Retain real-time translation experts to remove participation barriers completely.", cost: 850, wellness: 10, equity: 35 },
-                    { text: "Rely on standard, automated device-level text translation apps to minimize cost.", cost: 100, wellness: -10, equity: -15 }
-                ]
-            }
-        ];
+        const keysHeld = {};
 
-        function setupSimulation() {
-            // Randomly isolates 8 out of the 12 master scenarios for an extended gameplay path
-            let shuffled = [...masterScenarios].sort(() => 0.5 - Math.random());
-            activeScenarios = shuffled.slice(0, 8); 
+        // Desktop Listener Keys
+        window.addEventListener('keydown', e => {
+            if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key) && activePlayGame) { e.preventDefault(); }
+            keysHeld[e.key.toUpperCase()] = true;
+        });
+        window.addEventListener('keyup', e => { keysHeld[e.key.toUpperCase()] = false; });
+
+        // Mobile D-Pad Touch Handlers
+        const bindMobileTouch = (btnId, keyString) => {
+            const btn = document.getElementById(btnId);
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); keysHeld[keyString] = true; }, {passive: false});
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); keysHeld[keyString] = false; }, {passive: false});
+        };
+        bindMobileTouch('btn-up', 'ARROWUP'); bindMobileTouch('btn-down', 'ARROWDOWN');
+        bindMobileTouch('btn-left', 'ARROWLEFT'); bindMobileTouch('btn-right', 'ARROWRIGHT');
+
+        function startCampaignGame() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            clearInterval(gameClockInterval);
+
+            document.getElementById('start-game-btn').blur();
+            document.getElementById('camp-progress').innerText = "Ward Tally: Escalated Difficulty Mode";
+
+            activePlayGame = true; runningVotes = 0; runningMorale = 100; timeLeft = 35; globalSpeedMultiplier = 1.0; animationTick = 0;
+            player = { x: 50, y: 160, size: 26, targetStretch: 1, currentStretch: 1, targetTilt: 0, currentTilt: 0 };
+            ballots = [];
             
-            budget = 5000; 
-            wellness = 45; 
-            equity = 45; 
-            currentStep = 0;
-            updateSimUI();
+            // Rebuilt hazards: Media camera lenses with spatial vectors
+            obstacles = [
+                { x: 220, y: 70, dx: 2, dy: 2.5, size: 22, flashAlpha: 0, radialPulse: 0 },
+                { x: 420, y: 260, dx: -2.5, dy: -1.8, size: 24, flashAlpha: 0, radialPulse: 5 },
+                { x: 320, y: 180, dx: 1.8, dy: -2.4, size: 20, flashAlpha: 0, radialPulse: 10 }
+            ];
+
+            for(let i=0; i<3; i++) spawnBallot();
+
+            gameClockInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('camp-timer').innerText = `${timeLeft}s`;
+                if(timeLeft <= 0) terminateCampaignGame(true);
+            }, 1000);
+
+            runGameLoop();
         }
 
-        function updateSimUI() {
-            document.getElementById('stat-budget').innerText = `$${budget.toLocaleString()}`;
-            document.getElementById('stat-wellness').innerText = `${wellness}%`;
-            document.getElementById('stat-equity').innerText = `${equity}%`;
-
-            if (budget < 0 || wellness <= 0 || equity <= 0) {
-                endSimulation(false, "Operational Collapse: You triggered systemic insolvency or critical relationships breached minimum baseline parameters.");
-                return;
-            }
-            
-            if (currentStep >= activeScenarios.length) {
-                // Evaluates exact grade tier on successful runs
-                let finalScore = wellness + equity + (budget / 100);
-                let ranking = "Standard Administrator Balance";
-                if (finalScore >= 140) ranking = "Master Public Policy Innovator";
-                else if (finalScore >= 110) ranking = "Highly Effective Student Trustee";
-                
-                endSimulation(true, `Summit Complete! Performance Profile achieved: ${ranking}. You successfully balanced policy dynamics against operational realities.`);
-                return;
-            }
-
-            document.getElementById('sim-progress').innerText = `Round ${currentStep + 1} of 8`;
-            let current = activeScenarios[currentStep];
-            document.getElementById('sim-text').innerText = current.text;
-            
-            let choicesDiv = document.getElementById('sim-choices'); 
-            choicesDiv.innerHTML = '';
-            
-            current.choices.forEach(c => {
-                let btn = document.createElement('button'); 
-                btn.className = 'choice-btn'; 
-                btn.innerText = c.text;
-                btn.onclick = () => { 
-                    budget -= c.cost; 
-                    wellness += c.wellness; 
-                    equity += c.equity; 
-                    currentStep++; 
-                    updateSimUI(); 
-                };
-                choicesDiv.appendChild(btn);
+        function spawnBallot() {
+            ballots.push({
+                x: Math.random() * (canvas.width - 60) + 30,
+                y: Math.random() * (canvas.height - 60) + 30,
+                radius: 14,
+                bounceOffset: Math.random() * 100
             });
         }
 
+        function runGameLoop() {
+            if(!activePlayGame) return;
+            animationTick++;
+
+            document.getElementById('camp-votes').innerText = runningVotes;
+            document.getElementById('camp-morale').innerText = `${runningMorale}%`;
+
+            let mx = 0; let my = 0;
+            if (keysHeld['ARROWUP'] || keysHeld['W']) { my = -1; player.targetStretch = 1.2; player.targetTilt = -0.05; }
+            if (keysHeld['ARROWDOWN'] || keysHeld['S']) { my = 1; player.targetStretch = 0.9; player.targetTilt = 0.05; }
+            if (keysHeld['ARROWLEFT'] || keysHeld['A']) { mx = -1; player.targetStretch = 1.1; player.targetTilt = -0.1; }
+            if (keysHeld['ARROWRIGHT'] || keysHeld['D']) { mx = 1; player.targetStretch = 1.1; player.targetTilt = 0.1; }
+            if (mx === 0 && my === 0) { player.targetStretch = 1.0; player.targetTilt = 0; }
+
+            // Smooth interpolation physics
+            player.currentStretch += (player.targetStretch - player.currentStretch) * 0.15;
+            player.currentTilt += (player.targetTilt - player.currentTilt) * 0.15;
+            
+            player.x += mx * 4.5; player.y += my * 4.5;
+
+            // Enforce canvas boundaries
+            if (player.x < 15) player.x = 15; if (player.y < 15) player.y = 15;
+            if (player.x > canvas.width - player.size - 15) player.x = canvas.width - player.size - 15;
+            if (player.y > canvas.height - player.size - 15) player.y = canvas.height - player.size - 15;
+
+            ctx.fillStyle = '#121212'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Clean background grid wires
+            ctx.strokeStyle = 'rgba(255,255,255,0.04)'; ctx.lineWidth = 1;
+            for(let i=0; i<canvas.width; i+=40) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke(); }
+            for(let j=0; j<canvas.height; j+=40) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(canvas.width,j); ctx.stroke(); }
+
+            // RENDER BALLOT BRIEFCASE ITEMS WITH ANIMATED PIPELINES
+            ballots.forEach((b, idx) => {
+                let waveY = Math.sin((animationTick + b.bounceOffset) * 0.08) * 4;
+                ctx.save();
+                ctx.translate(b.x, b.y + waveY);
+                
+                // Draw Golden Tally Star Outer Glow
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.2)';
+                ctx.beginPath(); ctx.arc(0, 0, b.radius + 6, 0, Math.PI*2); ctx.fill();
+
+                // Draw Core Golden Vector Diamond Box
+                ctx.fillStyle = '#ffd700';
+                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, -b.radius); ctx.lineTo(b.radius, 0);
+                ctx.lineTo(0, b.radius); ctx.lineTo(-b.radius, 0);
+                ctx.closePath(); ctx.fill(); ctx.stroke();
+
+                // Inner detail lines
+                ctx.strokeStyle = '#121212'; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.moveTo(-5, -2); ctx.lineTo(5, -2); ctx.stroke();
+                
+                ctx.restore();
+
+                // Collision metric checks
+                let distX = player.x + (player.size/2) - b.x;
+                let distY = player.y + (player.size/2) - (b.y + waveY);
+                if(Math.sqrt(distX*distX + distY*distY) < (player.size/2) + b.radius) {
+                    ballots.splice(idx, 1);
+                    runningVotes += 65;
+                    globalSpeedMultiplier += 0.12;
+                    spawnBallot();
+                    
+                    // Procedural generation to make the game harder as scores rise
+                    if(runningVotes % 130 === 0) {
+                        obstacles.push({
+                            x: Math.random() * (canvas.width - 60) + 30,
+                            y: Math.random() * (canvas.height - 60) + 30,
+                            dx: (Math.random() > 0.5 ? 2 : -2),
+                            dy: (Math.random() > 0.5 ? 2 : -2),
+                            size: 22, flashAlpha: 0, radialPulse: 0
+                        });
+                    }
+                }
+            });
+
+            // RENDER EVIL MEDIA HARDWARE CAMERAS WITH SHOCKWAVES
+            obstacles.forEach(o => {
+                o.x += o.dx * globalSpeedMultiplier; o.y += o.dy * globalSpeedMultiplier;
+                if(o.x - o.size < 0 || o.x + o.size > canvas.width) o.dx *= -1;
+                if(o.y - o.size < 0 || o.y + o.size > canvas.height) o.dy *= -1;
+
+                o.radialPulse += 0.4;
+                if(o.radialPulse > 30) o.radialPulse = 0;
+
+                ctx.save();
+                ctx.translate(o.x, o.y);
+
+                // Expanding red warning shockwave array
+                ctx.strokeStyle = `rgba(255, 107, 107, ${1 - (o.radialPulse / 30)})`;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.arc(0, 0, o.size + o.radialPulse, 0, Math.PI*2); ctx.stroke();
+
+                // Draw Core Camera Case Block
+                ctx.fillStyle = '#ff6b6b'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+                ctx.fillRect(-o.size/2, -o.size/3, o.size, o.size * 0.7);
+                ctx.strokeRect(-o.size/2, -o.size/3, o.size, o.size * 0.7);
+                
+                // Camera Top Flash Module
+                ctx.fillRect(-o.size/4, -o.size/1.7, o.size/2, o.size/4);
+                
+                // Bad Lens Core
+                ctx.fillStyle = '#121212';
+                ctx.beginPath(); ctx.arc(0, o.size * 0.05, o.size/4, 0, Math.PI*2); ctx.fill();
+                ctx.strokeStyle = '#ffffff'; ctx.stroke();
+
+                ctx.restore();
+
+                // Hitbox Collision Calculation Check
+                let hX = (player.x + player.size/2) - o.x;
+                let hY = (player.y + player.size/2) - o.y;
+                if(Math.sqrt(hX*hX + hY*hY) < (player.size/2) + (o.size/2)) {
+                    runningMorale -= 20;
+                    timeLeft = Math.max(0, timeLeft - 3);
+                    player.x -= o.dx * 12; player.y -= o.dy * 12; // Physics knock-back
+                    if(runningMorale <= 0) terminateCampaignGame(false);
+                }
+            });
+
+            // RENDER ANIMATED BLUE PLAYER CHARACTER BADGE
+            ctx.save();
+            ctx.translate(player.x + player.size/2, player.y + player.size/2);
+            ctx.rotate(player.currentTilt);
+            ctx.scale(player.currentStretch, 2 - player.currentStretch);
+
+            // Draw Blue Badge Shadow Core
+            ctx.fillStyle = '#003da5';
+            ctx.fillRect(-player.size/2, -player.size/2, player.size, player.size);
+            
+            // Outer White Border Frame
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.5;
+            ctx.strokeRect(-player.size/2, -player.size/2, player.size, player.size);
+
+            // Character eyes
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(2, -6, 5, 5); ctx.fillRect(-7, -6, 5, 5);
+            ctx.fillStyle = '#121212';
+            ctx.fillRect(4, -5, 3, 3); ctx.fillRect(-5, -5, 3, 3);
+
+            ctx.restore();
+
+            animationFrameId = requestAnimationFrame(runGameLoop);
+        }
+
+        function terminateCampaignGame(clockEnded) {
+            activePlayGame = false; clearInterval(gameClockInterval); cancelAnimationFrame(animationFrameId);
+            ctx.fillStyle = 'rgba(0,0,0,0.92)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = "700 24px 'Space Grotesk'"; ctx.textAlign = 'center';
+
+            if(!clockEnded || runningMorale <= 0) {
+                document.getElementById('camp-progress').innerText = "Campaign Run Halted";
+                ctx.fillStyle = '#ff6b6b'; ctx.fillText("MEDIA SCRUTINY COLLAPSED THE RUN", canvas.width/2, canvas.height/2);
+            } else if (runningVotes >= 450) {
+                document.getElementById('camp-progress').innerText = "Electoral Victory!";
+                ctx.fillStyle = '#ffd700'; ctx.fillText(`VICTORY! SEAT SECURED WITH ${runningVotes} VOTES`, canvas.width/2, canvas.height/2);
+            } else {
+                document.getElementById('camp-progress').innerText = "Defeat at the Polls";
+                ctx.fillStyle = '#ffffff'; ctx.fillText(`MARGIN FAILURE: RUN ENDED WITH ${runningVotes}/450 VOTES`, canvas.width/2, canvas.height/2);
+            }
+        }
+
+        // ==========================================
+        // GAME 1: SUMMIT BUDGET BALANCER LOGIC
+        // ==========================================
+        let budget, wellness, equity, currentStep; let activeScenarios = [];
+        const masterScenarios = [
+            { text: "An out-of-province motivational speaker offers a keynote on systemic resilience, but their appearance fees consume $2,500.", choices: [{ text: "Approve the speaker. High prestige drives student metrics.", cost: 2500, wellness: 30, equity: -5 }, { text: "Deny and source local workshop leaders from community centers.", cost: 700, wellness: 10, equity: 25 }] },
+            { text: "Your outreach team recommends high-value tech door prizes (iPads). Activists argue this should fund accessibility features.", choices: [{ text: "Purchase the tech assets to aggressively drive up multi-school registration tallies.", cost: 1600, wellness: 15, equity: -15 }, { text: "Reallocate funds to cover full transit subsidies and digital ASL translation feeds.", cost: 600, wellness: 5, equity: 30 }] },
+            { text: "A prominent tech corporation offers to fund breakout streams, contributing $1,500 if they can gather user metrics surveys.", choices: [{ text: "Accept the corporate partnership to expand overall fiscal operating scale.", cost: -1500, wellness: 5, equity: -25 }, { text: "Decline to maintain structural participant data privacy standards.", cost: 0, wellness: 10, equity: 15 }] },
+            { text: "The catering team flags that certified Halal, Kosher, and allergen-safe meals across all student delegations adds a $1,400 surcharge.", choices: [{ text: "Absorb the surcharge. Broad culinary inclusion is a non-negotiable metric.", cost: 1400, wellness: 15, equity: 30 }, { text: "Deploy a generic standard menu box to safeguard remaining contingency funds.", cost: 400, wellness: -15, equity: -25 }] }
+        ];
+        function setupSimulation() {
+            let shuffled = [...masterScenarios].sort(() => 0.5 - Math.random());
+            activeScenarios = shuffled.slice(0, 4); budget = 5000; wellness = 45; equity = 45; currentStep = 0; updateSimUI();
+        }
+        function updateSimUI() {
+            document.getElementById('stat-budget').innerText = `$${budget.toLocaleString()}`; document.getElementById('stat-wellness').innerText = `${wellness}%`; document.getElementById('stat-equity').innerText = `${equity}%`;
+            if (budget < 0 || wellness <= 0 || equity <= 0) { endSimulation(false, "Operational Collapse: Insolvency triggered."); return; }
+            if (currentStep >= activeScenarios.length) { endSimulation(true, "Summit Balance Protocol Evaluated Successfully."); return; }
+            document.getElementById('sim-progress').innerText = `Round ${currentStep + 1} of 4`;
+            let current = activeScenarios[currentStep]; document.getElementById('sim-text').innerText = current.text;
+            let choicesDiv = document.getElementById('sim-choices'); choicesDiv.innerHTML = '';
+            current.choices.forEach(c => {
+                let btn = document.createElement('button'); btn.className = 'choice-btn'; btn.innerText = c.text;
+                btn.onclick = () => { budget -= c.cost; wellness += c.wellness; equity += c.equity; currentStep++; updateSimUI(); }; choicesDiv.appendChild(btn);
+            });
+        }
         function endSimulation(success, message) {
-            document.getElementById('sim-progress').innerText = success ? "Evaluation Successful" : "Evaluation Aborted";
             document.getElementById('sim-text').innerText = message;
             document.getElementById('sim-choices').innerHTML = `<button class="choice-btn" style="text-align:center; background:var(--dark); color:white;" onclick="setupSimulation()">Re-evaluate Protocol</button>`;
         }
 
         // ==========================================
-        // GAME 2: WORDLE ENGINE
+        // GAME 2: POLICY WORDLE ENGINE LOGIC
         // ==========================================
-        const wordPool = ["POLICY", "VOTING", "SENATE", "COURTS", "RIGHTS", "DEBATE", "STATUTE", "EQUITY", "SYSTEM", "REFORM", "AGENCY", "BALLOT", "CIVICS", "CLAUSE", "DECREE", "ETHICS", "HEARNG", "JUSTIC", "LAWYER", "OFFICE", "REPUBLIC", "RULING", "TREATY", "VETOES"];
+        const wordPool = ["POLICY", "VOTING", "SENATE", "COURTS", "RIGHTS", "DEBATE", "STATUTE", "EQUITY"];
         const secretWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-        let currentWordleRow = 0; let currentTileIndex = 0; const maxGuesses = 6;
-        let gameOver = false; let currentGuess = [];
-
+        let currentWordleRow = 0; let currentTileIndex = 0; let gameOver = false; let currentGuess = [];
         function initWordle() {
             const grid = document.getElementById('wordle-grid'); grid.innerHTML = '';
-            for (let i = 0; i < maxGuesses; i++) {
+            for (let i = 0; i < 6; i++) {
                 let row = document.createElement('div'); row.className = 'wordle-row';
-                for (let j = 0; j < 6; j++) {
-                    let tile = document.createElement('div'); tile.className = 'wordle-tile'; tile.id = `tile-${i}-${j}`; row.appendChild(tile);
-                }
+                for (let j = 0; j < 6; j++) { let tile = document.createElement('div'); tile.className = 'wordle-tile'; tile.id = `tile-${i}-${j}`; row.appendChild(tile); }
                 grid.appendChild(row);
             }
-            document.querySelectorAll('.key').forEach(keyBtn => {
-                keyBtn.addEventListener('click', () => { handleInput(keyBtn.getAttribute('data-key')); });
-            });
-            window.addEventListener('keydown', (e) => {
-                const key = e.key.toUpperCase();
-                if (key === 'ENTER') handleInput('ENTER');
-                else if (key === 'BACKSPACE') handleInput('BACKSPACE');
-                else if (/^[A-Z]$/.test(key)) handleInput(key);
-            });
+            document.querySelectorAll('.key').forEach(k => { k.addEventListener('click', () => { handleInput(k.getAttribute('data-key')); }); });
         }
-
         function handleInput(key) {
             if (gameOver) return;
-            const messageElement = document.getElementById('wordle-message'); messageElement.innerText = "";
-
-            if (key === 'BACKSPACE') {
-                if (currentTileIndex > 0) {
-                    currentTileIndex--; currentGuess.pop();
-                    document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`).innerText = "";
-                }
-            } else if (key === 'ENTER') {
-                if (currentGuess.length === 6) processGuess();
-                else messageElement.innerText = "Word must be exactly 6 letters long.";
-            } else {
-                if (currentGuess.length < 6) {
-                    document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`).innerText = key;
-                    currentGuess.push(key); currentTileIndex++;
-                }
-            }
+            if (key === 'BACKSPACE') { if (currentTileIndex > 0) { currentTileIndex--; currentGuess.pop(); document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`).innerText = ""; } }
+            else if (key === 'ENTER') { if (currentGuess.length === 6) processGuess(); }
+            else { if (currentGuess.length < 6) { document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`).innerText = key; currentGuess.push(key); currentTileIndex++; } }
         }
-
         function processGuess() {
             const finalString = currentGuess.join("");
-            const messageElement = document.getElementById('wordle-message');
             for (let i = 0; i < 6; i++) {
                 let tile = document.getElementById(`tile-${currentWordleRow}-${i}`); let letter = finalString[i];
-                let targetKeyBtn = document.querySelector(`.key[data-key="${letter}"]`);
-                if (secretWord[i] === letter) { tile.classList.add('correct'); updateKeyStyle(targetKeyBtn, 'correct'); }
-                else if (secretWord.includes(letter)) { tile.classList.add('present'); updateKeyStyle(targetKeyBtn, 'present'); }
-                else { tile.classList.add('absent'); updateKeyStyle(targetKeyBtn, 'absent'); }
+                if (secretWord[i] === letter) tile.classList.add('correct');
+                else if (secretWord.includes(letter)) tile.classList.add('present');
+                else tile.classList.add('absent');
             }
-            if (finalString === secretWord) { messageElement.innerText = "🎉 Puzzle solved successfully."; gameOver = true; return; }
+            if (finalString === secretWord) { gameOver = true; return; }
             currentWordleRow++; currentTileIndex = 0; currentGuess = [];
-            if (currentWordleRow >= maxGuesses) { messageElement.innerText = `Game Over. The correct term was: ${secretWord}`; gameOver = true; }
         }
 
-        function updateKeyStyle(keyBtn, status) {
-            if (!keyBtn || keyBtn.classList.contains('correct')) return;
-            if (keyBtn.classList.contains('present') && status === 'absent') return;
-            keyBtn.classList.remove('present', 'absent'); keyBtn.classList.add(status);
+        // --- INITIAL CANVAS BLANK STATE GRID ---
+        ctx.fillStyle = '#121212';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+        ctx.lineWidth = 1;
+        for(let i = 0; i < canvas.width; i += 40) { 
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke(); 
+        }
+        for(let j = 0; j < canvas.height; j += 40) { 
+            ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke(); 
         }
 
         setupSimulation();
