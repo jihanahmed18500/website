@@ -137,7 +137,7 @@
             </div>
         </section>
 
-        <!-- GAME 2: REAL WORDLE ENGINE -->
+        <!-- GAME 2: WORDLE ENGINE -->
         <section class="game-card" style="border-color: var(--indigo); box-shadow: 8px 8px 0px var(--indigo);">
             <div class="game-title">
                 <h2>Legal & Policy Wordle</h2>
@@ -147,7 +147,6 @@
             
             <div id="wordle-grid"></div>
             
-            <!-- VIRTUAL KEYBOARD ENGINE -->
             <div id="keyboard-container">
                 <div class="keyboard-row">
                     <button class="key" data-key="Q">Q</button><button class="key" data-key="W">W</button><button class="key" data-key="E">E</button><button class="key" data-key="R">R</button><button class="key" data-key="T">T</button><button class="key" data-key="Y">Y</button><button class="key" data-key="U">U</button><button class="key" data-key="I">I</button><button class="key" data-key="O">O</button><button class="key" data-key="P">P</button>
@@ -169,10 +168,13 @@
 
     <script>
         // ==========================================
-        // SIMULATOR CORE LOGIC
+        // GAME 1: EXPANDED SIMULATOR LOGIC
         // ==========================================
         let budget = 5000; let wellness = 50; let equity = 50; let currentStep = 0;
-        const simScenarios = [
+        let activeScenarios = [];
+
+        // Comprehensive Master List of 7 Systemic Scenarios
+        const masterScenarios = [
             {
                 text: "An out-of-province motivational speaker offers a keynote on resilience, but their travel and appearance fees will consume $2,500 of your total fund.",
                 choices: [
@@ -193,8 +195,44 @@
                     { text: "Accept the partnership to secure additional structural capital.", cost: -1500, wellness: 5, equity: -15 },
                     { text: "Decline to ensure complete participant data privacy and policy integrity.", cost: 0, wellness: 10, equity: 15 }
                 ]
+            },
+            {
+                text: "The catering committee flags that providing certified Halal, Kosher, and vegan options for all 1,200 attendees will incur a heavy premium, threatening your remaining operational overhead.",
+                choices: [
+                    { text: "Allocate the extra $1,200. Broad structural inclusion must remain a non-negotiable metric.", cost: 1200, wellness: 10, equity: 30 },
+                    { text: "Opt for a generic menu options package to safeguard emergency contingency funds.", cost: 400, wellness: -10, equity: -20 }
+                ]
+            },
+            {
+                text: "Local printing vendors quote a significant fee to publish comprehensive mental health resource directories and policy resource packages for every individual attendee.",
+                choices: [
+                    { text: "Print the hard-copy packages to give students tangible long-term community tools.", cost: 1000, wellness: 20, equity: 10 },
+                    { text: "Transition completely to digital QR code sheets to protect budgetary margins.", cost: 100, wellness: 5, equity: -5 }
+                ]
+            },
+            {
+                text: "A student advocacy caucus requests setting up a rapid-response community forum at the summit, but school board legal advisers suggest it requires hiring specialized neutral moderators to handle complex policy debates.",
+                choices: [
+                    { text: "Fund the professional neutral moderators to guarantee a safe, democratic dialogue platform.", cost: 750, wellness: 15, equity: 20 },
+                    { text: "Cancel the forum to avoid regulatory hurdles and ongoing financial liabilities.", cost: 0, wellness: -15, equity: -15 }
+                ]
+            },
+            {
+                text: "Unforeseen structural scheduling conflicts require booking local transit shuttles to transport attendees safely between distinct regional institutional hubs.",
+                choices: [
+                    { text: "Deploy complete shuttle fleets to guarantee comprehensive operational safety.", cost: 900, wellness: 15, equity: 10 },
+                    { text: "Rely on regular local transport connections, running a specialized informational campaign instead.", cost: 150, wellness: -5, equity: -5 }
+                ]
             }
         ];
+
+        // Shuffles master scenarios and isolates 4 for gameplay
+        function setupSimulation() {
+            let shuffled = [...masterScenarios].sort(() => 0.5 - Math.random());
+            activeScenarios = shuffled.slice(0, 4); 
+            budget = 5000; wellness = 50; equity = 50; currentStep = 0;
+            updateSimUI();
+        }
 
         function updateSimUI() {
             document.getElementById('stat-budget').innerText = `$${budget.toLocaleString()}`;
@@ -205,11 +243,11 @@
                 endSimulation(false, "Operational Failure: Your budget collapsed or critical community relationships dropped below baseline metrics.");
                 return;
             }
-            if (currentStep >= simScenarios.length) {
-                endSimulation(true, "Summit Success! You navigated systemic demands to execute an impactful, accessible community initiative.");
+            if (currentStep >= activeScenarios.length) {
+                endSimulation(true, "Summit Success! You balanced systemic demands to execute an impactful, accessible community initiative.");
                 return;
             }
-            let current = simScenarios[currentStep];
+            let current = activeScenarios[currentStep];
             document.getElementById('sim-text').innerText = current.text;
             let choicesDiv = document.getElementById('sim-choices'); choicesDiv.innerHTML = '';
             current.choices.forEach(c => {
@@ -220,20 +258,17 @@
         }
         function endSimulation(success, message) {
             document.getElementById('sim-text').innerText = message;
-            document.getElementById('sim-choices').innerHTML = `<button class="choice-btn" style="text-align:center; background:var(--dark); color:white;" onclick="resetSim()">Restart Simulation</button>`;
+            document.getElementById('sim-choices').innerHTML = `<button class="choice-btn" style="text-align:center; background:var(--dark); color:white;" onclick="setupSimulation()">Restart Simulation</button>`;
         }
-        function resetSim() { budget = 5000; wellness = 50; equity = 50; currentStep = 0; updateSimUI(); }
+        function resetSim() { setupSimulation(); }
 
         // ==========================================
-        // DYNAMIC WORDLE VIRTUAL KEYBOARD ENGINE
+        // GAME 2: WORDLE ENGINE LOGIC
         // ==========================================
         const wordPool = ["POLICY", "VOTING", "SENATE", "COURTS", "RIGHTS", "DEBATE", "STATUTE", "EQUITY", "SYSTEM", "REFORM", "AGENCY", "BALLOT", "CIVICS", "CLAUSE", "DECREE", "ETHICS", "HEARNG", "JUSTIC", "LAWYER", "OFFICE", "REPUBLIC", "RULING", "TREATY", "VETOES"];
         const secretWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-        let currentWordleRow = 0; 
-        let currentTileIndex = 0;
-        const maxGuesses = 6;
-        let gameOver = false;
-        let currentGuess = [];
+        let currentWordleRow = 0; let currentTileIndex = 0; const maxGuesses = 6;
+        let gameOver = false; let currentGuess = [];
 
         function initWordle() {
             const grid = document.getElementById('wordle-grid'); grid.innerHTML = '';
@@ -244,16 +279,9 @@
                 }
                 grid.appendChild(row);
             }
-            
-            // Connect On-Screen Buttons
             document.querySelectorAll('.key').forEach(keyBtn => {
-                keyBtn.addEventListener('click', () => {
-                    const keyValue = keyBtn.getAttribute('data-key');
-                    handleInput(keyValue);
-                });
+                keyBtn.addEventListener('click', () => { handleInput(keyBtn.getAttribute('data-key')); });
             });
-
-            // Connect Physical Keyboards for desktop visitors
             window.addEventListener('keydown', (e) => {
                 const key = e.key.toUpperCase();
                 if (key === 'ENTER') handleInput('ENTER');
@@ -264,30 +292,20 @@
 
         function handleInput(key) {
             if (gameOver) return;
-            const messageElement = document.getElementById('wordle-message');
-            messageElement.innerText = "";
+            const messageElement = document.getElementById('wordle-message'); messageElement.innerText = "";
 
             if (key === 'BACKSPACE') {
                 if (currentTileIndex > 0) {
-                    currentTileIndex--;
-                    currentGuess.pop();
-                    let activeTile = document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`);
-                    activeTile.innerText = "";
+                    currentTileIndex--; currentGuess.pop();
+                    document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`).innerText = "";
                 }
-            } 
-            else if (key === 'ENTER') {
-                if (currentGuess.length === 6) {
-                    processGuess();
-                } else {
-                    messageElement.innerText = "Word must be exactly 6 letters long.";
-                }
-            } 
-            else {
+            } else if (key === 'ENTER') {
+                if (currentGuess.length === 6) processGuess();
+                else messageElement.innerText = "Word must be exactly 6 letters long.";
+            } else {
                 if (currentGuess.length < 6) {
-                    let activeTile = document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`);
-                    activeTile.innerText = key;
-                    currentGuess.push(key);
-                    currentTileIndex++;
+                    document.getElementById(`tile-${currentWordleRow}-${currentTileIndex}`).innerText = key;
+                    currentGuess.push(key); currentTileIndex++;
                 }
             }
         }
@@ -295,52 +313,25 @@
         function processGuess() {
             const finalString = currentGuess.join("");
             const messageElement = document.getElementById('wordle-message');
-            
-            // Evaluates letters and colors tiles
             for (let i = 0; i < 6; i++) {
-                let tile = document.getElementById(`tile-${currentWordleRow}-${i}`);
-                let letter = finalString[i];
+                let tile = document.getElementById(`tile-${currentWordleRow}-${i}`); let letter = finalString[i];
                 let targetKeyBtn = document.querySelector(`.key[data-key="${letter}"]`);
-
-                if (secretWord[i] === letter) {
-                    tile.classList.add('correct');
-                    updateKeyStyle(targetKeyBtn, 'correct');
-                } else if (secretWord.includes(letter)) {
-                    tile.classList.add('present');
-                    updateKeyStyle(targetKeyBtn, 'present');
-                } else {
-                    tile.classList.add('absent');
-                    updateKeyStyle(targetKeyBtn, 'absent');
-                }
+                if (secretWord[i] === letter) { tile.classList.add('correct'); updateKeyStyle(targetKeyBtn, 'correct'); }
+                else if (secretWord.includes(letter)) { tile.classList.add('present'); updateKeyStyle(targetKeyBtn, 'present'); }
+                else { tile.classList.add('absent'); updateKeyStyle(targetKeyBtn, 'absent'); }
             }
-
-            if (finalString === secretWord) {
-                messageElement.innerText = "🎉 Puzzle solved successfully.";
-                gameOver = true;
-                return;
-            }
-
-            currentWordleRow++;
-            currentTileIndex = 0;
-            currentGuess = [];
-
-            if (currentWordleRow >= maxGuesses) {
-                messageElement.innerText = `Game Over. The correct term was: ${secretWord}`;
-                gameOver = true;
-            }
+            if (finalString === secretWord) { messageElement.innerText = "🎉 Puzzle solved successfully."; gameOver = true; return; }
+            currentWordleRow++; currentTileIndex = 0; currentGuess = [];
+            if (currentWordleRow >= maxGuesses) { messageElement.innerText = `Game Over. The correct term was: ${secretWord}`; gameOver = true; }
         }
 
         function updateKeyStyle(keyBtn, status) {
-            if (!keyBtn) return;
-            // Prevents over-writing green statuses back to yellow or gray
-            if (keyBtn.classList.contains('correct')) return;
+            if (!keyBtn || keyBtn.classList.contains('correct')) return;
             if (keyBtn.classList.contains('present') && status === 'absent') return;
-            
-            keyBtn.classList.remove('present', 'absent');
-            keyBtn.classList.add(status);
+            keyBtn.classList.remove('present', 'absent'); keyBtn.classList.add(status);
         }
 
-        updateSimUI();
+        setupSimulation();
         initWordle();
     </script>
 </body>
