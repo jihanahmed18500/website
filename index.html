@@ -53,7 +53,7 @@
             list-style: none; 
             gap: 1rem; 
             align-items: center; 
-            flex-wrap: wrap; /* Allows links to wrap on very small screens */
+            flex-wrap: wrap;
             justify-content: center;
         }
 
@@ -119,12 +119,11 @@
             border-radius: 15px; overflow: hidden; border: 3px solid var(--teal); background: #000;
         }
 
-        /* --- TABLET FIX --- */
+        /* --- MEDIA QUERIES --- */
         @media (max-width: 1024px) { 
             .role-box { grid-column: span 6; } 
         }
 
-        /* --- PHONE FIX --- */
         @media (max-width: 768px) {
             nav { padding: 1rem; flex-direction: column; gap: 0.8rem; text-align: center; }
             .nav-links { gap: 0.8rem; }
@@ -136,7 +135,7 @@
             .hero-box { padding: 2rem 1rem; }
         }
 
-        /* --- MODAL MOBILE STYLES --- */
+        /* --- MODAL --- */
         #modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.85); display: none; justify-content: center; 
@@ -163,6 +162,7 @@
         <ul class="nav-links">
             <li><a href="about.html">About</a></li>
             <li><a href="perspectives.html">Perspectives</a></li>
+            <li><a href="arcade.html">Arcade</a></li>
             <li><a href="gallery.html">Gallery</a></li>
             <li><a href="https://docs.google.com/document/d/1TCzqBW9-hDBrQjL8sHlkXNgKkW3g5mez/edit?usp=sharing" class="nav-resume" target="_blank">Resume ↓</a></li>
         </ul>
