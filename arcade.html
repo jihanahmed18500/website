@@ -12,6 +12,7 @@
             --highlight: #ffd700; 
             --teal: #006064; 
             --indigo: #1e1b4b; 
+            --coral: #ff6b6b;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,11 +38,12 @@
         .game-tag { background: var(--highlight); color: var(--dark); padding: 4px 10px; font-size: 0.7rem; font-weight: 900; border-radius: 5px; text-transform: uppercase; font-family: 'Inter'; }
 
         /* --- SIMULATOR STYLES --- */
+        .sim-progress { font-size: 0.85rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .sim-stats { display: flex; gap: 10px; margin-bottom: 1.5rem; background: var(--cream); padding: 12px; border-radius: 12px; border: 2px solid var(--dark); flex-wrap: wrap; }
         .stat-box { flex: 1; min-width: 80px; text-align: center; font-size: 0.9rem; font-weight: 600; }
         .stat-box span { display: block; font-size: 1.2rem; font-weight: 700; color: var(--teal); }
-        .choice-btn { display: block; width: 100%; text-align: left; padding: 12px 16px; background: white; border: 2px solid var(--dark); border-radius: 12px; margin-bottom: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .choice-btn:hover { background: var(--highlight); }
+        .choice-btn { display: block; width: 100%; text-align: left; padding: 14px 18px; background: white; border: 2px solid var(--dark); border-radius: 12px; margin-bottom: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.2s; line-height: 1.4; }
+        .choice-btn:hover { background: var(--highlight); transform: translateY(-1px); }
 
         /* --- WORDLE GRID --- */
         #wordle-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 6px; max-width: 280px; margin: 20px auto; }
@@ -61,44 +63,25 @@
             border-radius: 4px;
         }
         
-        /* --- TILES STATE STYLES --- */
         .wordle-tile.correct { background-color: #6cab64 !important; color: white; border-color: #6cab64; }
         .wordle-tile.present { background-color: #c9b458 !important; color: white; border-color: #c9b458; }
         .wordle-tile.absent { background-color: #787c7e !important; color: white; border-color: #787c7e; }
         
-        /* --- INTERACTIVE VIRTUAL KEYBOARD --- */
+        /* --- KEYBOARD --- */
         #keyboard-container { max-width: 500px; margin: 30px auto 0; display: flex; flex-direction: column; gap: 8px; }
         .keyboard-row { display: flex; justify-content: center; gap: 4px; width: 100%; }
         .key { 
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            background-color: #d3d6da;
-            color: var(--dark);
-            border: 0;
-            padding: 0;
-            height: 48px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            transition: background-color 0.1s ease;
+            font-family: 'Inter', sans-serif; font-weight: 700; background-color: #d3d6da; color: var(--dark); border: 0; padding: 0; height: 48px; flex: 1; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; user-select: none; text-transform: uppercase; font-size: 0.9rem; transition: background-color 0.1s ease;
         }
         .key:active, .key:hover { background-color: #bbb; }
         .key.wide-key { flex: 1.5; font-size: 0.75rem; }
         
-        /* --- KEYBOARD STATE STYLES --- */
         .key.correct { background-color: #6cab64 !important; color: white; }
         .key.present { background-color: #c9b458 !important; color: white; }
         .key.absent { background-color: #787c7e !important; color: white; }
 
         #wordle-message { text-align: center; margin-top: 1.5rem; font-weight: 700; color: var(--teal); min-height: 24px; padding: 0 10px; font-size: 0.95rem; }
 
-        /* --- MOBILE ADAPTATIONS --- */
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
             .game-card { padding: 1.5rem 1rem; border-radius: 16px; }
@@ -117,18 +100,19 @@
 
     <div class="container">
         
-        <!-- GAME 1: BALANCER -->
+        <!-- GAME 1: EXPANDED HARDCORE SIMULATOR -->
         <section class="game-card" style="border-color: var(--teal); box-shadow: 8px 8px 0px var(--teal);">
             <div class="game-title">
                 <h2>Summit Budget Balancer</h2>
-                <span class="game-tag" style="background: var(--teal); color: white;">Policy Simulator</span>
+                <span class="game-tag" style="background: var(--teal); color: white;">Hardcore Policy Simulator</span>
             </div>
-            <p style="margin-bottom: 1.5rem; color: #444; font-size: 0.95rem;">Step into the role of a Student Trustee allocating a $5,000 grant budget. Balance student wellness against operational limitations to successfully launch the regional summit.</p>
+            <p style="margin-bottom: 1.2rem; color: #444; font-size: 0.95rem;">Step into the role of a Student Trustee managing a rigid budget framework. Navigate 8 critical operational rounds. Keep your values high and avoid bankruptcy.</p>
             
+            <div class="sim-progress" id="sim-progress">Round 1 of 8</div>
             <div class="sim-stats">
                 <div class="stat-box">Budget <span id="stat-budget">$5,000</span></div>
-                <div class="stat-box">Wellness <span id="stat-wellness">50%</span></div>
-                <div class="stat-box">Equity <span id="stat-equity">50%</span></div>
+                <div class="stat-box">Wellness <span id="stat-wellness">45%</span></div>
+                <div class="stat-box">Equity <span id="stat-equity">45%</span></div>
             </div>
 
             <div id="sim-box">
@@ -168,69 +152,107 @@
 
     <script>
         // ==========================================
-        // GAME 1: EXPANDED SIMULATOR LOGIC
+        // GAME 1: EXPERANDED ENGINE & SCENARIOS
         // ==========================================
-        let budget = 5000; let wellness = 50; let equity = 50; let currentStep = 0;
+        let budget, wellness, equity, currentStep;
         let activeScenarios = [];
 
-        // Comprehensive Master List of 7 Systemic Scenarios
         const masterScenarios = [
             {
-                text: "An out-of-province motivational speaker offers a keynote on resilience, but their travel and appearance fees will consume $2,500 of your total fund.",
+                text: "An out-of-province motivational speaker offers a keynote on systemic resilience, but their appearance and travel logistics consume $2,500 of your budget.",
                 choices: [
-                    { text: "Approve the speaker. High prestige will drive significant engagement.", cost: 2500, wellness: 25, equity: -5 },
-                    { text: "Deny and source local workshop leaders from regional community centers instead.", cost: 800, wellness: 10, equity: 20 }
+                    { text: "Approve the speaker. High prestige will drive significant student engagement metrics.", cost: 2500, wellness: 30, equity: -5 },
+                    { text: "Deny and source local grass-roots workshop leaders from community recreation centers.", cost: 700, wellness: 10, equity: 25 }
                 ]
             },
             {
-                text: "To optimize student turnout, your outreach team recommends purchasing high-value digital tech door prizes (AirPods/iPads). Some council members argue this capital should go entirely to operational accessibility.",
+                text: "To optimize turnout, your outreach team recommends purchasing high-value digital tech door prizes (iPads/AirPods). Activists argue this capital should go entirely to structural accessibility features.",
                 choices: [
-                    { text: "Purchase the high-value prizes to aggressively boost registration numbers.", cost: 1500, wellness: 15, equity: -10 },
-                    { text: "Reallocate funds to cover free transit vouchers and professional translation features.", cost: 500, wellness: 5, equity: 25 }
+                    { text: "Purchase the tech assets to aggressively drive up multi-school registration tallies.", cost: 1600, wellness: 15, equity: -15 },
+                    { text: "Reallocate funds to cover full transit subsidies and digital ASL translation feeds.", cost: 600, wellness: 5, equity: 30 }
                 ]
             },
             {
-                text: "A prominent tech corporation offers to co-sponsor the digital safety breakout sessions, contributing an extra $1,500 if they can collect optional survey data from student attendees.",
+                text: "A prominent tech corporation offers to fund your digital safety breakout streams, contributing $1,500 extra if they can gather optional user-metrics surveys from student devices.",
                 choices: [
-                    { text: "Accept the partnership to secure additional structural capital.", cost: -1500, wellness: 5, equity: -15 },
-                    { text: "Decline to ensure complete participant data privacy and policy integrity.", cost: 0, wellness: 10, equity: 15 }
+                    { text: "Accept the corporate partnership to expand overall fiscal operating scale.", cost: -1500, wellness: 5, equity: -25 },
+                    { text: "Decline to maintain structural participant data privacy standards.", cost: 0, wellness: 10, equity: 15 }
                 ]
             },
             {
-                text: "The catering committee flags that providing certified Halal, Kosher, and vegan options for all 1,200 attendees will incur a heavy premium, threatening your remaining operational overhead.",
+                text: "The venue catering team flags that providing complete certified Halal, Kosher, and allergen-safe meals across all student delegations will trigger an unexpected $1,400 overhead surcharge.",
                 choices: [
-                    { text: "Allocate the extra $1,200. Broad structural inclusion must remain a non-negotiable metric.", cost: 1200, wellness: 10, equity: 30 },
-                    { text: "Opt for a generic menu options package to safeguard emergency contingency funds.", cost: 400, wellness: -10, equity: -20 }
+                    { text: "Absorb the surcharge. Broad culinary inclusion is a non-negotiable metric.", cost: 1400, wellness: 15, equity: 30 },
+                    { text: "Deploy a generic standard menu box to safeguard remaining contingency funds.", cost: 400, wellness: -15, equity: -25 }
                 ]
             },
             {
-                text: "Local printing vendors quote a significant fee to publish comprehensive mental health resource directories and policy resource packages for every individual attendee.",
+                text: "School board compliance inspectors flag that your post-summit venue space layout requires hiring extra licensed safety marshals to meet updated spatial regulatory codes.",
                 choices: [
-                    { text: "Print the hard-copy packages to give students tangible long-term community tools.", cost: 1000, wellness: 20, equity: 10 },
-                    { text: "Transition completely to digital QR code sheets to protect budgetary margins.", cost: 100, wellness: 5, equity: -5 }
+                    { text: "Pay the premium fee to guarantee institutional space alignment.", cost: 1100, wellness: 10, equity: 5 },
+                    { text: "Compress attendee capacity caps by 35% to bypass the marshal quota entirely.", cost: 0, wellness: -25, equity: -20 }
                 ]
             },
             {
-                text: "A student advocacy caucus requests setting up a rapid-response community forum at the summit, but school board legal advisers suggest it requires hiring specialized neutral moderators to handle complex policy debates.",
+                text: "An equity student group requests a prominent gallery wall space, but local media tracking components argue it could spark friction with more conservative administrative benefactors.",
                 choices: [
-                    { text: "Fund the professional neutral moderators to guarantee a safe, democratic dialogue platform.", cost: 750, wellness: 15, equity: 20 },
-                    { text: "Cancel the forum to avoid regulatory hurdles and ongoing financial liabilities.", cost: 0, wellness: -15, equity: -15 }
+                    { text: "Provide the space completely. Unfiltered student voice takes execution precedence.", cost: 200, wellness: 20, equity: 25 },
+                    { text: "Relocate the presentation to a secondary digital module format to avoid optics risk.", cost: 0, wellness: -15, equity: -20 }
                 ]
             },
             {
-                text: "Unforeseen structural scheduling conflicts require booking local transit shuttles to transport attendees safely between distinct regional institutional hubs.",
+                text: "Sudden regional transit delays threaten to block three high-priority student panels from arriving at the central hub on opening morning.",
                 choices: [
-                    { text: "Deploy complete shuttle fleets to guarantee comprehensive operational safety.", cost: 900, wellness: 15, equity: 10 },
-                    { text: "Rely on regular local transport connections, running a specialized informational campaign instead.", cost: 150, wellness: -5, equity: -5 }
+                    { text: "Deploy emergency chartered shuttle lines to pick up the stranded delegates.", cost: 950, wellness: 20, equity: 15 },
+                    { text: "Proceed on schedule, asking the panels to present asynchronously via pre-recorded videos.", cost: 100, wellness: -15, equity: -10 }
+                ]
+            },
+            {
+                text: "A student advocacy collective asks to run an unscheduled public accountability forum detailing local municipal policy discrepancies during the lunchtime slot.",
+                choices: [
+                    { text: "Sanction the forum and hire professional neutral moderators to guide the dialogue safely.", cost: 800, wellness: 15, equity: 20 },
+                    { text: "Deny the structural addition to protect strict operational timelines and board rules.", cost: 0, wellness: -20, equity: -15 }
+                ]
+            },
+            {
+                text: "A local printing agency quotes a high rate to print tactile mental health resource guides and local shelter directories for every single attendee.",
+                choices: [
+                    { text: "Print the physical booklets to guarantee access to students without reliable data plans.", cost: 1000, wellness: 25, equity: 15 },
+                    { text: "Host all data on a central website and print a single master QR code signpost instead.", cost: 150, wellness: 5, equity: -10 }
+                ]
+            },
+            {
+                text: "Severe seasonal weather warnings demand that you either install immediate heavy-duty tent heating clusters outside or cancel the outdoor cultural bazaar segment entirely.",
+                choices: [
+                    { text: "Rent the industrial heating infrastructure to protect the student vendors' hard work.", cost: 1200, wellness: 20, equity: 15 },
+                    { text: "Move the event into standard hallways, reducing student vendor booth footprints by half.", cost: 100, wellness: -20, equity: -15 }
+                ]
+            },
+            {
+                text: "The audio-visual vendor experiences a main board blowout right before the policy simulation finals. A replacement board hire will require upfront emergency capital.",
+                choices: [
+                    { text: "Secure the professional replacement unit to ensure crisp main-stage presentation fidelity.", cost: 750, wellness: 15, equity: 5 },
+                    { text: "Rely on portable school gym megaphones, adjusting the venue seating blocks to adapt.", cost: 0, wellness: -20, equity: -10 }
+                ]
+            },
+            {
+                text: "A group of regional schools requests multi-language transcription and real-time captioning support for international student delegates joining your plenary sessions.",
+                choices: [
+                    { text: "Retain real-time translation experts to remove participation barriers completely.", cost: 850, wellness: 10, equity: 35 },
+                    { text: "Rely on standard, automated device-level text translation apps to minimize cost.", cost: 100, wellness: -10, equity: -15 }
                 ]
             }
         ];
 
-        // Shuffles master scenarios and isolates 4 for gameplay
         function setupSimulation() {
+            // Randomly isolates 8 out of the 12 master scenarios for an extended gameplay path
             let shuffled = [...masterScenarios].sort(() => 0.5 - Math.random());
-            activeScenarios = shuffled.slice(0, 4); 
-            budget = 5000; wellness = 50; equity = 50; currentStep = 0;
+            activeScenarios = shuffled.slice(0, 8); 
+            
+            budget = 5000; 
+            wellness = 45; 
+            equity = 45; 
+            currentStep = 0;
             updateSimUI();
         }
 
@@ -240,30 +262,51 @@
             document.getElementById('stat-equity').innerText = `${equity}%`;
 
             if (budget < 0 || wellness <= 0 || equity <= 0) {
-                endSimulation(false, "Operational Failure: Your budget collapsed or critical community relationships dropped below baseline metrics.");
+                endSimulation(false, "Operational Collapse: You triggered systemic insolvency or critical relationships breached minimum baseline parameters.");
                 return;
             }
+            
             if (currentStep >= activeScenarios.length) {
-                endSimulation(true, "Summit Success! You balanced systemic demands to execute an impactful, accessible community initiative.");
+                // Evaluates exact grade tier on successful runs
+                let finalScore = wellness + equity + (budget / 100);
+                let ranking = "Standard Administrator Balance";
+                if (finalScore >= 140) ranking = "Master Public Policy Innovator";
+                else if (finalScore >= 110) ranking = "Highly Effective Student Trustee";
+                
+                endSimulation(true, `Summit Complete! Performance Profile achieved: ${ranking}. You successfully balanced policy dynamics against operational realities.`);
                 return;
             }
+
+            document.getElementById('sim-progress').innerText = `Round ${currentStep + 1} of 8`;
             let current = activeScenarios[currentStep];
             document.getElementById('sim-text').innerText = current.text;
-            let choicesDiv = document.getElementById('sim-choices'); choicesDiv.innerHTML = '';
+            
+            let choicesDiv = document.getElementById('sim-choices'); 
+            choicesDiv.innerHTML = '';
+            
             current.choices.forEach(c => {
-                let btn = document.createElement('button'); btn.className = 'choice-btn'; btn.innerText = c.text;
-                btn.onclick = () => { budget -= c.cost; wellness += c.wellness; equity += c.equity; currentStep++; updateSimUI(); };
+                let btn = document.createElement('button'); 
+                btn.className = 'choice-btn'; 
+                btn.innerText = c.text;
+                btn.onclick = () => { 
+                    budget -= c.cost; 
+                    wellness += c.wellness; 
+                    equity += c.equity; 
+                    currentStep++; 
+                    updateSimUI(); 
+                };
                 choicesDiv.appendChild(btn);
             });
         }
+
         function endSimulation(success, message) {
+            document.getElementById('sim-progress').innerText = success ? "Evaluation Successful" : "Evaluation Aborted";
             document.getElementById('sim-text').innerText = message;
-            document.getElementById('sim-choices').innerHTML = `<button class="choice-btn" style="text-align:center; background:var(--dark); color:white;" onclick="setupSimulation()">Restart Simulation</button>`;
+            document.getElementById('sim-choices').innerHTML = `<button class="choice-btn" style="text-align:center; background:var(--dark); color:white;" onclick="setupSimulation()">Re-evaluate Protocol</button>`;
         }
-        function resetSim() { setupSimulation(); }
 
         // ==========================================
-        // GAME 2: WORDLE ENGINE LOGIC
+        // GAME 2: WORDLE ENGINE
         // ==========================================
         const wordPool = ["POLICY", "VOTING", "SENATE", "COURTS", "RIGHTS", "DEBATE", "STATUTE", "EQUITY", "SYSTEM", "REFORM", "AGENCY", "BALLOT", "CIVICS", "CLAUSE", "DECREE", "ETHICS", "HEARNG", "JUSTIC", "LAWYER", "OFFICE", "REPUBLIC", "RULING", "TREATY", "VETOES"];
         const secretWord = wordPool[Math.floor(Math.random() * wordPool.length)];
