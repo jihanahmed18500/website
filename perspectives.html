@@ -3,36 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Perspectives — Jihan Ahmed</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Perspectives — Jihan Ahmed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --dark: #121212; --cream: #f4f1ea; --highlight: #ffd700; --teal: #006064; --indigo: #1e1b4b; }
-        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding: 0; margin: 0; }
+        :root { 
+            --dark: #121212; 
+            --cream: #f4f1ea; 
+            --highlight: #ffd700; 
+            --teal: #006064; 
+            --indigo: #1e1b4b; 
+            --coral: #ff6b6b;
+            --toronto-blue: #003da5;
+        }
         
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
+        h1, h2, h3, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+        /* --- NAVIGATION --- */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 1.8rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); 
+            padding: 1rem 5%; background: var(--cream); border-bottom: 2px solid var(--dark); 
         }
-        .logo { font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.6rem; text-decoration: none; color: var(--dark); }
-        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); padding: 8px 16px; border-radius: 10px; transition: 0.2s; }
+        .logo { font-weight: 700; font-size: 1.4rem; text-decoration: none; color: var(--dark); }
+        .back-btn { text-decoration: none; color: var(--dark); font-weight: 700; text-transform: uppercase; border: 2px solid var(--dark); padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; transition: 0.2s; }
         .back-btn:hover { background: var(--dark); color: white; }
 
-        header { text-align: center; padding: 80px 20px 40px; }
-        header h1 { font-family: 'Space Grotesk'; font-size: 4rem; letter-spacing: -2px; margin: 0; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        .page-header { text-align: center; margin-bottom: 3rem; }
+        .page-header h1 { font-size: 3rem; letter-spacing: -1.5px; margin-bottom: 10px; }
+        .page-header p { color: #555; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
-        .bento-grid { max-width: 1100px; margin: 0 auto 100px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding: 20px; }
-        
-        .post-box { 
+        /* --- BENTO CARDS MATCHING YOUR EXACT DESIGN --- */
+        .essay-card { 
             border: 2px solid var(--dark); 
-            padding: 2.5rem; border-radius: 30px; cursor: pointer; transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px;
+            border-radius: 40px; 
+            padding: 2.8rem; 
+            margin-bottom: 30px; 
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+            transition: transform 0.2s ease;
         }
-        .post-box:hover { transform: translate(-5px, -5px); box-shadow: 10px 10px 0px var(--dark); }
         
-        .tag { background: var(--highlight); color: var(--dark); padding: 5px 12px; font-size: 0.75rem; font-weight: 900; border-radius: 5px; text-transform: uppercase; align-self: flex-start; }
-        h2 { font-family: 'Space Grotesk'; font-size: 2.2rem; margin: 1.5rem 0 1rem; line-height: 1.1; color: white; }
-        p { color: #e0e0e0; font-size: 1rem; line-height: 1.5; margin-bottom: auto; }
-        .read-link { margin-top: 2rem; font-weight: 700; color: var(--highlight); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+        .essay-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        /* Specific solid card colors from your palette */
+        .card-blue { background-color: var(--toronto-blue); color: white; }
+        .card-teal { background-color: var(--teal); color: white; }
+        .card-indigo { background-color: var(--indigo); color: white; }
+
+        /* Header label tags (Yellow pills) */
+        .tag-pill { 
+            background: var(--highlight); 
+            color: var(--dark); 
+            padding: 6px 16px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            border-radius: 8px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            align-self: flex-start;
+            margin-bottom: 1.8rem;
+            display: inline-block;
+        }
+
+        .essay-title { 
+            font-size: 2.3rem; 
+            font-weight: 700; 
+            letter-spacing: -1px; 
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            color: white;
+        }
+
+        .essay-preview {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            opacity: 0.85;
+            margin-bottom: 2rem;
+            max-width: 680px;
+        }
+
+        .read-prompt {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--highlight);
+            margin-top: auto;
+        }
+
+        /* --- OVERLAY MODAL --- */
+        #modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); display: none; justify-content: center; 
+            align-items: center; z-index: 2000; backdrop-filter: blur(8px); 
+            padding: 15px;
+        }
+        .modal-content { 
+            background: var(--cream); border: 3px solid var(--dark); padding: 2.5rem; 
+            border-radius: 24px; width: 100%; max-width: 750px;
+            max-height: 85vh; overflow-y: auto;
+            box-shadow: 10px 10px 0px var(--dark);
+        }
+        .modal-content h2 { 
+            font-size: 2.2rem; font-family: 'Space Grotesk', sans-serif; 
+            margin-bottom: 1.5rem; color: var(--dark); 
+            border-bottom: 2px dashed var(--dark); padding-bottom: 1rem; 
+            letter-spacing: -1px; line-height: 1.1;
+        }
+        
+        .essay-body { 
+            font-size: 1.05rem; 
+            line-height: 1.7; 
+            color: #222; 
+        }
+        .essay-body p { margin-bottom: 1.5rem; }
+        .essay-body p:last-child { margin-bottom: 0; }
+        
+        .emphasis { 
+            font-weight: 700; 
+            color: var(--dark);
+            border-left: 4px solid var(--toronto-blue);
+            padding-left: 15px;
+            margin: 1.8rem 0;
+            font-style: italic;
+        }
+
+        .close-btn { 
+            display: block; width: 100%; text-align: center; padding: 14px; 
+            background: var(--dark); color: white; font-weight: 700; border-radius: 12px; 
+            cursor: pointer; margin-top: 2rem; font-family: 'Space Grotesk'; 
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.2s;
+        }
+        .close-btn:hover { background: var(--highlight); color: var(--dark); }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 0.5rem; padding: 1rem; text-align: center; }
+            .page-header h1 { font-size: 2.2rem; }
+            .essay-card { padding: 2rem 1.5rem; border-radius: 28px; min-height: auto; }
+            .essay-title { font-size: 1.8rem; }
+            .modal-content { padding: 1.5rem; }
+            .modal-content h2 { font-size: 1.7rem; }
+        }
     </style>
 </head>
 <body>
@@ -42,29 +161,124 @@
         <a href="index.html" class="back-btn">← Portfolio</a>
     </nav>
 
-    <header>
-        <h1>My Perspectives</h1>
-    </header>
+    <div class="container">
+        
+        <header class="page-header">
+            <h1>Perspectives</h1>
+            <p>A collection of essays, reflections, and lessons learned while organizing communities, leading advocacy initiatives, and building projects.</p>
+        </header>
 
-    <div class="bento-grid">
-        <a href="what-nobody-tells-you.html" class="post-box" style="background: var(--teal);">
+        <!-- ESSAY 1: NOBODY OWES YOU SUPPORT -->
+        <article class="essay-card card-blue" data-essay="support">
             <div>
-                <span class="tag">Reflections</span>
-                <h2>What Nobody Tells You</h2>
-                <p>Success, resistance, and the reality of youth initiative in a world that isn't always ready for it.</p>
+                <span class="tag-pill">Advocacy</span>
+                <h2 class="essay-title">Nobody Owes You Support</h2>
+                <p class="essay-preview">Building something meaningful has a way of challenging assumptions about validation, growth, and where support truly comes from.</p>
             </div>
-            <div class="read-link">Read Full Entry →</div>
-        </a>
+            <span class="read-prompt">Read Full Entry →</span>
+        </article>
 
-        <a href="chasing-fulfillment.html" class="post-box" style="background: var(--indigo);">
+        <!-- ESSAY 2: WHAT NOBODY TELLS YOU -->
+        <article class="essay-card card-teal" data-essay="nobody-tells">
             <div>
-                <span class="tag">Purpose</span>
-                <h2>Chasing Fulfillment</h2>
-                <p>An honest look behind the scenes of organizing mental health spaces and why impact matters more than recognition.</p>
+                <span class="tag-pill">Reflections</span>
+                <h2 class="essay-title">What Nobody Tells You</h2>
+                <p class="essay-preview">Success, resistance, and the reality of youth initiative in a world that isn't always ready for it.</p>
             </div>
-            <div class="read-link">Read Full Entry →</div>
-        </a>
+            <span class="read-prompt">Read Full Entry →</span>
+        </article>
+
+        <!-- ESSAY 3: CHASING FULFILLMENT -->
+        <article class="essay-card card-indigo" data-essay="fulfillment">
+            <div>
+                <span class="tag-pill">Purpose</span>
+                <h2 class="essay-title">Chasing Fulfillment</h2>
+                <p class="essay-preview">An honest look behind the scenes of organizing mental health spaces and why impact matters more than recognition.</p>
+            </div>
+            <span class="read-prompt">Read Full Entry →</span>
+        </article>
+
     </div>
 
+    <!-- PERSPECTIVES OVERLAY MODAL -->
+    <div id="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modal-title">Essay Title</h2>
+            <div class="essay-body" id="modal-text">
+                <!-- Essay content gets injected here -->
+            </div>
+            <div class="close-btn" onclick="closeBtn()">Close</div>
+        </div>
+    </div>
+
+    <script>
+        const essays = {
+            'support': {
+                title: 'Nobody Owes You Support',
+                text: `<p>One of the hardest lessons I have had to learn is that not everyone who says they care about you will support what you are trying to build. Growing up, I assumed that if you had a good idea, worked hard, and genuinely wanted to help people, the people closest to you would naturally be the first to believe in you. It seemed obvious. Why wouldn’t they?</p>
+                       <p>But building something meaningful has a way of challenging that assumption.</p>
+                       <p>When I started taking on leadership roles and working on projects that mattered to me, I expected encouragement from the people I knew. Instead, I learned that support is often much quieter, and much rarer, than you imagine. Sometimes the people you barely know become your biggest supporters, while the people you expected to cheer the loudest watch from a distance, stay silent, or even question what you’re doing.</p>
+                       <p>At first, that hurt more than I would like to admit.</p>
+                       <p>You begin asking yourself questions that have nothing to do with your work. Am I doing something wrong? Am I being too ambitious? Did I expect too much from people? It is easy to mistake someone’s lack of support as a reflection of your own worth. But over time, I realized those are two completely different things.</p>
+                       <p class="emphasis">The truth is that nobody owes you support.</p>
+                       <p>That sentence sounds harsh at first, but I actually think it is freeing. The moment you stop expecting validation from other people, you stop giving them control over whether you continue. You no longer measure your progress by who claps for you. You measure it by whether you are still moving.</p>
+                       <p>One thing that surprised me the most is how often support comes from the people you least expect. Someone you barely talked to in high school, someone you would not have considered a close friend, or someone you only crossed paths with a handful of times might be the one who donates to your cause, shares your work, sends you an encouraging message, or introduces you to an opportunity that changes everything. Meanwhile, people you thought would naturally support you, people you have known for years, sometimes say nothing at all.</p>
+                       <p>I used to take that personally. I wondered why someone who barely knew me could see value in what I was doing while people who knew me so well seemed indifferent. But I eventually realized that familiarity shapes the way people see you. The people who have known you for years often still picture the version of you they grew up with. They remember who you were, not necessarily who you are becoming. It can be difficult for them to recognize your growth because they have watched it happen so gradually.</p>
+                       <p>Someone who barely knows you, on the other hand, only sees what you have built. They are not comparing you to who you were three years ago. They are looking at your work for what it is today. They are not attached to an older version of you, so it is easier for them to appreciate the value of what you are creating. That taught me something I did not expect: sometimes the first people to believe in your vision are not the people closest to you. They are simply the people who judge your work on its own merits.</p>
+                       <p>That realization changed my perspective completely. I stopped asking why certain people were not supporting me and started appreciating the ones who did. Support is not measured by how long someone has known you. It is measured by the fact that they chose to believe in something you cared enough to build. Sometimes that belief comes from lifelong friends. Other times, it comes from someone you never imagined would be in your corner. And honestly, those unexpected supporters often become the reason you keep going.</p>
+                       <p>I have also realized that support looks different than I once thought. Some people simply are not interested in the things you care about, and that is okay. Others may be dealing with their own struggles. Some people might genuinely admire what you are doing but never say it out loud. And yes, there will always be people who hope you stay exactly where you are because your growth makes them uncomfortable.</p>
+                       <p>You cannot control any of that.</p>
+                       <p class="emphasis">What you can control is whether their silence becomes your excuse.</p>
+                       <p>One of the biggest mistakes I made was waiting for support before taking the next step. I thought once enough people believed in the vision, then I could move forward confidently. But if I had kept waiting, many of the opportunities I am grateful for today would never have happened.</p>
+                       <p>People usually support momentum, not potential.</p>
+                       <p>They support the project after it gains attention. They donate after someone else does. They celebrate the award after you receive it. They congratulate you after the hard part is already over. Looking back, I do not even blame them. It is human nature. But it taught me that belief often comes after proof, not before it.</p>
+                       <p class="emphasis">That means sometimes you have to be the only person who believes for a while. And honestly, that is enough.</p>
+                       <p>If you are building something that genuinely matters to you, do not spend your energy keeping score of who showed up and who did not. The right people will find you. Some will arrive much later than you expected. Others will surprise you completely.</p>
+                       <p>Your job is not to convince everyone to believe in your vision.</p>
+                       <p>Your job is to keep building it until they no longer have to imagine it.</p>
+                       <p>Because in the end, the people who never supported you are not the reason you succeeded.</p>
+                       <p>And they were never the reason you started.</p>`
+            },
+            'nobody-tells': {
+                title: 'What Nobody Tells You',
+                text: `<p>When you start taking action as a student—whether launching a youth council, coordinating regional initiatives, or challenging structural frameworks—everyone loves to praise "youth initiative" in theory. It looks fantastic in pamphlets and sounds perfect in assemblies.</p>
+                       <p>But there is a sharp reality that nobody tells you: actual progress makes people uncomfortable.</p>
+                       <p>The moment you step out of the designated boxes and start building real momentum, the warm encouragement often shifts into resistance. You find yourself encountering friction from the very institutions that claimed they wanted you to lead. Skepticism, gatekeeping, and subtle attempts to quiet your work become part of the daily process. People are comfortable with student leaders who wait for permission; they are rarely prepared for those who don't.</p>
+                       <p class="emphasis">Friction is not a sign of failure—it is proof that you are actually moving things.</p>
+                       <p>If your work isn't causing a stir, it is probably because you are staying safely inside pre-drawn lines. Real impact requires pushing against established boundaries, and that means navigating the doubts of those who aren't ready for change. Learning to separate their discomfort from your mission is the true test of resilience. When you understand that resistance is simply a byproduct of momentum, the obstacles stop stopping you. They become the marker of where the real work begins.</p>`
+            },
+            'fulfillment': {
+                title: 'Chasing Fulfillment',
+                text: `<p>In high school, we are taught to collect achievements. We construct identities around metrics—club leadership tags, project footprints, and grades. We treat our potential as a series of milestones to check off, believing that once we accumulate enough labels, fulfillment will naturally follow.</p>
+                       <p>But real community impact doesn't happen on paper. It happens in the quiet moments when the event is over and you are clean-stacking chairs in an empty gymnasium. True fulfillment lies in the actual momentum of building—not in the celebration after the hard work is already finished.</p>`
+            }
+        };
+
+        const cards = document.querySelectorAll('.essay-card');
+        const overlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+
+        cards.forEach(card => { 
+            card.addEventListener('click', () => { 
+                const key = card.getAttribute('data-essay');
+                if (essays[key]) {
+                    modalTitle.innerText = essays[key].title;
+                    modalText.innerHTML = essays[key].text;
+                    overlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; 
+                }
+            }); 
+        });
+
+        function closeBtn() { 
+            overlay.style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+
+        window.onclick = function(event) { 
+            if (event.target == overlay) closeBtn(); 
+        }
+    </script>
 </body>
 </html>
